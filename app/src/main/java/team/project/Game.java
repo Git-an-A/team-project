@@ -31,7 +31,7 @@ public class Game{
     private GameBoard gameBoard;
     private final int startMoney = 6000;
 
-    public void setUpGame(GameOptions){
+    public void setUpGame(GameOptions go){
 
     }
     public boolean nextTurn(Player player){
