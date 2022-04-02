@@ -25,15 +25,46 @@
 package team.project;
 
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MainUI {
+import java.lang.management.ClassLoadingMXBean;
+
+public class MainUI extends Application {
+
+    private Game game;
+
+    public MainUI(Game game) throws Exception {
+        this.game = game;
+        start(new Stage());
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        stage.setTitle("Aquire");
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+        scene.setFill(Color.LIGHTGRAY);
+
+        Label title = new Label();
+
+        root.getChildren().add(title);
+
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     private void dispWindow(String dispString){
         Stage disp = new Stage();
         disp.setTitle("Courses");

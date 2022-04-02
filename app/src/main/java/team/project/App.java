@@ -27,6 +27,7 @@
  */
 package team.project;
 
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,7 +35,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class App extends Application{
 
@@ -42,7 +49,6 @@ public class App extends Application{
         Application.launch(args);
         System.out.println("test");
     }
-
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -58,14 +64,14 @@ public class App extends Application{
         Button quit = new Button();
         Label title = new Label();
 
-        final int buttonSpacing = 25;
+        final int buttonSpacing = 40;
 
         final int newGameXloc = 300;
         final int newGameYloc = 200;
         final int loadGameXloc = newGameXloc;
         final int loadGameYloc = newGameYloc + buttonSpacing;
-        final int startXloc = 325;
-        final int startYloc = 250;
+        final int startXloc = newGameXloc + 25;
+        final int startYloc = newGameYloc + 75;
         final int quitXloc = startXloc;
         final int quitYloc = startYloc + buttonSpacing;
         final int titleXloc = 75;
@@ -74,14 +80,59 @@ public class App extends Application{
 
         newGame.setLayoutX(newGameXloc);
         newGame.setLayoutY(newGameYloc);
+        newGame.setText("New Game");
+
         loadGame.setLayoutX(loadGameXloc);
         loadGame.setLayoutY(loadGameYloc);
+        loadGame.setText("Load Game");
+
         start.setLayoutX(startXloc);
         start.setLayoutY(startYloc);
+        start.setText("Start!");
+
+
         quit.setLayoutX(quitXloc);
         quit.setLayoutY(quitYloc);
+        quit.setText("Quit");
+
         title.setLayoutX(titleXloc);
         title.setLayoutY(titleYloc);
+        title.setText("Welcome to Acquire!");
+        title.setFont(new Font("Arial", 32));
+
+        start.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             *
+             * @param event
+             */
+             @Override
+             public void handle(ActionEvent event) {
+                 Game game;
+                 if(loadGame.isArmed()){
+                     //load game from file
+                     game = new Game();
+                 }
+                 else{
+                     game = new Game();
+                 }
+
+                 stage.setOnHidden(new EventHandler<WindowEvent>() {
+                     @Override
+                     public void handle(WindowEvent event) {
+                         try {
+                             MainUI mainUI = new MainUI(game);
+                         } catch (Exception e) {
+                             e.printStackTrace();
+                         }
+                     }
+                 });
+                 stage.hide();
+             }
+        });
+
+
+
+
 
         root.getChildren().add(newGame);
         root.getChildren().add(loadGame);
