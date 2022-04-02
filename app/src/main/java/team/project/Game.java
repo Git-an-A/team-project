@@ -24,6 +24,53 @@
 
 package team.project;
 
-public class Game{
+import java.util.ArrayList;
 
+public class Game{
+    private ArrayList<Player> players;
+    private GameBoard gameBoard;
+    private final int startMoney = 6000;
+
+    public void setUpGame(GameOptions go){
+
+    }
+    public boolean nextTurn(Player player){
+        return true;
+    }
+    public boolean tallyScore(Player player, int amount){
+        return true;
+    }
+    public boolean takeTurn(Player player){
+        return true;
+    }
+    public void displayInfo(){
+
+    }
+    public void openOptions(){
+
+    }
+    public boolean drawTile(Player player){
+        return true;
+    }
+    public boolean buyStock (Stock stockName, int amount){
+        return true;
+    }
+    public boolean sellStock (Stock stockName, int amount){
+        return true;
+    }
+    public Stock viewStocks(Stock stock){
+        return new Stock();
+    }
+    public boolean playTile(Tile tile){
+        return true;
+    }
+    public boolean tradeStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean sellStocks(Stock stockName, int amount){
+        return true;
+    }
+    public void endGame(){
+
+    }
 }
