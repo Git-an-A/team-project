@@ -27,12 +27,72 @@
  */
 package team.project;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+public class App extends Application{
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Application.launch(args);
+        System.out.println("test");
     }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        stage.setTitle("Aquire");
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+        scene.setFill(Color.LIGHTGRAY);
+
+        RadioButton newGame = new RadioButton();
+        RadioButton loadGame = new RadioButton();
+        Button start = new Button();
+        Button quit = new Button();
+        Label title = new Label();
+
+        final int buttonSpacing = 25;
+
+        final int newGameXloc = 300;
+        final int newGameYloc = 200;
+        final int loadGameXloc = newGameXloc;
+        final int loadGameYloc = newGameYloc + buttonSpacing;
+        final int startXloc = 325;
+        final int startYloc = 250;
+        final int quitXloc = startXloc;
+        final int quitYloc = startYloc + buttonSpacing;
+        final int titleXloc = 75;
+        final int titleYloc = 85;
+
+
+        newGame.setLayoutX(newGameXloc);
+        newGame.setLayoutY(newGameYloc);
+        loadGame.setLayoutX(loadGameXloc);
+        loadGame.setLayoutY(loadGameYloc);
+        start.setLayoutX(startXloc);
+        start.setLayoutY(startYloc);
+        quit.setLayoutX(quitXloc);
+        quit.setLayoutY(quitYloc);
+        title.setLayoutX(titleXloc);
+        title.setLayoutY(titleYloc);
+
+        root.getChildren().add(newGame);
+        root.getChildren().add(loadGame);
+        root.getChildren().add(start);
+        root.getChildren().add(quit);
+        root.getChildren().add(title);
+
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 }
