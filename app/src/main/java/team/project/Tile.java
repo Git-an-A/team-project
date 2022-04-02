@@ -25,4 +25,9 @@
 package team.project;
 
 public class Tile {
+    private String letterID;
+    private String[] letters;
+    private int numbers;
+    private int[] numberID;
+    private boolean isPlaced;
 }

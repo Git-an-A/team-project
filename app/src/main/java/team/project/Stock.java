@@ -25,4 +25,8 @@
 package team.project;
 
 public class Stock {
+    private String name;
+    private int amount;
+    private int cost;
+
 }

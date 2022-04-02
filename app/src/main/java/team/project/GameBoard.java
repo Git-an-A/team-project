@@ -24,5 +24,40 @@
 
 package team.project;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.ArrayList;
+
 public class GameBoard {
+    private int corporationsPlaced;
+    private int size;
+    private int[][] board;
+
+    public GameBoard(){
+
+    }
+    public boolean placeCorp(Tile tile){
+        return true;
+    }
+    public boolean placeUnacompanied(Tile tile){
+        return true;
+    }
+    public ArrayList<Tile> mergeCorpCheck(Tile tile){
+        return new ArrayList<Tile>();
+    }
+    public Corporation mergeCorp(Corporation corp1, Corporation corp2){
+        return new Corporation();
+    }
+    public boolean giveStocks(Stock stockname, int amount){
+        return true;
+    }
+    public boolean takeStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean giveMoney(Player player, int amount){
+        return true;
+    }
+    public boolean takeMoney(Player player, int amount){
+        return true;
+    }
 }

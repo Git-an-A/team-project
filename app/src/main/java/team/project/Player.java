@@ -25,4 +25,27 @@
 package team.project;
 
 public class Player {
+    int number;
+
+    public Tile DrawTile(){
+        return new Tile();
+    }
+    public boolean buyStock(Stock stockName, int amount){
+        return true;
+    }
+    public PlayerInv viewStocks(){
+        return new PlayerInv();
+    }
+    public boolean tradeStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean sellStocks(Stock stock, int amount){
+        return true;
+    }
+    public boolean discardDeadTile(Tile tile){
+        return true;
+    }
+    public GameOptions endGame(){
+        return new GameOptions();
+    }
 }

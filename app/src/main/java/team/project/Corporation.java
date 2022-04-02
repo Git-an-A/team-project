@@ -24,5 +24,24 @@
 
 package team.project;
 
+import java.util.ArrayList;
+
 public class Corporation {
+    private ArrayList<Stock> stocks;
+    private int price;
+    private String name;
+    private int size;
+
+    public boolean giveStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean getStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean giveBonus(Player player, int amount){
+        return true;
+    }
+    public boolean isSafe(){
+        return true;
+    }
 }

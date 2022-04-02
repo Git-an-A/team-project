@@ -25,5 +25,27 @@
 package team.project;
 
 public class GameOptions {
+    private boolean hiddenAsset;
+    private String filename;
 
+    public GameOptions(){
+
+    }
+
+    public boolean start (int numPlayers){
+        return true;
+    }
+
+    public boolean load (String filename){
+        return true;
+    }
+    public GameOptions readData(String filepath){
+        return new GameOptions();
+    }
+    public void saveDate(String file, GameOptions go){
+
+    }
+    public boolean Display(){
+        return hiddenAsset;
+    }
 }

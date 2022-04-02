@@ -24,5 +24,42 @@
 
 package team.project;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameInventory {
+    private List<Tile> tiles;
+    private int stocks;
+    private int money;
+    private ArrayList<Corporation> corporations;
+
+    public Stock viewStocks(){
+        return new Stock();
+    }
+    public boolean giveStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean gainStocks(Stock stockName, int amount){
+        return true;
+    }
+    public boolean giveTiles(Tile tile){
+        return true;
+    }
+    public String tilesToString(ArrayList<Tile> arT){
+        return new String();
+    }
+    public boolean giveMoney(Player player, int amount){
+        return true;
+    }
+    public boolean addMoney(Player player, int amount){
+        return true;
+    }
+    public boolean viewCorporations(ArrayList<Corporation> arC){
+        return true;
+    }
+    public int numTiles(){
+        return 0;
+    }
 }
