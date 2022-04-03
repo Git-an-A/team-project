@@ -24,10 +24,40 @@
 
 package team.project;
 
-public class Tile {
+/**
+ * Java class for Tile
+ */
+public class Tile{
     private String letterID;
-    private String[] letters;
+    private String[] letters = {"A","B", "C", "D", "E", "F", "G", "H", "I"};
     private int numbers;
     private int[] numberID;
     private boolean isPlaced;
+
+    public Tile(int numbers, String letterID){
+        this.numbers = numbers;
+        this.letterID = letterID;
+    }
+
+    @Override
+    public String toString() {
+        return numbers + letterID;
+    }
+
+    /**
+     * Getters and Setters
+     */
+    public int getNumbers() {
+        return numbers;
+    }
+
+    public String getLetterID() {
+        return letterID;
+    }
+    public void setNumbers(int number){
+        this.numbers = number;
+    }
+    public void setLetterID(String letterID){
+        this.letterID = letterID;
+    }
 }

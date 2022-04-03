@@ -25,27 +25,38 @@
 package team.project;
 
 public class Player {
-    int number;
+    PlayerInv inventory = new PlayerInv();
 
-    public Tile DrawTile(){
-        return new Tile();
+    public Player(String playerName) {
+
+
     }
-    public boolean buyStock(Stock stockName, int amount){
+
+    // will come back
+//    public Tile DrawTile(){
+//        return Tile();
+//    }
+    public boolean buyStock(Stock stockName, int amount) {
         return true;
     }
-    public PlayerInv viewStocks(){
+
+    public PlayerInv viewStocks() {
         return new PlayerInv();
     }
-    public boolean tradeStocks(Stock stockName, int amount){
+
+    public boolean tradeStocks(Stock stockName, int amount) {
         return true;
     }
-    public boolean sellStocks(Stock stock, int amount){
+
+    public boolean sellStocks(Stock stock, int amount) {
         return true;
     }
-    public boolean discardDeadTile(Tile tile){
+
+    public boolean discardDeadTile(Tile tile) {
         return true;
     }
-    public GameOptions endGame(){
+
+    public GameOptions endGame() {
         return new GameOptions();
     }
 }

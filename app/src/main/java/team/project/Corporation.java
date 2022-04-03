@@ -41,7 +41,27 @@ public class Corporation {
     public boolean giveBonus(Player player, int amount){
         return true;
     }
+
+    /**
+     * Check if the corporation is safe or not
+     * @return true if corporation is safe, false if it is less than 11
+     */
     public boolean isSafe(){
-        return true;
+        if(size >= 11){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Getters and Setters
+     */
+    public int getSize(){
+        return size;
+    }
+    public void setSize(int size){
+        this.size =  size;
     }
 }
+

@@ -25,8 +25,34 @@
 package team.project;
 
 public class Stock {
-    private String name;
-    private int amount;
-    private int cost;
+    public String name;
+    public int amount;
+    public int cost;
 
+    public Stock(){};
+
+    /**
+     * Constructor
+     *
+     * @param name Name of the corporation in which this stock is in
+     * @param amount Amount of stock this type is owned by
+     * @param cost Cost/value of the stock
+     */
+    public Stock(String name, int amount, int cost){
+        this.amount = amount;
+        this.cost = cost;
+        this.name = name;
+    }
+    /**
+     * Public and Setters
+     */
+    public int getAmount() {return amount;}
+    public String getName() {return name;}
+    public int getCost(){return cost;}
+
+    public void setName(String name) {this.name = name;}
+
+    public void setAmount(int amount) {this.amount = amount;}
+
+    public void setCost(int cost) {this.cost = cost;}
 }
