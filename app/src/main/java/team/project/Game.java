@@ -25,15 +25,40 @@
 package team.project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
     private ArrayList<Player> players;
     private GameBoard gameBoard;
     private final int startMoney = 6000;
 
+    /**
+     * Setting up game
+     *
+     * @param go thing that makes it go
+     * @param numPlayers how many players will play
+     */
     public void setUpGame(GameOptions go, int numPlayers) {
         GameOptions getPlayers = new GameOptions();
         getPlayers.start(numPlayers);
+    }
+
+    /**
+     * Corporation makings
+     * @return the list of the 7 corporation
+     * Needs more work
+     */
+    private List<Corporation> corporationList(){
+        List<Corporation> hotelChains = new ArrayList<>();
+        hotelChains.add(new Corporation("Worldwide", 1));
+        hotelChains.add(new Corporation("Sackson", 2));
+        hotelChains.add(new Corporation("Festival", 3));
+        hotelChains.add(new Corporation("Imperial", 4));
+        hotelChains.add(new Corporation("American", 5));
+        hotelChains.add(new Corporation("Continental", 6));
+        hotelChains.add(new Corporation("Tower", 7));
+
+        return hotelChains;
     }
 
     public boolean nextTurn(Player player) {

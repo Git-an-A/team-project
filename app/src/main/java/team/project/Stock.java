@@ -28,6 +28,7 @@ public class Stock {
     public String name;
     public int amount;
     public int cost;
+    private Player player = null;
 
     public Stock(){};
 
@@ -55,4 +56,16 @@ public class Stock {
     public void setAmount(int amount) {this.amount = amount;}
 
     public void setCost(int cost) {this.cost = cost;}
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * gets the player's cost of the stock
+     * @param cost cost
+     */
+    public void setPlayer(Player cost) {
+        this.player = cost;
+    }
 }

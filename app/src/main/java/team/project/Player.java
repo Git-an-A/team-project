@@ -24,18 +24,35 @@
 
 package team.project;
 
+import java.util.ArrayDeque;
+
 public class Player {
-    PlayerInv inventory = new PlayerInv();
+    private ArrayDeque<TileGroup> playerTiles;
 
+    /**
+     * Tries to get the player's tiles
+     * @param playerName the respective player's turn
+     */
     public Player(String playerName) {
-
+        playerTiles = new ArrayDeque<TileGroup>();
 
     }
 
-    // will come back
-//    public Tile DrawTile(){
-//        return Tile();
-//    }
+    /**
+     * adds tile to player
+     *
+     * @param e gives them a tile
+     */
+    public void addTile(TileGroup e){playerTiles.addLast(e);}
+
+    public String toString(){
+        String sb= "";
+        for(var tile: playerTiles){
+            sb+= tile.toString() + "\t";
+        }
+        return sb;
+    }
+
     public boolean buyStock(Stock stockName, int amount) {
         return true;
     }

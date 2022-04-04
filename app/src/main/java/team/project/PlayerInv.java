@@ -26,7 +26,7 @@ package team.project;
 
 import java.util.ArrayList;
 
-public class PlayerInv {
+public class PlayerInv{
     private ArrayList<Tile> tiles;
     private ArrayList<Stock> stocks;
     private int money;

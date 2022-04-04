@@ -44,11 +44,18 @@ public class GameOptions {
      * @param numPlayers number of players
      */
     public void start(int numPlayers) {
+        Tile newTiles = new Tile();
+        newTiles.shuffle();
+        newTiles.shuffle();
+
         ArrayList<Player> players = new ArrayList<Player>(numPlayers);
         for (int i = 1; i <= numPlayers; i++) {
             String playerName = "Player" + i;
             Player player = new Player(playerName);
             players.add(player);
+            for(int j=0; j<6; j++){
+                player.addTile((newTiles.dealTile()));
+            }
         }
     }
 

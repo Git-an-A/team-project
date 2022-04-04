@@ -24,40 +24,56 @@
 
 package team.project;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Java class for Tile
  */
 public class Tile{
-    private String letterID;
-    private String[] letters = {"A","B", "C", "D", "E", "F", "G", "H", "I"};
-    private int numbers;
-    private int[] numberID;
+    private ArrayList<TileGroup> tiles;
     private boolean isPlaced;
 
-    public Tile(int numbers, String letterID){
-        this.numbers = numbers;
-        this.letterID = letterID;
+    /**
+     * Constructor
+     */
+    public Tile() {
+        tiles = new ArrayList<TileGroup>(108);
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
+        for (var letterID : letters){
+            for(int i=1; i<=12; i++ ){
+                TileGroup tileMake = new TileGroup(letterID,i);
+                tiles.add(tileMake);
+            }
+        }
     }
 
-    @Override
-    public String toString() {
-        return numbers + letterID;
+    public String toString(){
+        String sb ="";
+        for (var tileMake: tiles){
+            sb += tileMake.toString() + "\t";
+        }
+        return sb;
     }
 
     /**
-     * Getters and Setters
+     * Methods - size to get size of tiles, shuffle to shuffle through the tiles, and deal
+     * -tiles to the player(s)
+     *
      */
-    public int getNumbers() {
-        return numbers;
+    public int size(){return tiles.size();}
+    public void shuffle(){
+        Collections.shuffle(tiles);
     }
 
-    public String getLetterID() {
-        return letterID;
-    }
-    public void setNumbers(int number){
-        this.numbers = number;
-    }
-    public void setLetterID(String letterID){
-        this.letterID = letterID;
+    /**
+     * Deals the tile
+     * @return given tile is removed from the list
+     */
+    public TileGroup dealTile(){
+        if(tiles.size()> 0){
+            return tiles.remove(0);
+        }
+        return null;
     }
 }
