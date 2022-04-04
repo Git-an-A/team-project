@@ -46,7 +46,8 @@ public class GameBoard {
         return new ArrayList<Tile>();
     }
     public Corporation mergeCorp(Corporation corp1, Corporation corp2){
-        return new Corporation();
+
+        return null; //new corp
     }
     public boolean giveStocks(Stock stockname, int amount){
         return true;

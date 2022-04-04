@@ -25,15 +25,50 @@
 package team.project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Corporation {
     private ArrayList<Stock> stocks;
     private int price;
     private String name;
     private int size;
+    private boolean found = false;
+    private List<Stock> stockList;
+
+    public Corporation(String name, int price){
+        this.name = name;
+        this.price = price;
+    }
+
+    /**
+     * Gives the player a founded bonus
+     * @param playerName respective player who founded the corp
+     * @return returns true (probably should figure this out more)
+     */
+    public boolean founded(Player playerName){
+        this.found = true;
+        Stock stockBonus = getFreeStocks().get(0);
+        stockBonus.setPlayer(playerName);
+        stockList.set(stockBonus.getAmount(),stockBonus);
+        return true;
+    }
 
     public boolean giveStocks(Stock stockName, int amount){
+
         return true;
+    }
+
+    /**
+     * (Hopefully) gets the stocks that are not taken
+     * @return the list of free stocks
+     */
+    private List<Stock> getFreeStocks(){
+        List<Stock> freeStock = new ArrayList<>();
+        for(Stock stk : this.stockList){
+            if(stk.getName() == null){
+                freeStock.add(stk);
+            }
+        }return freeStock;
     }
     public boolean getStocks(Stock stockName, int amount){
         return true;
@@ -41,7 +76,27 @@ public class Corporation {
     public boolean giveBonus(Player player, int amount){
         return true;
     }
+
+    /**
+     * Check if the corporation is safe or not
+     * @return true if corporation is safe, false if it is less than 11
+     */
     public boolean isSafe(){
-        return true;
+        if(size >= 11){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Getters and Setters
+     */
+    public int getSize(){
+        return size;
+    }
+    public void setSize(int size){
+        this.size =  size;
     }
 }
+

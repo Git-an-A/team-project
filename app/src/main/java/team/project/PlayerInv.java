@@ -26,21 +26,24 @@ package team.project;
 
 import java.util.ArrayList;
 
-public class PlayerInv {
+public class PlayerInv{
     private ArrayList<Tile> tiles;
     private ArrayList<Stock> stocks;
     private int money;
 
-    public boolean getTile(Tile tile){
+    public boolean getTile(Tile tile) {
         return true;
     }
-    public boolean getStocks(Stock stockname, int amount){
+
+    public boolean getStocks(Stock stockName, int amount) {
         return true;
     }
-    public int getMoney(){
+
+    public int getMoney() {
         return 0;
     }
-    public int numTiles(){
+
+    public int numTiles() {
         return tiles.size();
     }
 }

@@ -24,28 +24,56 @@
 
 package team.project;
 
-public class Player {
-    int number;
+import java.util.ArrayDeque;
 
-    public Tile DrawTile(){
-        return new Tile();
+public class Player {
+    private ArrayDeque<TileGroup> playerTiles;
+
+    /**
+     * Tries to get the player's tiles
+     * @param playerName the respective player's turn
+     */
+    public Player(String playerName) {
+        playerTiles = new ArrayDeque<TileGroup>();
+
     }
-    public boolean buyStock(Stock stockName, int amount){
+
+    /**
+     * adds tile to player
+     *
+     * @param e gives them a tile
+     */
+    public void addTile(TileGroup e){playerTiles.addLast(e);}
+
+    public String toString(){
+        String sb= "";
+        for(var tile: playerTiles){
+            sb+= tile.toString() + "\t";
+        }
+        return sb;
+    }
+
+    public boolean buyStock(Stock stockName, int amount) {
         return true;
     }
-    public PlayerInv viewStocks(){
+
+    public PlayerInv viewStocks() {
         return new PlayerInv();
     }
-    public boolean tradeStocks(Stock stockName, int amount){
+
+    public boolean tradeStocks(Stock stockName, int amount) {
         return true;
     }
-    public boolean sellStocks(Stock stock, int amount){
+
+    public boolean sellStocks(Stock stock, int amount) {
         return true;
     }
-    public boolean discardDeadTile(Tile tile){
+
+    public boolean discardDeadTile(Tile tile) {
         return true;
     }
-    public GameOptions endGame(){
+
+    public GameOptions endGame() {
         return new GameOptions();
     }
 }

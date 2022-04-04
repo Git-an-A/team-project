@@ -24,28 +24,87 @@
 
 package team.project;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class GameOptions {
     private boolean hiddenAsset;
     private String filename;
 
     public GameOptions(){
-
     }
 
-    public boolean start (int numPlayers){
-        return true;
+    /**
+     * This creates, adds, and determines the amount of players in the game
+     *
+     * @param numPlayers number of players
+     */
+    public void start(int numPlayers) {
+        Tile newTiles = new Tile();
+        newTiles.shuffle();
+        newTiles.shuffle();
+
+        ArrayList<Player> players = new ArrayList<Player>(numPlayers);
+        for (int i = 1; i <= numPlayers; i++) {
+            String playerName = "Player" + i;
+            Player player = new Player(playerName);
+            players.add(player);
+            for(int j=0; j<6; j++){
+                player.addTile((newTiles.dealTile()));
+            }
+        }
     }
 
-    public boolean load (String filename){
-        return true;
-    }
-    public GameOptions readData(String filepath){
-        return new GameOptions();
-    }
-    public void saveDate(String file, GameOptions go){
+    /**
+     * Method that will load the game from the json file
+     *
+     * @param filename String of the filename
+     * @return getGame Game object that holds the game
+     */
+    public Game load(String filename){
+        Game getGame = null;
+        Gson gson = new Gson();
+        File loadFile = new File(filename);
 
+        try{
+            Scanner scan = new Scanner(loadFile);
+            while(scan.hasNextLine()){
+                getGame = gson.fromJson(scan.nextLine(),Game.class);
+            }
+            scan.close();
+        }catch (Exception e){}
+        return getGame;
     }
+
+//    public GameOptions readData(String filepath){
+//        return new GameOptions();
+//    }
+
+    /**
+     * Method that will save the current game
+     *
+     * @param file desired file location made by the player
+     * @param go the current state of the game
+     */
+    public void saveDate(String file, Game go){
+        Gson gson = new Gson();
+        try{
+            File filing = new File(file);
+            if(filing.exists()){
+                filing.delete();
+            }
+            FileWriter fileWrite = new FileWriter(file, true);
+            fileWrite.write(gson.toJson(go));
+            fileWrite.close();
+        }catch (Exception e){}
+    }
+
     public boolean Display(){
         return hiddenAsset;
     }
 }
+
