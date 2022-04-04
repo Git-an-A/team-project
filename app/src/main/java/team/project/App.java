@@ -107,32 +107,29 @@ public class App extends Application{
              */
              @Override
              public void handle(ActionEvent event) {
-                 Game game;
-                 if(loadGame.isArmed()){
-                     //load game from file
-                     game = new Game();
-                 }
-                 else{
-                     game = new Game();
-                 }
-
+//                 if(loadGame.isArmed()){
+//                     //load game from file
+//                     game = new Game();
+//                 }
+//                 else if(newGame.isArmed()){
+//                     game = new Game();
+//                 }
+                 Game finalGame = new Game();
                  stage.setOnHidden(new EventHandler<WindowEvent>() {
                      @Override
                      public void handle(WindowEvent event) {
                          try {
-                             MainUI mainUI = new MainUI(game);
+                             MainUI mainUI = new MainUI(finalGame);
                          } catch (Exception e) {
                              e.printStackTrace();
                          }
                      }
                  });
                  stage.hide();
+
+
              }
         });
-
-
-
-
 
         root.getChildren().add(newGame);
         root.getChildren().add(loadGame);
