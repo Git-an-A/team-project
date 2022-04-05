@@ -35,22 +35,32 @@ public class Corporation {
     private boolean found = false;
     private List<Stock> stockList;
 
+    private static final int[] stockPrices = new int[]{200,300,400,500,600,700};
+
     public Corporation(String name, int price){
         this.name = name;
         this.price = price;
     }
 
     /**
-     * Gives the player a founded bonus
-     * @param playerName respective player who founded the corp
-     * @return returns true (probably should figure this out more)
+     * Need something that will get the corporation's starting stock
      */
-    public boolean founded(Player playerName){
-        this.found = true;
-        Stock stockBonus = getFreeStocks().get(0);
-        stockBonus.setPlayer(playerName);
-        stockList.set(stockBonus.getAmount(),stockBonus);
-        return true;
+    private List<Stock> startingStock(){
+        List<Stock> startStock = new ArrayList<>();
+
+        return startStock;
+    }
+
+    /**
+     * Founds a corporation
+     * @param name is the player's name
+     * @param tilePlacement is how many tiles was played to make a corporation
+     * @param cost current value of the corporation
+     * @param companyName name of corporation
+     */
+    public void founded(Player name, int tilePlacement, int cost, String companyName){
+        Stock foundingCo = new Stock(companyName, 1, cost);
+
     }
 
     public boolean giveStocks(Stock stockName, int amount){
@@ -58,18 +68,19 @@ public class Corporation {
         return true;
     }
 
-    /**
-     * (Hopefully) gets the stocks that are not taken
-     * @return the list of free stocks
-     */
-    private List<Stock> getFreeStocks(){
-        List<Stock> freeStock = new ArrayList<>();
-        for(Stock stk : this.stockList){
-            if(stk.getName() == null){
-                freeStock.add(stk);
-            }
-        }return freeStock;
-    }
+//    /**
+//     * (Hopefully) gets the stocks that are not taken
+//     * @return the list of free stocks
+//     */
+//    private List<Stock> getFreeStocks(){
+//        List<Stock> freeStock = new ArrayList<>();
+//        for(Stock stk : this.stockList){
+//            if(stk.getName() == null){
+//                freeStock.add(stk);
+//            }
+//        }return freeStock;
+//    }
+
     public boolean getStocks(Stock stockName, int amount){
         return true;
     }
@@ -97,6 +108,18 @@ public class Corporation {
     }
     public void setSize(int size){
         this.size =  size;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
 

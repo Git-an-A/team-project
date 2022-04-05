@@ -57,15 +57,18 @@ public class Stock {
 
     public void setCost(int cost) {this.cost = cost;}
 
-    public Player getPlayer() {
-        return player;
-    }
+    /**
+     * Gets player
+     * @return current player
+     */
+    public Player getPlayer() {return player;}
 
     /**
-     * gets the player's cost of the stock
-     * @param cost cost
+     * gets the player's value of the stock
+     * @param cost Value of the stock owned by the player
      */
-    public void setPlayer(Player cost) {
+    public void setPlayerValue(Player cost) {
         this.player = cost;
     }
+
 }
