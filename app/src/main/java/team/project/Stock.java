@@ -36,10 +36,9 @@ public class Stock {
      * Constructor
      *
      * @param name Name of the corporation in which this stock is in
-     * @param amount Amount of stock this type is owned by
      * @param cost Cost/value of the stock
      */
-    public Stock(String name, int amount, int cost){
+    public Stock(String name, int cost){
         this.amount = amount;
         this.cost = cost;
         this.name = name;
