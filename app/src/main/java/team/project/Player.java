@@ -27,14 +27,14 @@ package team.project;
 import java.util.ArrayDeque;
 
 public class Player {
-    private ArrayDeque<TileGroup> playerTiles;
+    private ArrayDeque<Tile> playerTiles;
 
     /**
      * Tries to get the player's tiles
      * @param playerName the respective player's turn
      */
     public Player(String playerName) {
-        playerTiles = new ArrayDeque<TileGroup>();
+        playerTiles = new ArrayDeque<Tile>();
 
     }
 
@@ -43,7 +43,7 @@ public class Player {
      *
      * @param e gives them a tile
      */
-    public void addTile(TileGroup e){playerTiles.addLast(e);}
+    public void addTile(Tile e){playerTiles.addLast(e);}
 
     public String toString(){
         String sb= "";

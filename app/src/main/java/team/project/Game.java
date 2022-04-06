@@ -28,19 +28,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+    private static Game instance = null;
     private ArrayList<Player> players;
     private GameBoard gameBoard;
     private final int startMoney = 6000;
+    private GameOptions gameOptions;
 
+    private Game(){
+
+    }
     /**
      * Setting up game
      *
-     * @param go thing that makes it go
+     * @param gameOptions intitail game options determined at start of game
      * @param numPlayers how many players will play
      */
-    public void setUpGame(GameOptions go, int numPlayers) {
-        GameOptions getPlayers = new GameOptions();
-        getPlayers.start(numPlayers);
+    public void setUpGame(GameOptions gameOptions, int numPlayers) {
+        this.gameOptions = gameOptions;
+        gameOptions.start(numPlayers);
+    }
+
+    public static Game getInstance(){
+        if(instance == null){
+            instance = new Game();
+        }
+        return instance;
     }
 
     /**
@@ -61,6 +73,9 @@ public class Game {
         return hotelChains;
     }
 
+//    public void saveGame(){
+//        gameOptions.saveData();
+//    }
 
 
     public boolean nextTurn(Player player) {
@@ -91,6 +106,7 @@ public class Game {
         return new Stock();}
 
     public boolean playTile(Tile tile) {
+
         //MainUI.playTile();
         return true;
     }

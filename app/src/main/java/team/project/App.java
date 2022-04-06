@@ -114,12 +114,12 @@ public class App extends Application{
 //                 else if(newGame.isArmed()){
 //                     game = new Game();
 //                 }
-                 Game finalGame = new Game();
+                 Game finalGame = Game.getInstance();
                  stage.setOnHidden(new EventHandler<WindowEvent>() {
                      @Override
                      public void handle(WindowEvent event) {
                          try {
-                             MainUI mainUI = new MainUI(finalGame);
+                             MainUI mainUI = new MainUI();
                          } catch (Exception e) {
                              e.printStackTrace();
                          }

@@ -44,7 +44,7 @@ public class GameOptions {
      * @param numPlayers number of players
      */
     public void start(int numPlayers) {
-        Tile newTiles = new Tile();
+        Tiles newTiles = new Tiles();
         newTiles.shuffle();
         newTiles.shuffle();
 
@@ -88,9 +88,9 @@ public class GameOptions {
      * Method that will save the current game
      *
      * @param file desired file location made by the player
-     * @param go the current state of the game
+     * @param game the current state of the game
      */
-    public void saveDate(String file, Game go){
+    private void saveData(String file, Game game){
         Gson gson = new Gson();
         try{
             File filing = new File(file);
@@ -98,9 +98,14 @@ public class GameOptions {
                 filing.delete();
             }
             FileWriter fileWrite = new FileWriter(file, true);
-            fileWrite.write(gson.toJson(go));
+            fileWrite.write(gson.toJson(game));
             fileWrite.close();
         }catch (Exception e){}
+    }
+
+    public void saveDefault(){
+        String file = "save.txt";
+        saveData(file, Game.getInstance());
     }
 
     public boolean Display(){

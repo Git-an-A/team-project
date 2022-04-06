@@ -1,79 +1,35 @@
-/*
- * MIT License
- *
- * Copyright (c) 2022 Git-an-A
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package team.project;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * Java class for Tile
- */
-public class Tile{
-    private ArrayList<TileGroup> tiles;
-    private boolean isPlaced;
+@Getter
+@Setter
+public class Tile {
+    private String letterID;
+    private int numbers;
 
     /**
-     * Constructor
+     * Instance Variables
+     *
+     * @param lett is the letters of the tiles
+     * @param num is the numbers of the tiles
      */
-    public Tile() {
-        tiles = new ArrayList<TileGroup>(108);
-        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
-        for (var letterID : letters){
-            for(int i=1; i<=12; i++ ){
-                TileGroup tileMake = new TileGroup(letterID,i);
-                tiles.add(tileMake);
-            }
-        }
+    public Tile(String lett, int num){
+        this.letterID = lett;
+        this.numbers = num;
     }
 
-    public String toString(){
-        String sb ="";
-        for (var tileMake: tiles){
-            sb += tileMake.toString() + "\t";
-        }
+    public int getNumbers(){return numbers;}
+
+    public String getLetterID() {
+        return letterID;
+    }
+
+    @Override
+    public String toString() {
+        String sb = getLetterID() + getNumbers();
         return sb;
     }
 
-    /**
-     * Methods - size to get size of tiles, shuffle to shuffle through the tiles, and deal
-     * -tiles to the player(s)
-     *
-     */
-    public int size(){return tiles.size();}
-    public void shuffle(){
-        Collections.shuffle(tiles);
-    }
-
-    /**
-     * Deals the tile
-     * @return given tile is removed from the list
-     */
-    public TileGroup dealTile(){
-        if(tiles.size()> 0){
-            return tiles.remove(0);
-        }
-        return null;
-    }
 }

@@ -24,33 +24,55 @@
 
 package team.project;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
- * Creates and defines the tiles
+ * Java class for Tile
  */
-public class TileGroup {
-    private String letterID;
-    private int numbers;
+public class Tiles{
+    private ArrayList<Tile> tileList;
 
     /**
-     * Instance Variables
-     *
-     * @param lett is the letters of the tiles
-     * @param num is the numbers of the tiles
+     * Constructor
      */
-    public TileGroup(String lett, int num){
-        this.letterID = lett;
-        this.numbers = num;
+    public Tiles() {
+        tileList = new ArrayList<Tile>(108);
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
+        for (var letterID : letters){
+            for(int i=1; i<=12; i++ ){
+                Tile tileMake = new Tile(letterID,i);
+                tileList.add(tileMake);
+            }
+        }
     }
 
-    public int getNumbers(){return numbers;}
-
-    public String getLetterID() {
-        return letterID;
-    }
-
-    @Override
-    public String toString() {
-        String sb = getLetterID() + getNumbers();
+    public String toString(){
+        String sb ="";
+        for (var tileMake: tileList){
+            sb += tileMake.toString() + "\t";
+        }
         return sb;
+    }
+
+    /**
+     * Methods - size to get size of tiles, shuffle to shuffle through the tiles, and deal
+     * -tiles to the player(s)
+     *
+     */
+    public int size(){return tileList.size();}
+    public void shuffle(){
+        Collections.shuffle(tileList);
+    }
+
+    /**
+     * Deals the tile
+     * @return given tile is removed from the list
+     */
+    public Tile dealTile(){
+        if(tileList.size()> 0){
+            return tileList.remove(0);
+        }
+        return null;
     }
 }

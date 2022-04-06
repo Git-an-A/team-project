@@ -69,8 +69,8 @@ public class MainUI extends Application {
     private Label moneyLabel;
     //private
 
-    public MainUI(Game game) throws Exception {
-        this.game = game;
+    public MainUI() throws Exception {
+        game = Game.getInstance();
         root = new Group();
 
         int gridLength = 12;
@@ -274,7 +274,7 @@ public class MainUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 //replace with radio button selection
-                game.playTile(new Tile());
+                //game.playTile(new Tile());
             }
         });
         return button;
@@ -362,7 +362,6 @@ public class MainUI extends Application {
         GridPane gridPane = createLabGridpane(labAr, x, y);
         return gridPane;
     }
-
 
 
 

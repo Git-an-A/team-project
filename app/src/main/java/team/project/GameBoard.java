@@ -39,8 +39,6 @@ public class GameBoard {
     public GameBoard(){
         //initialize game board
 
-
-
     }
     public boolean placeCorp(Tile tile){
         return true;
