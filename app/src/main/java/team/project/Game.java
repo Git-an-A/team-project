@@ -61,6 +61,8 @@ public class Game {
         return hotelChains;
     }
 
+
+
     public boolean nextTurn(Player player) {
         return true;}
 
@@ -89,7 +91,9 @@ public class Game {
         return new Stock();}
 
     public boolean playTile(Tile tile) {
-        return true;}
+        //MainUI.playTile();
+        return true;
+    }
 
     public boolean tradeStocks(Stock stockName, int amount) {
         return true;}

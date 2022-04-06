@@ -52,6 +52,7 @@ public class MainUI extends Application {
     private Group root;
     private Label turnLabel;
     private GridPane buttonGrid;
+    Button[][] butAr;
     private Button menuButton;
     private GridPane infoTable;
     private Label yourTileLabel;
@@ -71,6 +72,12 @@ public class MainUI extends Application {
     public MainUI(Game game) throws Exception {
         this.game = game;
         root = new Group();
+
+        int gridLength = 12;
+        int gridHeight = 9;
+
+        butAr = new Button[gridLength][gridHeight];
+
         buttonGrid  = makeGridpane();
         turnLabel = makeTurnLabel();
         menuButton = makeMenuButton();
@@ -93,6 +100,14 @@ public class MainUI extends Application {
         start(new Stage());
 
     }
+    public void playTile(String color, int x, int y){
+        butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
+        //add different colors
+    }
+
+
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -168,7 +183,7 @@ public class MainUI extends Application {
         label.setFont(new Font("Arial", 20));
         return label;
     }
-    private GridPane createGridpane(Button[][] butAr, int x, int y){
+    private GridPane createGridpane(int x, int y){
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(x);
         gridPane.setLayoutY(y);
@@ -197,10 +212,7 @@ public class MainUI extends Application {
     private GridPane makeGridpane(){
         int x = 30;
         int y = 30;
-        int gridLength = 12;
-        int gridHeight = 9;
 
-        Button[][] butAr = new Button[gridLength][gridHeight];
         for(int i=0; i<12;i++){
             for(int j=0;j<9;j++){
                 char c = (char)(j+65);
@@ -213,7 +225,7 @@ public class MainUI extends Application {
                 butAr[i][j] = button;
             }
         }
-        GridPane gridPane = createGridpane(butAr, x, y);
+        GridPane gridPane = createGridpane(x, y);
         return gridPane;
     }
     private Label makeTurnLabel(){
@@ -350,4 +362,8 @@ public class MainUI extends Application {
         GridPane gridPane = createLabGridpane(labAr, x, y);
         return gridPane;
     }
+
+
+
+
 }

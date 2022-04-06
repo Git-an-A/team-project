@@ -32,9 +32,9 @@ public class GameBoard {
     private int corporationsPlaced;
     private int size;
     private int[][] board;
-    private String play = "PLAY";
-    private String exchange = "EXCHANGE";
-    private String draw = "DRAW";
+    private final String play = "PLAY";
+    private final String exchange = "EXCHANGE";
+    private final String draw = "DRAW";
     private String boardState;
     public GameBoard(){
         //initialize game board
@@ -55,7 +55,7 @@ public class GameBoard {
 
         return null; //new corp
     }
-    public boolean giveStocks(Stock stockname, int amount){
+    public boolean giveStocks(Stock stockName, int amount){
         return true;
     }
     public boolean takeStocks(Stock stockName, int amount){
@@ -66,5 +66,22 @@ public class GameBoard {
     }
     public boolean takeMoney(Player player, int amount){
         return true;
+    }
+
+    private void playState(){
+        setBoardState(play);
+
+    }
+    private void exchangeState(){
+        setBoardState(exchange);
+
+    }
+    private void drawState(){
+        setBoardState(draw);
+
+    }
+
+    public void setBoardState(String boardState) {
+        this.boardState = boardState;
     }
 }
