@@ -32,8 +32,14 @@ public class GameBoard {
     private int corporationsPlaced;
     private int size;
     private int[][] board;
-
+    private String play = "PLAY";
+    private String exchange = "EXCHANGE";
+    private String draw = "DRAW";
+    private String boardState;
     public GameBoard(){
+        //initialize game board
+
+
 
     }
     public boolean placeCorp(Tile tile){

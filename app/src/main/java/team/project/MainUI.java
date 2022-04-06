@@ -50,11 +50,48 @@ public class MainUI extends Application {
 
     private Game game;
     private Group root;
+    private Label turnLabel;
+    private GridPane buttonGrid;
+    private Button menuButton;
+    private GridPane infoTable;
+    private Label yourTileLabel;
+    private RadioButton tileRB1;
+    private RadioButton tileRB2;
+    private RadioButton tileRB3;
+    private RadioButton tileRB4;
+    private RadioButton tileRB5;
+    private RadioButton tileRB6;
+    private Button playTileButton;
+    private Label yourSharesLabel;
+    private GridPane sharesTable;
+    private Label moneyAvailableLabel;
+    private Label moneyLabel;
+    //private
 
     public MainUI(Game game) throws Exception {
         this.game = game;
         root = new Group();
+        buttonGrid  = makeGridpane();
+        turnLabel = makeTurnLabel();
+        menuButton = makeMenuButton();
+        infoTable = makeInfoTable();
+        yourTileLabel = makeYourTileLabel();
+        int yDistRB = 25;
+        final ToggleGroup toggleGroup = new ToggleGroup();
+        tileRB1 = makeTileRadioButtons(toggleGroup, yDistRB, 0);
+        tileRB2 = makeTileRadioButtons(toggleGroup, yDistRB, 1);
+        tileRB3 = makeTileRadioButtons(toggleGroup, yDistRB, 2);
+        tileRB4 = makeTileRadioButtons(toggleGroup, yDistRB, 3);
+        tileRB5 = makeTileRadioButtons(toggleGroup, yDistRB, 4);
+        tileRB6 = makeTileRadioButtons(toggleGroup, yDistRB, 5);
+        playTileButton = makePlayTileButton();
+        yourSharesLabel = makeYourSharesLabel();
+        sharesTable = makeSharesTable();
+        moneyAvailableLabel = makeMoneyAvailableLabel();
+        moneyLabel = makeMoneyLabel();
+
         start(new Stage());
+
     }
 
     @Override
@@ -65,42 +102,29 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 1260, 630);
         scene.setFill(Color.DARKGRAY);
 
-        final ToggleGroup toggleGroup = new ToggleGroup();
-
         Label title = new Label();
 
-
-
-        //grid pane tile
-        root.getChildren().add(makeGridpane());
+        root.getChildren().add(buttonGrid);
         //tabs bottom left
 
-        //turn label
-        root.getChildren().add(makeTurnLabel());
-        //menu button
-        root.getChildren().add(makeMenuButton());
-        //info table / label
-        root.getChildren().add(makeInfoTable());
-        //Your tiles label
-        root.getChildren().add(makeYourTileLabel());
-        //tile radio buttons (6)
-        int yDistRB = 25;
-        for(int i=0;i<6;i++){
-            root.getChildren().add(makeTileRadioButtons(toggleGroup, yDistRB, i));
-        }
-        //play tile button
-        root.getChildren().add(makePlayTileButton());
-        //your shares label
-        root.getChildren().add(makeYourSharesLabel());
-        //shares tabel (6 row, 2 collumn)
-        root.getChildren().add(makeSharesTable());
-        //money available label
-        root.getChildren().add(makeMoneyAvailableLabel());
-        //money avalable label
-        root.getChildren().add(makeMoneyLabel());
+        root.getChildren().add(turnLabel);
+        root.getChildren().add(menuButton);
+        root.getChildren().add(infoTable);
+        root.getChildren().add(tileRB1);
+        root.getChildren().add(tileRB2);
+        root.getChildren().add(tileRB3);
+        root.getChildren().add(tileRB4);
+        root.getChildren().add(tileRB5);
+        root.getChildren().add(tileRB6);
+        root.getChildren().add(playTileButton);
+        root.getChildren().add(yourTileLabel);
+        root.getChildren().add(sharesTable);
+        root.getChildren().add(moneyAvailableLabel);
+        root.getChildren().add(moneyLabel);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
+
 
         stage.setResizable(false);
         stage.setScene(scene);

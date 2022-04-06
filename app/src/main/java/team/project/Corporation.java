@@ -38,6 +38,13 @@ public class Corporation {
     private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
     private static final int[] majorShare = new int[]{2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000};
 
+    /*
+    for price:
+    create a get price method
+    create a price style instance variable
+    initialize price style in constructor
+    in get price call the array of prices that matches the style that was instantiated
+     */
 
     /**
      * Constructor and sets up the two stock lists (owned and free)
