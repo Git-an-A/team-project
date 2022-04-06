@@ -36,10 +36,9 @@ public class Stock {
      * Constructor
      *
      * @param name Name of the corporation in which this stock is in
-     * @param amount Amount of stock this type is owned by
      * @param cost Cost/value of the stock
      */
-    public Stock(String name, int amount, int cost){
+    public Stock(String name, int cost){
         this.amount = amount;
         this.cost = cost;
         this.name = name;
@@ -57,15 +56,18 @@ public class Stock {
 
     public void setCost(int cost) {this.cost = cost;}
 
-    public Player getPlayer() {
-        return player;
-    }
+    /**
+     * Gets player
+     * @return current player
+     */
+    public Player getPlayer() {return player;}
 
     /**
-     * gets the player's cost of the stock
-     * @param cost cost
+     * gets the player's value of the stock
+     * @param cost Value of the stock owned by the player
      */
-    public void setPlayer(Player cost) {
+    public void setPlayerValue(Player cost) {
         this.player = cost;
     }
+
 }

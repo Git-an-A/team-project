@@ -28,54 +28,126 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Corporation {
-    private ArrayList<Stock> stocks;
+    private List<Tile> playTiles;
     private int price;
     private String name;
     private int size;
-    private boolean found = false;
-    private List<Stock> stockList;
+    private List<Stock> ownStock;
+    private List<Stock> freeStock;
 
+    private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
+    private static final int[] majorShare = new int[]{2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000};
+
+
+    /**
+     * Constructor and sets up the two stock lists (owned and free)
+     * @param name Name of the corporation
+     * @param price value of the corporation
+     */
     public Corporation(String name, int price){
         this.name = name;
         this.price = price;
+        this.freeStock = startingStock();
+        this.ownStock = new ArrayList<>();
     }
 
     /**
-     * Gives the player a founded bonus
-     * @param playerName respective player who founded the corp
-     * @return returns true (probably should figure this out more)
+     * Starting stock for the corporation
+     * @return the 25 stocks that are given for a corporation
      */
-    public boolean founded(Player playerName){
-        this.found = true;
-        Stock stockBonus = getFreeStocks().get(0);
-        stockBonus.setPlayer(playerName);
-        stockList.set(stockBonus.getAmount(),stockBonus);
-        return true;
-    }
-
-    public boolean giveStocks(Stock stockName, int amount){
-
-        return true;
+    private List<Stock> startingStock(){
+        List<Stock> startStock = new ArrayList<>();
+        for(int i=0; i<25; i++){
+            startStock.add(new Stock(name, price));
+        }
+        return startStock;
     }
 
     /**
-     * (Hopefully) gets the stocks that are not taken
-     * @return the list of free stocks
+     * Founds a corporation
+     * @param name is the player's name
+     * @param tilePlacement is how many tiles was played to make a corporation
+     * @param cost current value of the corporation
+     * @param companyName name of corporation that was chosen
      */
-    private List<Stock> getFreeStocks(){
-        List<Stock> freeStock = new ArrayList<>();
-        for(Stock stk : this.stockList){
-            if(stk.getName() == null){
-                freeStock.add(stk);
-            }
-        }return freeStock;
+    public void founded(Player name, int tilePlacement, int cost, String companyName){
+        Stock foundingCo = new Stock(companyName, cost);
+
     }
-    public boolean getStocks(Stock stockName, int amount){
+
+    /**
+     * Gives player a stock
+     * @param playerName player that receives it
+     */
+    public void giveStocks(Player playerName){
+        Stock availableStock = freeStock.get(0);
+        freeStock.remove(availableStock);
+        ownStock.add(availableStock);
+
+        //something that gives player the stock
+
+    }
+
+    /**
+     * When the player sells a stock
+     *
+     * @param playerName player who sold it
+     */
+    public void buyStock(Player playerName){
+        removeStock(playerName);
+        //something that takes money from player
+    }
+
+    /**
+     * When the player buys a stock
+     * @param playerName player who bought it
+     */
+    public void sellStock(Player playerName){
+        giveStocks(playerName);
+        //something that changes player's money
+    }
+
+    /**
+     * removes stock from player
+     *
+      * @param playerName player who lost it
+     */
+    public void removeStock(Player playerName){
+        Stock stock = null; // null for now
+//        Something that can check for the stocks from player
+
+        ownStock.remove(stock);
+        freeStock.add(stock);
+
+        //something that takes stock from player
+
+    }
+
+    /**
+     * This figures out the current value of the stocks and Corporations
+     *
+     *  @return the value of the stock
+     */
+    public int calculateStockValue(){
+        int size = playTiles.size();
+
+        return size;
+    }
+
+    /**
+     * Trades stocks from corporation
+     * @param player
+     */
+    public void tradeStocks(Player player){
+
+    }
+
+
+    public boolean giveMajorBonus(Player player){
         return true;
     }
-    public boolean giveBonus(Player player, int amount){
-        return true;
-    }
+
+    public boolean giveMinorBonus(Player player){return true;}
 
     /**
      * Check if the corporation is safe or not
@@ -91,12 +163,37 @@ public class Corporation {
 
     /**
      * Getters and Setters
+     * Price is the cost/value of the Corporation
      */
     public int getSize(){
         return size;
     }
     public void setSize(int size){
         this.size =  size;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void addTile(Tile tiles){
+        playTiles.add(tiles);
+    }
+
+    public int getFreeStock() {
+        return freeStock.size();
+    }
+
+    public int getOwnStock() {
+        return ownStock.size();
     }
 }
 
