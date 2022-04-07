@@ -25,10 +25,9 @@
 package team.project;
 
 public class Stock {
-    public String name;
-    public int amount;
-    public int cost;
-    private Player player = null;
+    private String name;
+    private int value;
+    private int cost;
 
     public Stock(){};
 
@@ -36,38 +35,23 @@ public class Stock {
      * Constructor
      *
      * @param name Name of the corporation in which this stock is in
-     * @param cost Cost/value of the stock
      */
-    public Stock(String name, int cost){
-        this.amount = amount;
-        this.cost = cost;
+    public Stock(String name){
         this.name = name;
     }
     /**
      * Public and Setters
      */
-    public int getAmount() {return amount;}
     public String getName() {return name;}
     public int getCost(){return cost;}
+    public int getValue(){return value;}
 
     public void setName(String name) {this.name = name;}
 
-    public void setAmount(int amount) {this.amount = amount;}
 
     public void setCost(int cost) {this.cost = cost;}
+    public void setValue(int value){this.value = value;}
 
-    /**
-     * Gets player
-     * @return current player
-     */
-    public Player getPlayer() {return player;}
 
-    /**
-     * gets the player's value of the stock
-     * @param cost Value of the stock owned by the player
-     */
-    public void setPlayerValue(Player cost) {
-        this.player = cost;
-    }
 
 }

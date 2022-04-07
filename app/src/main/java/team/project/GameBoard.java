@@ -27,11 +27,14 @@ package team.project;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class GameBoard {
     private Tiles tiles;
     private int corporationsPlaced;
     private int size;
+    List<Stack<Stock>> corps;
     private int[][] board;
     private final String play = "PLAY";
     private final String exchange = "EXCHANGE";
@@ -43,6 +46,11 @@ public class GameBoard {
         for(int i=0;i<10;i++){
             tiles.shuffle();
         }
+        corps = new ArrayList<Stack<Stock>>();
+        for(int i=0;i<8;i++){
+            corps.add(new Stack<Stock>());
+        }
+
         boardState = play;
     }
     public boolean placeCorp(Tile tile){

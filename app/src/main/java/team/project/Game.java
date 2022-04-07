@@ -26,16 +26,14 @@ package team.project;
 
 import javafx.stage.Stage;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Facade for the acquire game backend
  * @author Baylor McElroy
  */
 public class Game {
+    private Stack<Tile> playedTiles;
     private static Game instance = null;
     private Queue<Player> players;
     private Player currentPlayer;
@@ -43,8 +41,10 @@ public class Game {
     private final int startMoney = 6000;
     private GameOptions gameOptions;
     private MainUI mainUI;
-    private Game(){
+    private List<Corporation> corporationList;
 
+    private Game(){
+        corporationList = createCorporationList();
     }
     /**
      * Sets up game with specified game options
@@ -125,15 +125,15 @@ public class Game {
      * @return the list of the 7 corporation
      * Needs more work
      */
-    private List<Corporation> corporationList(){
+    private List<Corporation> createCorporationList(){
         List<Corporation> hotelChains = new ArrayList<>();
-        hotelChains.add(new Corporation("Worldwide", 1));
-        hotelChains.add(new Corporation("Sackson", 2));
-        hotelChains.add(new Corporation("Festival", 3));
-        hotelChains.add(new Corporation("Imperial", 4));
-        hotelChains.add(new Corporation("American", 5));
-        hotelChains.add(new Corporation("Continental", 6));
-        hotelChains.add(new Corporation("Tower", 7));
+        hotelChains.add(new Corporation("Worldwide", 1, 1));
+        hotelChains.add(new Corporation("Sackson", 2, 2));
+        hotelChains.add(new Corporation("Festival", 3, 3));
+        hotelChains.add(new Corporation("Imperial", 4, 4));
+        hotelChains.add(new Corporation("American", 5, 5));
+        hotelChains.add(new Corporation("Continental", 6, 6));
+        hotelChains.add(new Corporation("Tower", 7, 7));
 
         return hotelChains;
     }
@@ -220,6 +220,7 @@ public class Game {
      */
     public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
+        playedTiles.add(tile);
         mainUI.playTile(tile);
         //add tile to corporation
     }
@@ -229,6 +230,10 @@ public class Game {
 
     public boolean sellStocks(Stock stockName, int amount) {
         return true;}
+
+    public Tile getLastTile(){
+        return playedTiles.peek();
+    }
 
     public void endGame() {}
 }

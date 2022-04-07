@@ -25,6 +25,8 @@
 package team.project;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Player in the game. Each player has money stocks and tiles
@@ -34,7 +36,17 @@ import java.util.ArrayDeque;
 public class Player {
     private Tile[] playerTiles;
     private String name;
-
+    private ArrayList<Corporation> founded;
+    private ArrayList<Stack<Stock>> corps;
+    private Stack<Stock> corp1;
+    private Stack<Stock> corp2;
+    private Stack<Stock> corp3;
+    private Stack<Stock> corp4;
+    private Stack<Stock> corp5;
+    private Stack<Stock> corp6;
+    private Stack<Stock> corp7;
+    private Stack<Stock> corp8;
+    private int money;
     /**
      * Constructor requires name
      *
@@ -44,6 +56,9 @@ public class Player {
     public Player(String name) {
         playerTiles = new Tile[6];
         this.name = name;
+        for(int i=0;i<8;i++){
+            corps.add(new Stack<Stock>());
+        }
     }
 
     /**
@@ -117,13 +132,19 @@ public class Player {
      * @author Tori Weir
      */
     public void printTiles(){
-
         for(var tile: playerTiles){
             System.out.println(tile.toString() + "\t");
         }
     }
-    public boolean buyStock(Stock stockName, int amount) {
-        return true;
+    public void buyStock(Corporation corporation, int cost, int value) {
+        //remove stock to corporation stack
+        int number = corporation.getNumber();
+        Stack<Stock> tempStack = corps.get(number);
+        tempStack.add(corporation.giveStock(this));
+        corps.set(number, tempStack);
+
+        //substract price if necessary
+
     }
 
     public PlayerInv viewStocks() {
@@ -144,5 +165,15 @@ public class Player {
 
     public GameOptions endGame() {
         return new GameOptions();
+    }
+
+    public void addFounded(Corporation corporation){
+        founded.add(corporation);
+    }
+    public void takeMoney(int amount){
+        money = money - amount;
+    }
+    public void giveMoney(int amount){
+        money = money + amount;
     }
 }
