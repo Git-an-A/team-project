@@ -44,11 +44,24 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Main class of applictaion, contains start window
+ * @author Baylor McElroy
+ */
 public class App extends Application{
-
+    /**
+     * main method
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         Application.launch(args);
     }
+
+    /**
+     * Start menu
+     * @param stage stage to display start menu
+     * @throws Exception UI exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -101,10 +114,7 @@ public class App extends Application{
         title.setFont(new Font("Arial", 32));
 
         start.setOnAction(new EventHandler<ActionEvent>() {
-            /**
-             *
-             * @param event
-             */
+
              @Override
              public void handle(ActionEvent event) {
 //                 if(loadGame.isArmed()){

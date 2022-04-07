@@ -46,6 +46,10 @@ import java.lang.management.ClassLoadingMXBean;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The main User interface for the board of the game.
+ * @author Baylor McElroy
+ */
 public class MainUI extends Application {
 
     private Game game;
@@ -70,7 +74,10 @@ public class MainUI extends Application {
     private Button next;
     final ToggleGroup toggleGroup = new ToggleGroup();
 
-
+    /**
+     * Adds all controls to UI
+     * @throws Exception for UI exception
+     */
     public MainUI() throws Exception {
         System.out.println("MainUI.java MainUI() top");
         game = Game.getInstance();
@@ -116,6 +123,9 @@ public class MainUI extends Application {
 
     }
 
+    /**
+     * Moves game to next phase
+     */
     private void nextPhase(){
         System.out.println("MainUI.java nextPhase()");
 
@@ -134,6 +144,9 @@ public class MainUI extends Application {
         }
     }
 
+    /**
+     * moves turn to next Player
+     */
     public void nextTurn(){
         System.out.println("MainUI.java nextTurn() top");
         game.nextTurn();
@@ -148,6 +161,11 @@ public class MainUI extends Application {
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
 
+    /**
+     * Shows stage
+     * @param stage new stage to show
+     * @throws Exception UI exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -196,6 +214,10 @@ public class MainUI extends Application {
         System.out.println("MainUI.java start() bottom");
 
     }
+
+    /**
+     * Displays menu.
+     */
     private void dispMenu(){
         Stage disp = new Stage();
         disp.setTitle("Courses");
@@ -211,6 +233,14 @@ public class MainUI extends Application {
         System.out.println("MainUI.java dispMenu()");
 
     }
+
+    /**
+     * Creates a button on location with specified text.
+     * @param text text displayed by button
+     * @param x absolut x location of button
+     * @param y absolute y location of button
+     * @return created button
+     */
     private Button createButton(String text, int x, int y){
         Button button = new Button();
         button.setText(text);
@@ -218,6 +248,14 @@ public class MainUI extends Application {
         button.setLayoutY(y);
         return button;
     }
+
+    /**
+     * Creates radio button at location with specified text.
+     * @param text to be displayed on radio button
+     * @param x absolute x location
+     * @param y absoulte y location
+     * @return created radio button
+     */
     private RadioButton createRadioButton(String text, int x, int y){
         RadioButton Rbutton = new RadioButton();
         Rbutton.setText(text);
@@ -225,6 +263,15 @@ public class MainUI extends Application {
         Rbutton.setLayoutY(y);
         return Rbutton;
     }
+
+    /**
+     * creates label with specified text location and text size
+     * @param text text displayed but label
+     * @param x absolute x location
+     * @param y absolute y location
+     * @param fontSize text size of label
+     * @return created label
+     */
     private Label createLabel(String text, int x, int y, int fontSize){
         Label label = new Label();
         label.setText(text);
@@ -233,6 +280,13 @@ public class MainUI extends Application {
         label.setFont(new Font("Arial", 20));
         return label;
     }
+
+    /**
+     * Creates button gridpane representing tiles
+     * @param x absolute x location of top corner of grid
+     * @param y abosulte y location of top corner of grid
+     * @return grid pane of buttons
+     */
     private GridPane createGridpane(int x, int y){
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(x);
@@ -246,6 +300,14 @@ public class MainUI extends Application {
         }
         return gridPane;
     }
+
+    /**
+     * creates label grid pane to mimic tables
+     * @param labAr array of labels in gridpane to be added
+     * @param x absolute x location of top corner of grid
+     * @param y abosulte y location of top corner of grid
+     * @return grid pane of labels
+     */
     private GridPane createLabGridpane(Label[][] labAr, int x, int y){
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(x);
@@ -259,6 +321,11 @@ public class MainUI extends Application {
         }
         return gridPane;
     }
+
+    /**
+     * makes button gridpane
+     * @return gridpane
+     */
     private GridPane makeGridpane(){
         int x = 30;
         int y = 30;
@@ -278,6 +345,11 @@ public class MainUI extends Application {
         GridPane gridPane = createGridpane(x, y);
         return gridPane;
     }
+
+    /**
+     * makes label depicting turn
+     * @return constructed label
+     */
     private Label makeTurnLabel(){
         int x = 800;
         int y = 60;
@@ -286,6 +358,11 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
+
+    /**
+     * makes menu button
+     * @return constructed button
+     */
     private Button makeMenuButton(){
         int x = 1160;
         int y = 60;
@@ -299,6 +376,11 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+    /**
+     * make label that says "Your tiles"
+     * @return constructed label
+     */
     private Label makeYourTileLabel(){
         int x = 800;
         int y = 400;
@@ -307,6 +389,14 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
+
+    /**
+     * makes radio button representing selected tile to be played
+     * @param toggleGroup toggle group of radio button
+     * @param yDist distance between radio buttons
+     * @param numRB number of radio button
+     * @return constructed radio button
+     */
     private RadioButton makeTileRadioButtons(ToggleGroup toggleGroup, int yDist, int numRB){
         int x = 815;
         int y = 445 + yDist * numRB;
@@ -315,6 +405,11 @@ public class MainUI extends Application {
         radioButton.setToggleGroup(toggleGroup);
         return radioButton;
     }
+
+    /**
+     * make play tile button that plays tile on selected radio button
+     * @return constructed button
+     */
     private Button makePlayTileButton(){
         int x = 784;
         int y = 600;
@@ -359,6 +454,11 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+    /**
+     * makes label that says "your shares"
+     * @return constructed label
+     */
     private Label makeYourSharesLabel(){
         int x = 960;
         int y = 400;
@@ -367,6 +467,11 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
+
+    /**
+     * make label that says "money available"
+     * @return constructed label
+     */
     private Label makeMoneyAvailableLabel(){
         int x = 1115;
         int y = 400;
@@ -375,6 +480,11 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
+
+    /**
+     * makes label depicting money a player has
+     * @return constructed label
+     */
     private Label makeMoneyLabel(){
         int x = 1115;
         int y = 450;
@@ -383,6 +493,11 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
+
+    /**
+     *  makes gridpane for info table on top right
+     * @return constructed gridpane
+     */
     private GridPane makeInfoTable(){
         int x = 700;
         int y = 100;
@@ -412,6 +527,10 @@ public class MainUI extends Application {
         return gridPane;
     }
 
+    /**
+     * makes table showing shares in a players inventory
+     * @return constructed gridpane
+     */
     private GridPane makeSharesTable(){
         int x = 920;
         int y = 430;
@@ -443,6 +562,10 @@ public class MainUI extends Application {
         return gridPane;
     }
 
+    /**
+     * makes button to move to next phase of turn
+     * @return constructed button
+     */
     private Button makeNextButton(){
         int x = 1125;
         int y = 540;
@@ -452,6 +575,8 @@ public class MainUI extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //change text when pressed to depict state
+                //fix states changing on their own
                 nextPhase();
             }
         });

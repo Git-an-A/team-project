@@ -53,9 +53,8 @@ public class GameOptions extends Application {
     }
 
     /**
-     * This creates, adds, and determines the amount of players in the game
-     *
-     *
+     * This creates, adds, and determines the game options
+     * @author Baylor McElroy
      */
     @Override
     public void start(Stage stage) {
@@ -128,6 +127,7 @@ public class GameOptions extends Application {
      *
      * @param filename String of the filename
      * @return getGame Game object that holds the game
+     * @author Tori Weir
      */
     public Game load(String filename){
         Game getGame = null;
@@ -153,6 +153,7 @@ public class GameOptions extends Application {
      *
      * @param file desired file location made by the player
      * @param game the current state of the game
+     * @author Tori Weir
      */
     private void saveData(String file, Game game){
         Gson gson = new Gson();

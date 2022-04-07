@@ -26,13 +26,20 @@ package team.project;
 
 import java.util.ArrayDeque;
 
+/**
+ * Player in the game. Each player has money stocks and tiles
+ *
+ *
+ */
 public class Player {
     private Tile[] playerTiles;
     private String name;
 
     /**
-     * Tries to get the player's tiles
+     * Constructor requires name
+     *
      * @param name the respective player's turn
+     * @author Baylor McElroy
      */
     public Player(String name) {
         playerTiles = new Tile[6];
@@ -40,9 +47,10 @@ public class Player {
     }
 
     /**
-     * adds tile to player
+     * Adds a fresh tile to array of tiles owned by player
      *
      * @param tile gives them a tile
+     * @author Baylor McElroy
      */
     public void addTile(Tile tile){
         System.out.println("Player.java addTile() top");
@@ -57,23 +65,56 @@ public class Player {
 
     }
 
+    /**
+     * Removes tile from tiles player owns
+     *
+     * @param i position in array of tiles
+     * @return tile removed
+     * @author Baylor McElroy
+     */
     public Tile removeTile(int i){
         Tile tempTile = playerTiles[i];
         playerTiles[i] = null;
         return tempTile;
     }
+
+    /**
+     * String representation of object
+     *
+     * @return toString of Player (name for now)
+     * @author Baylor McElroy
+     */
     public String toString(){
         String sb = name;
         return sb;
     }
 
+    /**
+     * Gets a tile from the tiles owned by player
+     *
+     * @param i place of tile in array of tiles held by player
+     * @return Tile of that given place
+     * @author Baylor McElroy
+     */
     public Tile getTile(int i){
         return playerTiles[i];
     }
 
+    /**
+     * Returns name of player
+     *
+     * @return player name
+     * @author Baylor McElroy
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Prints all tiles held by player
+     *
+     * @author Baylor McElroy
+     */
     public void printTiles(){
 
         for(var tile: playerTiles){

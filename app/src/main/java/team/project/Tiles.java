@@ -30,6 +30,7 @@ import java.util.Stack;
 
 /**
  * Java class for Tile
+ * @author Tori Weir
  */
 public class Tiles{
     private Stack<Tile> tileList;

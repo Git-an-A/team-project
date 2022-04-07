@@ -71,6 +71,10 @@ public class GameBoard {
         return true;
     }
 
+    /**
+     * moves board to next phase of turn
+     * @author Baylor McELroy
+     */
     public void nextState(){
         switch (boardState){
             case play : {

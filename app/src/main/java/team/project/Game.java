@@ -31,6 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Facade for the acquire game backend
+ * @author Baylor McElroy
+ */
 public class Game {
     private static Game instance = null;
     private Queue<Player> players;
@@ -43,16 +47,23 @@ public class Game {
 
     }
     /**
-     * Setting up game
+     * Sets up game with specified game options
      *
      * @param gameOptions intitail game options determined at start of game
      * @param mainUI UI of game
+     * @author Baylor McElroy
      */
     public void setUpGame(GameOptions gameOptions, MainUI mainUI) throws Exception {
         this.gameOptions = gameOptions;
         gameOptions.start(new Stage());
         this.mainUI = mainUI;
     }
+
+    /**
+     * Starts game and distributes necessary resources
+     * @author Baylor McElroy
+     * @author Tori Weir
+     */
     public void startGame(){
         System.out.println("Game.java startGame() top");
 
@@ -96,6 +107,12 @@ public class Game {
         System.out.println("Game.java startGame() bottom");
 
     }
+
+    /**
+     * returns singleton instance of game
+     * @return instance of Game
+     * @author Baylor McElroy
+     */
     public static Game getInstance(){
         if(instance == null){
             instance = new Game();
@@ -121,25 +138,49 @@ public class Game {
         return hotelChains;
     }
 
+    /**
+     * saves current game state
+     * @author Baylor McElroy
+     */
     public void saveGame(){
         gameOptions.saveDefault();
     }
+
+    /**
+     * sets the current players of the game. Called once at start of game.
+     * @param players instantiated players starting the game
+     * @author Baylor McElroy
+     */
     public void setPlayers(ArrayDeque<Player> players){
         this.players = players;
     }
     public int getNumPlayers(){
         return players.size();
     }
+
+    /**
+     *  get player whose turn it currently is
+     * @return current player
+     */
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
     public String getGameState(){
         return gameBoard.getBoardState();
     }
+
+    /**
+     * moves game to next phase of turn
+     * @author Baylor McElroy
+     */
     public void nextState(){
         gameBoard.nextState();
     }
 
+    /**
+     * makes it the next players turn
+     * @author Baylor McElroy
+     */
     public void nextTurn() {
         players.add(currentPlayer);
         currentPlayer  = players.poll();
@@ -170,11 +211,16 @@ public class Game {
     public Stock viewStocks(Stock stock) {
         return new Stock();}
 
-    public boolean playTile(Tile tile) {
+    /**
+     * Plays tile specified by UI then marks it on UI
+     * @param tile
+     * @return
+     * @author Baylor McElroy
+     */
+    public void  playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
         mainUI.playTile(tile);
         //add tile to corporation
-        return true;
     }
 
     public boolean tradeStocks(Stock stockName, int amount) {
