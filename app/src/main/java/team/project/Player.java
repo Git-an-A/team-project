@@ -56,9 +56,9 @@ public class Player {
         System.out.println("Player.java addTile() top");
         for(int i=0;i<6;i++){
             if(playerTiles[i]==null){
-                System.out.println("Player tiles pre " + playerTiles[i] + " location " + i);
+//                System.out.println("Player tiles pre " + playerTiles[i] + " location " + i);
                 playerTiles[i] = tile;
-                System.out.println("Player tiles post " + playerTiles[i]+ " location " + i);
+//                System.out.println("Player tiles post " + playerTiles[i]+ " location " + i);
                 break;
             }
         }
@@ -114,6 +114,7 @@ public class Player {
      * Prints all tiles held by player
      *
      * @author Baylor McElroy
+     * @author Tori Weir
      */
     public void printTiles(){
 

@@ -102,7 +102,7 @@ public class MainUI extends Application {
         tileRB4 = makeTileRadioButtons(toggleGroup, yDistRB, 3);
         tileRB5 = makeTileRadioButtons(toggleGroup, yDistRB, 4);
         tileRB6 = makeTileRadioButtons(toggleGroup, yDistRB, 5);
-        playTileButton = makePlayTileButton();
+        //playTileButton = makePlayTileButton();
         yourSharesLabel = makeYourSharesLabel();
         sharesTable = makeSharesTable();
         moneyAvailableLabel = makeMoneyAvailableLabel();
@@ -127,20 +127,56 @@ public class MainUI extends Application {
      * Moves game to next phase
      */
     private void nextPhase(){
-        System.out.println("MainUI.java nextPhase()");
-
-        switch (game.getGameState()){
-            case "PLAY" : {
+        System.out.println("MainUI.java nextPhase() top");
+        String gameState = game.getGameState();
+        System.out.println(gameState);
+        switch (gameState){
+            case "PLAY" -> {
                 System.out.println("UI State: PLAY");
+                Tile tile = null;
+                Player tempPlayer = game.getCurrentPlayer();
+                if(toggleGroup.getSelectedToggle() == tileRB1){
+                    tile = tempPlayer.removeTile(0);
+                    System.out.println("0 tile played by " + tempPlayer);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(1);
+                    System.out.println("1 tile played by " + tempPlayer);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB3){
+                    tile = tempPlayer.removeTile(2);
+                    System.out.println("2 tile played by " + tempPlayer);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB4){
+                    tile = tempPlayer.removeTile(3);
+                    System.out.println("3 tile played by " + tempPlayer);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB5){
+                    tile = tempPlayer.removeTile(4);
+                    System.out.println("4 tile played by " + tempPlayer);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB6){
+                    tile = tempPlayer.removeTile(5);
+                    System.out.println("5 tile played by " + tempPlayer);
+                }
+
+                if(tile!=null){
+                    System.out.println(tile.toString());
+                    game.playTile(tile);
+                }
+                game.nextState();
+                System.out.println("MainUi.java end switch play:");
+                System.out.println(gameState);
             }
-            case "EXCHANGE" : {
+            case "EXCHANGE" -> {
                 System.out.println("UI State: EXCHANGE");
                 game.nextState();
             }
-            case "DRAW" : {
+            case "DRAW" -> {
                 game.nextState();
                 System.out.println("UI State: DRAW");
-                nextTurn();}
+                nextTurn();
+            }
         }
     }
 
@@ -196,7 +232,7 @@ public class MainUI extends Application {
         root.getChildren().add(tileRB4);
         root.getChildren().add(tileRB5);
         root.getChildren().add(tileRB6);
-        root.getChildren().add(playTileButton);
+        //root.getChildren().add(playTileButton);
         root.getChildren().add(yourTileLabel);
         root.getChildren().add(sharesTable);
         root.getChildren().add(moneyAvailableLabel);
@@ -214,7 +250,6 @@ public class MainUI extends Application {
         System.out.println("MainUI.java start() bottom");
 
     }
-
     /**
      * Displays menu.
      */
@@ -233,7 +268,6 @@ public class MainUI extends Application {
         System.out.println("MainUI.java dispMenu()");
 
     }
-
     /**
      * Creates a button on location with specified text.
      * @param text text displayed by button
@@ -248,7 +282,6 @@ public class MainUI extends Application {
         button.setLayoutY(y);
         return button;
     }
-
     /**
      * Creates radio button at location with specified text.
      * @param text to be displayed on radio button
@@ -263,7 +296,6 @@ public class MainUI extends Application {
         Rbutton.setLayoutY(y);
         return Rbutton;
     }
-
     /**
      * creates label with specified text location and text size
      * @param text text displayed but label
@@ -280,7 +312,6 @@ public class MainUI extends Application {
         label.setFont(new Font("Arial", 20));
         return label;
     }
-
     /**
      * Creates button gridpane representing tiles
      * @param x absolute x location of top corner of grid
@@ -300,7 +331,6 @@ public class MainUI extends Application {
         }
         return gridPane;
     }
-
     /**
      * creates label grid pane to mimic tables
      * @param labAr array of labels in gridpane to be added
@@ -321,7 +351,6 @@ public class MainUI extends Application {
         }
         return gridPane;
     }
-
     /**
      * makes button gridpane
      * @return gridpane
@@ -345,7 +374,6 @@ public class MainUI extends Application {
         GridPane gridPane = createGridpane(x, y);
         return gridPane;
     }
-
     /**
      * makes label depicting turn
      * @return constructed label
@@ -358,7 +386,6 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
-
     /**
      * makes menu button
      * @return constructed button
@@ -376,7 +403,6 @@ public class MainUI extends Application {
         });
         return button;
     }
-
     /**
      * make label that says "Your tiles"
      * @return constructed label
@@ -389,7 +415,6 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
-
     /**
      * makes radio button representing selected tile to be played
      * @param toggleGroup toggle group of radio button
@@ -405,56 +430,23 @@ public class MainUI extends Application {
         radioButton.setToggleGroup(toggleGroup);
         return radioButton;
     }
-
     /**
      * make play tile button that plays tile on selected radio button
      * @return constructed button
      */
-    private Button makePlayTileButton(){
-        int x = 784;
-        int y = 600;
-        String text = "Play selected tile";
-        Button button = createButton(text, x, y);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("MainUI.java handle() top");
-                Tile tile = null;
-                Player tempPlayer = game.getCurrentPlayer();
-                if(toggleGroup.getSelectedToggle() == tileRB1){
-                    tile = tempPlayer.removeTile(0);
-                    System.out.println("0 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
-                    tile = tempPlayer.removeTile(1);
-                    System.out.println("1 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB3){
-                    tile = tempPlayer.removeTile(2);
-                    System.out.println("2 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB4){
-                    tile = tempPlayer.removeTile(3);
-                    System.out.println("3 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB5){
-                    tile = tempPlayer.removeTile(4);
-                    System.out.println("4 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB6){
-                    tile = tempPlayer.removeTile(5);
-                    System.out.println("5 tile played by " + tempPlayer);
-                }
-
-                if(tile!=null){
-                    game.playTile(tile);
-                }
-                nextPhase();
-            }
-        });
-        return button;
-    }
-
+//    private Button makePlayTileButton(){
+//        int x = 784;
+//        int y = 600;
+//        String text = "Play selected tile";
+//        Button button = createButton(text, x, y);
+//        button.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//        });
+//        return button;
+//    }
     /**
      * makes label that says "your shares"
      * @return constructed label
@@ -467,7 +459,6 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
-
     /**
      * make label that says "money available"
      * @return constructed label
@@ -480,7 +471,6 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
-
     /**
      * makes label depicting money a player has
      * @return constructed label
@@ -493,7 +483,6 @@ public class MainUI extends Application {
         Label label = createLabel(text, x, y, fontSize);
         return label;
     }
-
     /**
      *  makes gridpane for info table on top right
      * @return constructed gridpane
@@ -526,7 +515,6 @@ public class MainUI extends Application {
         GridPane gridPane = createLabGridpane(labAr, x, y);
         return gridPane;
     }
-
     /**
      * makes table showing shares in a players inventory
      * @return constructed gridpane
@@ -561,7 +549,6 @@ public class MainUI extends Application {
         GridPane gridPane = createLabGridpane(labAr, x, y);
         return gridPane;
     }
-
     /**
      * makes button to move to next phase of turn
      * @return constructed button

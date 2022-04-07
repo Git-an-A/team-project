@@ -49,7 +49,7 @@ public class Game {
     /**
      * Sets up game with specified game options
      *
-     * @param gameOptions intitail game options determined at start of game
+     * @param gameOptions intitial game options determined at start of game
      * @param mainUI UI of game
      * @author Baylor McElroy
      */
@@ -65,11 +65,11 @@ public class Game {
      * @author Tori Weir
      */
     public void startGame(){
-        System.out.println("Game.java startGame() top");
+//        System.out.println("Game.java startGame() top");
 
         gameBoard = new GameBoard();
 
-        System.out.println("Game.java startGame() pre for loop");
+//        System.out.println("Game.java startGame() pre for loop");
 
         int numPlayers = gameOptions.getNumPlayers();
         players = new ArrayDeque<>(numPlayers);
@@ -79,23 +79,23 @@ public class Game {
             System.out.println("PlayerName = " + playerName);
             players.add(player);
             for(int j=0; j<6; j++){
-                System.out.println("j (of 6 tiles)" + j);
+//                System.out.println("j (of 6 tiles)" + j);
                 player.addTile(gameBoard.getTiles().dealTile()); //error here
                 System.out.println();
-                System.out.println("Player get start tile? " + player.getTile(j));
+//                System.out.println("Player get start tile? " + player.getTile(j));
             }
             System.out.println("All player tiles: ");
             for(int k=0;k<6;k++){
                 System.out.println("k " + k + " tile " + player.getTile(k));
             }
-            System.out.println(player);
+//            System.out.println(player);
         }
         System.out.println("Game.java startGame() post for loop");
 
 
         currentPlayer = players.poll();
-        System.out.println("current player" + currentPlayer);
-        System.out.println(currentPlayer.toString());
+//        System.out.println("current player" + currentPlayer);
+//        System.out.println(currentPlayer.toString());
         try {
             System.out.println("test");
             gameOptions.hide();
@@ -166,6 +166,7 @@ public class Game {
         return currentPlayer;
     }
     public String getGameState(){
+        System.out.println("Game.java getGameState top");
         return gameBoard.getBoardState();
     }
 
@@ -217,7 +218,7 @@ public class Game {
      * @return
      * @author Baylor McElroy
      */
-    public void  playTile(Tile tile) {
+    public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
         mainUI.playTile(tile);
         //add tile to corporation

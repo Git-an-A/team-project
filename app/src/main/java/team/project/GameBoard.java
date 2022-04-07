@@ -76,29 +76,25 @@ public class GameBoard {
      * @author Baylor McELroy
      */
     public void nextState(){
+        System.out.println("Game board next state top");
         switch (boardState){
-            case play : {
-                setBoardState(exchange);
-
+            case play -> {
+                boardState = exchange;
             }
-            case exchange: {
-                setBoardState(draw);
+            case exchange -> {
+                boardState = draw;
             }
-            case draw: {
-                setBoardState(play);
+            case draw -> {
+                boardState = play;
                 Game.getInstance().getCurrentPlayer().addTile(tiles.dealTile());
             }
         }
-
-
     }
 
     public String getBoardState(){
         return boardState;
     }
-    public void setBoardState(String boardState) {
-        this.boardState = boardState;
-    }
+
     public Tiles getTiles(){
 
         return tiles;
