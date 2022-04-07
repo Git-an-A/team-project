@@ -30,10 +30,11 @@ import java.util.List;
 public class Game {
     private static Game instance = null;
     private ArrayList<Player> players;
+    private Player currentPlayer;
     private GameBoard gameBoard;
     private final int startMoney = 6000;
     private GameOptions gameOptions;
-
+    private MainUI mainUI;
     private Game(){
 
     }
@@ -41,11 +42,12 @@ public class Game {
      * Setting up game
      *
      * @param gameOptions intitail game options determined at start of game
-     * @param numPlayers how many players will play
+     * @param mainUI UI of game
      */
-    public void setUpGame(GameOptions gameOptions, int numPlayers) {
+    public void setUpGame(GameOptions gameOptions, MainUI mainUI) {
         this.gameOptions = gameOptions;
-        gameOptions.start(numPlayers);
+        gameOptions.start();
+        this.mainUI = mainUI;
     }
 
     public static Game getInstance(){
@@ -73,11 +75,15 @@ public class Game {
         return hotelChains;
     }
 
-//    public void saveGame(){
-//        gameOptions.saveData();
-//    }
-
-
+    public void saveGame(){
+        gameOptions.saveDefault();
+    }
+    public void setPlayers(ArrayList<Player> players){
+        this.players = players;
+    }
+    public int getNumPlayers(){
+        return players.size();
+    }
     public boolean nextTurn(Player player) {
         return true;}
 
@@ -106,8 +112,7 @@ public class Game {
         return new Stock();}
 
     public boolean playTile(Tile tile) {
-
-        //MainUI.playTile();
+        mainUI.playTile(tile);
         return true;
     }
 

@@ -41,9 +41,10 @@ public class GameOptions {
     /**
      * This creates, adds, and determines the amount of players in the game
      *
-     * @param numPlayers number of players
+     *
      */
-    public void start(int numPlayers) {
+    public void start() {
+        int numPlayers = 4;
         Tiles newTiles = new Tiles();
         newTiles.shuffle();
         newTiles.shuffle();
@@ -57,6 +58,7 @@ public class GameOptions {
                 player.addTile((newTiles.dealTile()));
             }
         }
+        Game.getInstance().setPlayers(players);
     }
 
     /**

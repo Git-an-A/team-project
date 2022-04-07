@@ -67,7 +67,7 @@ public class MainUI extends Application {
     private GridPane sharesTable;
     private Label moneyAvailableLabel;
     private Label moneyLabel;
-    //private
+    final ToggleGroup toggleGroup = new ToggleGroup();
 
     public MainUI() throws Exception {
         game = Game.getInstance();
@@ -84,7 +84,7 @@ public class MainUI extends Application {
         infoTable = makeInfoTable();
         yourTileLabel = makeYourTileLabel();
         int yDistRB = 25;
-        final ToggleGroup toggleGroup = new ToggleGroup();
+
         tileRB1 = makeTileRadioButtons(toggleGroup, yDistRB, 0);
         tileRB2 = makeTileRadioButtons(toggleGroup, yDistRB, 1);
         tileRB3 = makeTileRadioButtons(toggleGroup, yDistRB, 2);
@@ -100,7 +100,9 @@ public class MainUI extends Application {
         start(new Stage());
 
     }
-    public void playTile(String color, int x, int y){
+    public void playTile(Tile tile){
+        int x = tile.getXpos();
+        int y = tile.getYpos();
         butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
         //add different colors
     }
@@ -111,7 +113,6 @@ public class MainUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         stage.setTitle("Aquire");
 
         Scene scene = new Scene(root, 1260, 630);
@@ -273,8 +274,34 @@ public class MainUI extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //replace with radio button selection
-                //game.playTile(new Tile());
+                Tile tile = null;
+                Player tempPlayer = new Player("name");
+                if(toggleGroup.getSelectedToggle() == tileRB1){
+                    tile = tempPlayer.removeTile(0);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(1);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(2);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(3);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(4);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(5);
+                }
+                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                    tile = tempPlayer.removeTile(6);
+                }
+
+                if(tile!=null){
+                    game.playTile(tile);
+                }
+
             }
         });
         return button;

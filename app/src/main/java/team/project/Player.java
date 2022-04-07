@@ -27,24 +27,37 @@ package team.project;
 import java.util.ArrayDeque;
 
 public class Player {
-    private ArrayDeque<Tile> playerTiles;
+    private Tile[] playerTiles;
 
     /**
      * Tries to get the player's tiles
      * @param playerName the respective player's turn
      */
     public Player(String playerName) {
-        playerTiles = new ArrayDeque<Tile>();
-
+        playerTiles = new Tile[6];
     }
 
     /**
      * adds tile to player
      *
-     * @param e gives them a tile
+     * @param tile gives them a tile
      */
-    public void addTile(Tile e){playerTiles.addLast(e);}
+    public void addTile(Tile tile){
+        boolean flag = true;
+        int i = 0;
+        while (flag){
+            if(playerTiles[i]==null){
+                playerTiles[i] = tile;
+                flag = false;
+            }
+        }
+    }
 
+    public Tile removeTile(int i){
+        Tile tempTile = playerTiles[i];
+        playerTiles[i] = null;
+        return tempTile;
+    }
     public String toString(){
         String sb= "";
         for(var tile: playerTiles){

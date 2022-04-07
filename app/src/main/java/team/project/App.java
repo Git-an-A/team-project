@@ -38,6 +38,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -47,12 +48,11 @@ public class App extends Application{
 
     public static void main(String[] args) {
         Application.launch(args);
-        System.out.println("test");
     }
     @Override
     public void start(Stage stage) throws Exception {
 
-        stage.setTitle("Aquire");
+        stage.setTitle("Acquire");
 
         Group root = new Group();
         Scene scene = new Scene(root, 450, 400);
@@ -114,6 +114,7 @@ public class App extends Application{
 //                 else if(newGame.isArmed()){
 //                     game = new Game();
 //                 }
+
                  Game finalGame = Game.getInstance();
                  stage.setOnHidden(new EventHandler<WindowEvent>() {
                      @Override
@@ -126,7 +127,6 @@ public class App extends Application{
                      }
                  });
                  stage.hide();
-
 
              }
         });
@@ -141,6 +141,5 @@ public class App extends Application{
         stage.setScene(scene);
         stage.show();
     }
-
 
 }
