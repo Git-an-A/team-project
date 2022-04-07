@@ -45,6 +45,7 @@ public class Game {
 
     private Game(){
         corporationList = createCorporationList();
+        playedTiles = new Stack<>();
     }
     /**
      * Sets up game with specified game options

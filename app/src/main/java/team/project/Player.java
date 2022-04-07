@@ -79,7 +79,6 @@ public class Player {
         }
 
     }
-
     /**
      * Removes tile from tiles player owns
      *
@@ -92,7 +91,6 @@ public class Player {
         playerTiles[i] = null;
         return tempTile;
     }
-
     /**
      * String representation of object
      *
@@ -103,7 +101,6 @@ public class Player {
         String sb = name;
         return sb;
     }
-
     /**
      * Gets a tile from the tiles owned by player
      *
