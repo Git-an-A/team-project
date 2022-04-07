@@ -26,18 +26,19 @@ package team.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 /**
  * Java class for Tile
  */
 public class Tiles{
-    private ArrayList<Tile> tileList;
+    private Stack<Tile> tileList;
 
     /**
      * Constructor
      */
     public Tiles() {
-        tileList = new ArrayList<Tile>(108);
+        tileList = new Stack<Tile>();
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
         for (var letterID : letters){
             for(int i=1; i<=12; i++ ){
@@ -71,8 +72,10 @@ public class Tiles{
      */
     public Tile dealTile(){
         if(tileList.size()> 0){
+            System.out.println("Tile delt: " + tileList.pop());
             return tileList.remove(0);
         }
+
         return null;
     }
 }

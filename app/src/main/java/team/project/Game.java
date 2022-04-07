@@ -55,11 +55,7 @@ public class Game {
     public void startGame(){
         System.out.println("Game.java startGame() top");
 
-       // System.out.println("Game.java startGame() pre tile shuffle");
-
-        gameBoard.getTiles().shuffle();
-        gameBoard.getTiles().shuffle();
-        //System.out.println("Game.java startGame() post tile shuffle");
+       gameBoard = new GameBoard();
 
         System.out.println("Game.java startGame() pre for loop");
 
@@ -68,17 +64,25 @@ public class Game {
         for (int i = 1; i <= numPlayers; i++) {
             String playerName = "Player" + i;
             Player player = new Player(playerName);
-            System.out.println( playerName);
+            System.out.println("PlayerName = " + playerName);
             players.add(player);
             for(int j=0; j<6; j++){
-                System.out.println(j);
-                player.addTile((gameBoard.getTiles().dealTile())); //error here
+                System.out.println("j (of 6 tiles)" + j);
+                player.addTile(gameBoard.getTiles().dealTile()); //error here
+                System.out.println();
+                System.out.println("Player get start tile? " + player.getTile(j));
             }
+            System.out.println("All player tiles: ");
+            for(int k=0;k<6;k++){
+                System.out.println("k " + k + " tile " + player.getTile(k));
+            }
+            System.out.println(player);
         }
         System.out.println("Game.java startGame() post for loop");
 
 
         currentPlayer = players.getFirst();
+        System.out.println("current player" + currentPlayer);
         System.out.println(currentPlayer.toString());
         try {
             System.out.println("test");

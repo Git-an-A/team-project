@@ -337,7 +337,7 @@ public class MainUI extends Application {
                 if(tile!=null){
                     game.playTile(tile);
                 }
-
+                game.nextState();
             }
         });
         return button;

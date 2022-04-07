@@ -40,6 +40,10 @@ public class GameBoard {
     public GameBoard(){
         //initialize game board
         tiles = new Tiles();
+        for(int i=0;i<10;i++){
+            tiles.shuffle();
+        }
+        boardState = play;
     }
     public boolean placeCorp(Tile tile){
         return true;
@@ -92,6 +96,7 @@ public class GameBoard {
         this.boardState = boardState;
     }
     public Tiles getTiles(){
+
         return tiles;
     }
 }

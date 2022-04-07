@@ -28,13 +28,15 @@ import java.util.ArrayDeque;
 
 public class Player {
     private Tile[] playerTiles;
+    private String name;
 
     /**
      * Tries to get the player's tiles
-     * @param playerName the respective player's turn
+     * @param name the respective player's turn
      */
-    public Player(String playerName) {
+    public Player(String name) {
         playerTiles = new Tile[6];
+        this.name = name;
     }
 
     /**
@@ -46,13 +48,12 @@ public class Player {
         System.out.println("Player.java addTile() top");
         for(int i=0;i<6;i++){
             if(playerTiles[i]==null){
-                System.out.println(playerTiles[i]);
+                System.out.println("Player tiles pre " + playerTiles[i] + " location " + i);
                 playerTiles[i] = tile;
+                System.out.println("Player tiles post " + playerTiles[i]+ " location " + i);
+                break;
             }
-            break;
         }
-
-        System.out.println("Player.java addTile() bottom");
 
     }
 
@@ -62,7 +63,8 @@ public class Player {
         return tempTile;
     }
     public String toString(){
-        String sb= "";
+        String sb = name;
+
         for(var tile: playerTiles){
             sb+= tile.toString() + "\t";
         }
