@@ -44,18 +44,14 @@ public class Player {
      */
     public void addTile(Tile tile){
         System.out.println("Player.java addTile() top");
-        boolean flag = true;
-        int i = 0;
-        while (flag &&i<6){
-            //System.out.println(tile);
+        for(int i=0;i<6;i++){
             if(playerTiles[i]==null){
                 System.out.println(playerTiles[i]);
                 playerTiles[i] = tile;
-
-                flag = false;
             }
-            i++;
+            break;
         }
+
         System.out.println("Player.java addTile() bottom");
 
     }

@@ -29,6 +29,7 @@ import org.checkerframework.checker.units.qual.C;
 import java.util.ArrayList;
 
 public class GameBoard {
+    private Tiles tiles;
     private int corporationsPlaced;
     private int size;
     private int[][] board;
@@ -38,7 +39,7 @@ public class GameBoard {
     private String boardState;
     public GameBoard(){
         //initialize game board
-
+        tiles = new Tiles();
     }
     public boolean placeCorp(Tile tile){
         return true;
@@ -68,9 +69,17 @@ public class GameBoard {
 
     public void nextState(){
         switch (boardState){
-            case play : setBoardState(exchange);;
-            case exchange: setBoardState(draw);
-            case draw: setBoardState(play);
+            case play : {
+                setBoardState(exchange);
+
+            }
+            case exchange: {
+                setBoardState(draw);
+            }
+            case draw: {
+                setBoardState(play);
+                Game.getInstance().getCurrentPlayer().addTile(tiles.dealTile());
+            }
         }
 
 
@@ -81,5 +90,8 @@ public class GameBoard {
     }
     public void setBoardState(String boardState) {
         this.boardState = boardState;
+    }
+    public Tiles getTiles(){
+        return tiles;
     }
 }

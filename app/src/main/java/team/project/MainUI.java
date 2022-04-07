@@ -182,8 +182,6 @@ public class MainUI extends Application {
         System.out.println("MainUI.java start() bottom");
 
     }
-
-
     private void dispMenu(){
         Stage disp = new Stage();
         disp.setTitle("Courses");
@@ -199,7 +197,6 @@ public class MainUI extends Application {
         System.out.println("MainUI.java dispMenu()");
 
     }
-
     private Button createButton(String text, int x, int y){
         Button button = new Button();
         button.setText(text);

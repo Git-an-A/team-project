@@ -57,14 +57,12 @@ public class Game {
 
        // System.out.println("Game.java startGame() pre tile shuffle");
 
-        Tiles newTiles = new Tiles();
-        newTiles.shuffle();
-        newTiles.shuffle();
+        gameBoard.getTiles().shuffle();
+        gameBoard.getTiles().shuffle();
         //System.out.println("Game.java startGame() post tile shuffle");
 
         System.out.println("Game.java startGame() pre for loop");
 
-        //error here
         int numPlayers = gameOptions.getNumPlayers();
         players = new ArrayDeque<>(numPlayers);
         for (int i = 1; i <= numPlayers; i++) {
@@ -72,9 +70,9 @@ public class Game {
             Player player = new Player(playerName);
             System.out.println( playerName);
             players.add(player);
-            for(int j=0; j<6; j++){ //increments twice. ERROR
+            for(int j=0; j<6; j++){
                 System.out.println(j);
-                player.addTile((newTiles.dealTile())); //error here
+                player.addTile((gameBoard.getTiles().dealTile())); //error here
             }
         }
         System.out.println("Game.java startGame() post for loop");
@@ -153,7 +151,8 @@ public class Game {
     }
 
     public boolean drawTile(Player player) {
-        return true;}
+        return true;
+    }
 
     public boolean buyStock(Stock stockName, int amount) {
         return true;}
