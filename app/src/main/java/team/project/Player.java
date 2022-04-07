@@ -64,10 +64,6 @@ public class Player {
     }
     public String toString(){
         String sb = name;
-
-        for(var tile: playerTiles){
-            sb+= tile.toString() + "\t";
-        }
         return sb;
     }
 
@@ -75,6 +71,15 @@ public class Player {
         return playerTiles[i];
     }
 
+    public String getName() {
+        return name;
+    }
+    public void printTiles(){
+
+        for(var tile: playerTiles){
+            System.out.println(tile.toString() + "\t");
+        }
+    }
     public boolean buyStock(Stock stockName, int amount) {
         return true;
     }

@@ -29,10 +29,11 @@ import javafx.stage.Stage;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Game {
     private static Game instance = null;
-    private ArrayDeque<Player> players;
+    private Queue<Player> players;
     private Player currentPlayer;
     private GameBoard gameBoard;
     private final int startMoney = 6000;
@@ -55,7 +56,7 @@ public class Game {
     public void startGame(){
         System.out.println("Game.java startGame() top");
 
-       gameBoard = new GameBoard();
+        gameBoard = new GameBoard();
 
         System.out.println("Game.java startGame() pre for loop");
 
@@ -81,7 +82,7 @@ public class Game {
         System.out.println("Game.java startGame() post for loop");
 
 
-        currentPlayer = players.getFirst();
+        currentPlayer = players.poll();
         System.out.println("current player" + currentPlayer);
         System.out.println(currentPlayer.toString());
         try {
@@ -139,8 +140,10 @@ public class Game {
         gameBoard.nextState();
     }
 
-    public boolean nextTurn(Player player) {
-        return true;}
+    public void nextTurn() {
+        players.add(currentPlayer);
+        currentPlayer  = players.poll();
+    }
 
     public boolean tallyScore(Player player, int amount) {
         return true;}
@@ -168,7 +171,9 @@ public class Game {
         return new Stock();}
 
     public boolean playTile(Tile tile) {
+        currentPlayer.addTile(gameBoard.getTiles().dealTile());
         mainUI.playTile(tile);
+        //add tile to corporation
         return true;
     }
 

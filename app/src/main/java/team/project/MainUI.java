@@ -70,6 +70,7 @@ public class MainUI extends Application {
     private Button next;
     final ToggleGroup toggleGroup = new ToggleGroup();
 
+
     public MainUI() throws Exception {
         System.out.println("MainUI.java MainUI() top");
         game = Game.getInstance();
@@ -109,27 +110,33 @@ public class MainUI extends Application {
         int y = tile.getYpos();
         butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
         //add different colors
+        System.out.println("Current players Tiles (who just played)");
+        Game.getInstance().getCurrentPlayer().printTiles();
+        System.out.println("Play tile bottom");
+
     }
 
     private void nextPhase(){
-        System.out.println("MainUI.java nextPhase() top");
+        System.out.println("MainUI.java nextPhase()");
 
         switch (game.getGameState()){
             case "PLAY" : {
-
+                System.out.println("UI State: PLAY");
             }
             case "EXCHANGE" : {
+                System.out.println("UI State: EXCHANGE");
                 game.nextState();
             }
             case "DRAW" : {
                 game.nextState();
+                System.out.println("UI State: DRAW");
                 nextTurn();}
         }
     }
 
     public void nextTurn(){
         System.out.println("MainUI.java nextTurn() top");
-
+        game.nextTurn();
         Player currentPlayer = game.getCurrentPlayer();
         tileRB1.setText(currentPlayer.getTile(0).toString());
         tileRB2.setText(currentPlayer.getTile(1).toString());
@@ -137,9 +144,9 @@ public class MainUI extends Application {
         tileRB4.setText(currentPlayer.getTile(3).toString());
         tileRB5.setText(currentPlayer.getTile(4).toString());
         tileRB6.setText(currentPlayer.getTile(5).toString());
+        turnLabel.setText(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn");
+        System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -154,6 +161,13 @@ public class MainUI extends Application {
 
         root.getChildren().add(buttonGrid);
         //tabs bottom left
+        Player currentPlayer = game.getCurrentPlayer();
+        tileRB1.setText(currentPlayer.getTile(0).toString());
+        tileRB2.setText(currentPlayer.getTile(1).toString());
+        tileRB3.setText(currentPlayer.getTile(2).toString());
+        tileRB4.setText(currentPlayer.getTile(3).toString());
+        tileRB5.setText(currentPlayer.getTile(4).toString());
+        tileRB6.setText(currentPlayer.getTile(5).toString());
 
         root.getChildren().add(turnLabel);
         root.getChildren().add(menuButton);
@@ -314,30 +328,33 @@ public class MainUI extends Application {
                 Player tempPlayer = game.getCurrentPlayer();
                 if(toggleGroup.getSelectedToggle() == tileRB1){
                     tile = tempPlayer.removeTile(0);
+                    System.out.println("0 tile played by " + tempPlayer);
                 }
                 else if(toggleGroup.getSelectedToggle() == tileRB2){
                     tile = tempPlayer.removeTile(1);
+                    System.out.println("1 tile played by " + tempPlayer);
                 }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                else if(toggleGroup.getSelectedToggle() == tileRB3){
                     tile = tempPlayer.removeTile(2);
+                    System.out.println("2 tile played by " + tempPlayer);
                 }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                else if(toggleGroup.getSelectedToggle() == tileRB4){
                     tile = tempPlayer.removeTile(3);
+                    System.out.println("3 tile played by " + tempPlayer);
                 }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                else if(toggleGroup.getSelectedToggle() == tileRB5){
                     tile = tempPlayer.removeTile(4);
+                    System.out.println("4 tile played by " + tempPlayer);
                 }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
+                else if(toggleGroup.getSelectedToggle() == tileRB6){
                     tile = tempPlayer.removeTile(5);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
-                    tile = tempPlayer.removeTile(6);
+                    System.out.println("5 tile played by " + tempPlayer);
                 }
 
                 if(tile!=null){
                     game.playTile(tile);
                 }
-                game.nextState();
+                nextPhase();
             }
         });
         return button;
