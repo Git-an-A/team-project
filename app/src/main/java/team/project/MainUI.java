@@ -67,10 +67,13 @@ public class MainUI extends Application {
     private GridPane sharesTable;
     private Label moneyAvailableLabel;
     private Label moneyLabel;
+    private Button next;
     final ToggleGroup toggleGroup = new ToggleGroup();
 
     public MainUI() throws Exception {
+        System.out.println("MainUI.java MainUI() top");
         game = Game.getInstance();
+
         root = new Group();
 
         int gridLength = 12;
@@ -96,8 +99,9 @@ public class MainUI extends Application {
         sharesTable = makeSharesTable();
         moneyAvailableLabel = makeMoneyAvailableLabel();
         moneyLabel = makeMoneyLabel();
-
-        start(new Stage());
+        next = makeNextButton();
+        game.setUpGame(new GameOptions(), this);
+        System.out.println("MainUI.java MainUI() bottom");
 
     }
     public void playTile(Tile tile){
@@ -107,13 +111,41 @@ public class MainUI extends Application {
         //add different colors
     }
 
+    private void nextPhase(){
+        System.out.println("MainUI.java nextPhase() top");
 
+        switch (game.getGameState()){
+            case "PLAY" : {
+
+            }
+            case "EXCHANGE" : {
+                game.nextState();
+            }
+            case "DRAW" : {
+                game.nextState();
+                nextTurn();}
+        }
+    }
+
+    public void nextTurn(){
+        System.out.println("MainUI.java nextTurn() top");
+
+        Player currentPlayer = game.getCurrentPlayer();
+        tileRB1.setText(currentPlayer.getTile(0).toString());
+        tileRB2.setText(currentPlayer.getTile(1).toString());
+        tileRB3.setText(currentPlayer.getTile(2).toString());
+        tileRB4.setText(currentPlayer.getTile(3).toString());
+        tileRB5.setText(currentPlayer.getTile(4).toString());
+        tileRB6.setText(currentPlayer.getTile(5).toString());
+    }
 
 
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Aquire");
+
+        System.out.println("MainUI.java start() top");
+        stage.setTitle("Acquire");
 
         Scene scene = new Scene(root, 1260, 630);
         scene.setFill(Color.DARKGRAY);
@@ -137,6 +169,7 @@ public class MainUI extends Application {
         root.getChildren().add(sharesTable);
         root.getChildren().add(moneyAvailableLabel);
         root.getChildren().add(moneyLabel);
+        root.getChildren().add(next);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
@@ -144,7 +177,10 @@ public class MainUI extends Application {
 
         stage.setResizable(false);
         stage.setScene(scene);
+
         stage.show();
+        System.out.println("MainUI.java start() bottom");
+
     }
 
 
@@ -159,6 +195,8 @@ public class MainUI extends Application {
         disp.setResizable(false);
         disp.setScene(scene);
         disp.show();
+
+        System.out.println("MainUI.java dispMenu()");
 
     }
 
@@ -274,8 +312,9 @@ public class MainUI extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                System.out.println("MainUI.java handle() top");
                 Tile tile = null;
-                Player tempPlayer = new Player("name");
+                Player tempPlayer = game.getCurrentPlayer();
                 if(toggleGroup.getSelectedToggle() == tileRB1){
                     tile = tempPlayer.removeTile(0);
                 }
@@ -390,6 +429,19 @@ public class MainUI extends Application {
         return gridPane;
     }
 
-
+    private Button makeNextButton(){
+        int x = 1125;
+        int y = 540;
+        String text = "Next";
+        Button button = createButton(text, x, y);
+        button.setPrefSize(100, 50);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                nextPhase();
+            }
+        });
+        return button;
+    }
 
 }

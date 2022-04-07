@@ -139,7 +139,10 @@ public class App extends Application{
 
         stage.setResizable(false);
         stage.setScene(scene);
+        System.out.println("App.java start() pre show");
         stage.show();
+        System.out.println("App.java start() post show");
+
     }
 
 }

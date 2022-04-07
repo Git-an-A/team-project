@@ -66,19 +66,19 @@ public class GameBoard {
         return true;
     }
 
-    private void playState(){
-        setBoardState(play);
+    public void nextState(){
+        switch (boardState){
+            case play : setBoardState(exchange);;
+            case exchange: setBoardState(draw);
+            case draw: setBoardState(play);
+        }
 
-    }
-    private void exchangeState(){
-        setBoardState(exchange);
-
-    }
-    private void drawState(){
-        setBoardState(draw);
 
     }
 
+    public String getBoardState(){
+        return boardState;
+    }
     public void setBoardState(String boardState) {
         this.boardState = boardState;
     }

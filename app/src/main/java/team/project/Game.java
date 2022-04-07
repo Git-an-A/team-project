@@ -24,12 +24,15 @@
 
 package team.project;
 
+import javafx.stage.Stage;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     private static Game instance = null;
-    private ArrayList<Player> players;
+    private ArrayDeque<Player> players;
     private Player currentPlayer;
     private GameBoard gameBoard;
     private final int startMoney = 6000;
@@ -44,12 +47,52 @@ public class Game {
      * @param gameOptions intitail game options determined at start of game
      * @param mainUI UI of game
      */
-    public void setUpGame(GameOptions gameOptions, MainUI mainUI) {
+    public void setUpGame(GameOptions gameOptions, MainUI mainUI) throws Exception {
         this.gameOptions = gameOptions;
-        gameOptions.start();
+        gameOptions.start(new Stage());
         this.mainUI = mainUI;
     }
+    public void startGame(){
+        System.out.println("Game.java startGame() top");
 
+       // System.out.println("Game.java startGame() pre tile shuffle");
+
+        Tiles newTiles = new Tiles();
+        newTiles.shuffle();
+        newTiles.shuffle();
+        //System.out.println("Game.java startGame() post tile shuffle");
+
+        System.out.println("Game.java startGame() pre for loop");
+
+        //error here
+        int numPlayers = gameOptions.getNumPlayers();
+        players = new ArrayDeque<>(numPlayers);
+        for (int i = 1; i <= numPlayers; i++) {
+            String playerName = "Player" + i;
+            Player player = new Player(playerName);
+            System.out.println( playerName);
+            players.add(player);
+            for(int j=0; j<6; j++){ //increments twice. ERROR
+                System.out.println(j);
+                player.addTile((newTiles.dealTile())); //error here
+            }
+        }
+        System.out.println("Game.java startGame() post for loop");
+
+
+        currentPlayer = players.getFirst();
+        System.out.println(currentPlayer.toString());
+        try {
+            System.out.println("test");
+            gameOptions.hide();
+            mainUI.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Game.java startGame() bottom");
+
+    }
     public static Game getInstance(){
         if(instance == null){
             instance = new Game();
@@ -78,12 +121,22 @@ public class Game {
     public void saveGame(){
         gameOptions.saveDefault();
     }
-    public void setPlayers(ArrayList<Player> players){
+    public void setPlayers(ArrayDeque<Player> players){
         this.players = players;
     }
     public int getNumPlayers(){
         return players.size();
     }
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+    public String getGameState(){
+        return gameBoard.getBoardState();
+    }
+    public void nextState(){
+        gameBoard.nextState();
+    }
+
     public boolean nextTurn(Player player) {
         return true;}
 

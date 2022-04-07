@@ -43,14 +43,21 @@ public class Player {
      * @param tile gives them a tile
      */
     public void addTile(Tile tile){
+        System.out.println("Player.java addTile() top");
         boolean flag = true;
         int i = 0;
-        while (flag){
+        while (flag &&i<6){
+            //System.out.println(tile);
             if(playerTiles[i]==null){
+                System.out.println(playerTiles[i]);
                 playerTiles[i] = tile;
+
                 flag = false;
             }
+            i++;
         }
+        System.out.println("Player.java addTile() bottom");
+
     }
 
     public Tile removeTile(int i){
@@ -64,6 +71,10 @@ public class Player {
             sb+= tile.toString() + "\t";
         }
         return sb;
+    }
+
+    public Tile getTile(int i){
+        return playerTiles[i];
     }
 
     public boolean buyStock(Stock stockName, int amount) {

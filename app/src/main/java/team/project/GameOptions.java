@@ -25,15 +25,29 @@
 package team.project;
 
 import com.google.gson.Gson;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GameOptions {
+public class GameOptions extends Application {
     private boolean hiddenAsset;
     private String filename;
+    private int numPlayers;
+    private boolean hide;
+    private Stage disp;
 
     public GameOptions(){
     }
@@ -43,22 +57,70 @@ public class GameOptions {
      *
      *
      */
-    public void start() {
-        int numPlayers = 4;
-        Tiles newTiles = new Tiles();
-        newTiles.shuffle();
-        newTiles.shuffle();
+    @Override
+    public void start(Stage stage) {
+        System.out.println("GameOptions.java start() top");
+        disp = new Stage();
+        disp.setTitle("Courses");
 
-        ArrayList<Player> players = new ArrayList<Player>(numPlayers);
-        for (int i = 1; i <= numPlayers; i++) {
-            String playerName = "Player" + i;
-            Player player = new Player(playerName);
-            players.add(player);
-            for(int j=0; j<6; j++){
-                player.addTile((newTiles.dealTile()));
+        Group root = new Group();
+        Scene scene = new Scene(root, 400, 250);
+        scene.setFill(Color.LIGHTGRAY);
+
+        Label labelTop = new Label();
+        labelTop.setLayoutX(175);
+        labelTop.setLayoutY(25);
+        labelTop.setText("Enter number of Players");
+
+        Label labelBot = new Label();
+        labelBot.setLayoutX(175);
+        labelBot.setLayoutY(50);
+        labelBot.setText("Enter <yes> for hide assests mode");
+
+        Button button = new Button();
+        button.setLayoutX(25);
+        button.setLayoutY(100);
+        button.setPrefSize(100, 25);
+        button.setText("Enter");
+        button.setDefaultButton(true);
+
+        TextField playerTF = new TextField();
+        playerTF.setLayoutX(25);
+        playerTF.setLayoutY(25);
+
+        TextField hideShow = new TextField();
+        hideShow.setLayoutX(25);
+        hideShow.setLayoutY(50);
+        //System.out.println("GameOptions.java pre enter handler");
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                numPlayers = Integer.valueOf(playerTF.getText());
+                String tempText = hideShow.getText();
+                if(tempText=="yes"){
+                    hide = true;
+                }
+               // System.out.println("GameOptions.java start() post enter handler");
+
+                System.out.println("GameOptions.java start() pre startGame");
+                Game.getInstance().startGame(); //error is in here
+                System.out.println("GameOptions.java start() post startGame");
+
+
             }
-        }
-        Game.getInstance().setPlayers(players);
+        });
+
+        root.getChildren().add(labelTop);
+        root.getChildren().add(labelBot);
+        root.getChildren().add(button);
+        root.getChildren().add(hideShow);
+        root.getChildren().add(playerTF);
+
+
+        disp.setResizable(false);
+        disp.setScene(scene);
+        disp.show();
     }
 
     /**
@@ -112,6 +174,12 @@ public class GameOptions {
 
     public boolean Display(){
         return hiddenAsset;
+    }
+    public int getNumPlayers(){
+        return numPlayers;
+    }
+    public void hide(){
+        disp.hide();
     }
 }
 
