@@ -36,8 +36,10 @@ public class Corporation {
     private String companyName;
     private int number;
 
+    // I put this here to note the prices
     private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
     private static final int[] majorShare = new int[]{2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000};
+    private static final int[] minorShare = new int[]{1000, 1500,2000,2500,3000,3500,4000,4500,5000,5500,6000};
 
     /*
     for price:
@@ -133,14 +135,11 @@ public class Corporation {
      */
     public void removeStock(Player playerName){
         Stock stock = null; // null for now
-//        Something that can check for the stocks from player
-
-
+        int amount = playerName.getCorps().size();
 
         //something that takes stock from player
 
     }
-
     /**
      * This figures out the current value of the stocks and Corporations
      *

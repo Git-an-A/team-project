@@ -47,6 +47,7 @@ public class Player {
     private Stack<Stock> corp7;
     private Stack<Stock> corp8;
     private int money;
+
     /**
      * Constructor requires name
      *
@@ -56,6 +57,7 @@ public class Player {
     public Player(String name) {
         playerTiles = new Tile[6];
         this.name = name;
+        this.money = 6000;
         for(int i=0;i<8;i++){
             corps.add(new Stack<Stock>());
         }
@@ -91,6 +93,7 @@ public class Player {
         playerTiles[i] = null;
         return tempTile;
     }
+
     /**
      * String representation of object
      *
@@ -140,7 +143,8 @@ public class Player {
         tempStack.add(corporation.giveStock(this));
         corps.set(number, tempStack);
 
-        //substract price if necessary
+        //subtract price if necessary
+        takeMoney(cost);
 
     }
 
@@ -148,12 +152,53 @@ public class Player {
         return new PlayerInv();
     }
 
-    public boolean tradeStocks(Stock stockName, int amount) {
-        return true;
+    public ArrayList<Stack<Stock>> getCorps() {
+        return corps;
     }
 
-    public boolean sellStocks(Stock stock, int amount) {
-        return true;
+    //will work more on this
+    public void tradeStocks(Corporation oldCorporation, Corporation newCorporation) {
+        //get old corporation number
+        int number = oldCorporation.getNumber();
+        Stack<Stock> oldStack = corps.get(number);
+        Stack<Stock> newStack = null;
+        Stack<Stock> remainderStack = null;
+        int tradeIn;
+        int remainder;
+
+        if(oldStack.size()/3 == 0){
+            tradeIn= oldStack.size()/3;
+            for(int i=0; i< tradeIn; i++){
+                newStack.add(newCorporation.giveStock(this));
+            }
+
+        }
+        else{
+            tradeIn = oldStack.size()/3;
+            for(int i=0; i< tradeIn; i++){
+                newStack.add(newCorporation.giveStock(this));
+            }
+            remainder = oldStack.size()%3;
+            for(int i=0; i< remainder; i++){
+                remainderStack.add(oldCorporation.giveStock(this));
+            }
+        }
+        corps.remove(oldStack);
+        oldCorporation.removeStock(this);
+        corps.add(newStack);
+        oldCorporation.giveStock(this);
+
+    }
+
+    public void sellStocks(Corporation corporation, int cost, int value) {
+        //remove stock from player's inventory
+        int number = corporation.getNumber();
+        Stack<Stock> tempStack = corps.get(number);
+        int amount = value * tempStack.size();
+        giveMoney(amount);
+
+        corps.remove(tempStack);
+
     }
 
     public boolean discardDeadTile(Tile tile) {
@@ -173,4 +218,5 @@ public class Player {
     public void giveMoney(int amount){
         money = money + amount;
     }
+    public int checkMoney(){return money;}
 }
