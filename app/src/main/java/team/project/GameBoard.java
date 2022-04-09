@@ -123,10 +123,19 @@ public class GameBoard {
 //        testing.ShareBonus(corp);
 //    }
 
+    /**
+     * Finds the current player
+     *
+     * @return current player
+     */
     public Player findPlayer(){
         Player player = Game.getInstance().getCurrentPlayer();
         return player;
     }
+
+    /**
+     * Finds the next player of the queue
+     */
     public void findNext(){
         Game.getInstance().playerQueue().poll();
     }

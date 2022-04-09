@@ -38,7 +38,7 @@ public class Corporation {
     private boolean played;
     private int colorNum;
 
-    // I put this here to note the prices
+    // Reference of the prices
     private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
     private static final int[] majorShare = new int[]{2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000};
     private static final int[] minorShare = new int[]{1000, 1500,2000,2500,3000,3500,4000,4500,5000,5500,6000};
@@ -92,11 +92,14 @@ public class Corporation {
      */
     public void founded(Player player, Tile tile){
         player.addFounded(this);
+        playTiles.add(tile);
     }
 
     /**
-     * Gives player a stock
+     * Gives the player stock
      *
+     * @param player player who receives it
+     * @return stock
      */
     public Stock giveStock(Player player){
         int cost;
@@ -122,18 +125,32 @@ public class Corporation {
      * @param playerName player who sold it
      */
     public void buyStock(Player playerName){
+        int amount = playerName.getCorps().size();
         removeStock(playerName);
-        //something that takes money from player
+        playerName.giveMoney(getValue(amount));
+
     }
-    private int getValue(int number){
+
+    /**
+     * Calculates the current value of the stocks a player owns all together
+     *
+     * @param number the amount of stocks
+     * @return the value
+     */
+    public int getValue(int number){
         return baseValue + 100 * number;
     }
 
-    //    public void sellStock(Player player, Stock stock){
-//        player.giveMoney(stock.getValue());
-//        stocks.add(stock);
-//        //something that changes player's money
-//    }
+    /**
+     * Sells the stock to the player
+     * @param player player who is buying it
+     * @param amount amount of stocks
+     */
+    public void sellStock(Player player, int amount){
+        player.takeMoney(getValue(amount));
+        player.buyStock(this);
+
+    }
 
     /**
      * removes stock from player
@@ -141,29 +158,35 @@ public class Corporation {
       * @param playerName player who lost it
      */
     public void removeStock(Player playerName){
-        Stock stock = null; // null for now
-        int numb = playerName.getCorps().size();
-
-        //something that takes stock from player
+        for(int i=0; i< playerName.getCorps().size(); i++) {
+            if (companyName.equals(playerName.getCorps())) {
+                int numb = playerName.getCorps().size();
+                for (int n = 0; n < numb; n++) {
+                    playerName.getCorps().remove(n);
+                }
+            }
+        }
     }
 
     /**
-     * Trades stocks from corporation
-     * @param player
+     * Calculates major bonus
+     *
+     * @return Major bonus
      */
-    public void tradeStocks(Player player){
-
-    }
-
-
     public int giveMajorBonus(){
         return getPrice()*10;
     }
 
+    /**
+     * Calculates minor bonus
+     *
+     * @return Minor bonus
+     */
     public int giveMinorBonus(){return giveMajorBonus()/2;}
 
     /**
      * Check if the corporation is safe or not
+     *
      * @return true if corporation is safe, false if it is less than 11
      */
     public boolean isSafe(){
@@ -173,11 +196,14 @@ public class Corporation {
             return false;
         }
     }
-    public int getNumber(){return number;}
+
     /**
      * Getters and Setters
      * Price is the cost/value of the Corporation
      */
+
+    public int getNumber(){return number;}
+
     public int getSize(){
         return size;
     }
