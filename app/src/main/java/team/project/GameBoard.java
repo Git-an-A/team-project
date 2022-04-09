@@ -52,18 +52,14 @@ public class GameBoard {
 
         boardState = play;
     }
-    public boolean placeCorp(Tile tile){
-        return true;
-    }
-    public boolean placeUnacompanied(Tile tile){
-        return true;
-    }
-    public ArrayList<Tile> mergeCorpCheck(Tile tile){
-        return new ArrayList<Tile>();
-    }
-    public Corporation mergeCorp(Corporation corp1, Corporation corp2){
 
-        return null; //new corp
+    public void mergeCorp(List<Corporation> corporations, Corporation corporation , Tile tile){
+        for (Corporation item: corporations) {
+            for (Tile t : item.getPlayTiles()) {
+                t.setCorp(corporation);
+            }
+            tile.setCorp(corporation);
+        }
     }
     public boolean giveStocks(Stock stockName, int amount){
         return true;

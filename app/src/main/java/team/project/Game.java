@@ -206,8 +206,60 @@ public class Game {
     public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
         playedTiles.add(tile);
-        mainUI.playTile(tile);
+        int tileXpos = tile.getXpos();
+        int tileYpos = tile.getYpos();
+        Stack<Tile> tileStack = new Stack<>();
+        Tile tempTile = new Tile("z", 26);
+        for (Tile playedTile: playedTiles) {
+            int playedTileXpos = playedTile.getXpos();
+            int playedTileYpos = playedTile.getYpos();
+            //left
+            if(playedTileXpos - tileXpos == 1){
+                tileStack.add(playedTile);
+            }
+            //right
+            if(tileXpos - playedTileXpos == 1){
+                tileStack.add(playedTile);
+            }
+            //above
+            if(playedTileYpos - tileYpos == 1){
+                tileStack.add(playedTile);
+            }
+            //below
+            if(tileYpos - playedTileYpos == 1){
+                tileStack.add(playedTile);
+            }
+        }
         //add tile to corporation
+        if(tileStack.size()==0){
+            //no corporation
+            mainUI.colorTile(tile, 0);
+        }
+        else if (tileStack.size() == 1){
+            //add to corporation
+            tempTile = tileStack.pop();
+            if(tempTile.getCorp() != null){
+                tile.setCorp(tempTile.getCorp());
+            }
+            else {
+                //make corporation
+                mainUI.chooseCorp(getUnplacedCorporations(), 1);
+            }
+        }
+        else {
+            //merge corporation
+            Stack<Corporation> corporations = new Stack<>();
+            for (Tile t: tileStack) {
+                corporations.add(t.getCorp());
+            }
+            mainUI.chooseCorp(corporations, 2);
+
+        }
+
+
+        //get corporation color
+
+
     }
 
     public boolean tradeStocks(Stock stockName, int amount) {
@@ -225,8 +277,12 @@ public class Game {
     }
 
     public void playCorporation(Corporation corporation){
-
+        corporation.giveStock(currentPlayer);
+        corporation.setPlayed(true);
     }
 
+    public GameBoard getGameBoard(){
+        return gameBoard;
+    }
     public void endGame() {}
 }

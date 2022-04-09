@@ -46,6 +46,7 @@ import java.lang.management.ClassLoadingMXBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * The main User interface for the board of the game.
@@ -113,10 +114,41 @@ public class MainUI extends Application {
         System.out.println("MainUI.java MainUI() bottom");
 
     }
-    public void playTile(Tile tile){
+    public void colorTile(Tile tile, int colorType){
         int x = tile.getXpos();
         int y = tile.getYpos();
-        butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
+
+        switch (colorType){
+            case 1 -> {
+                butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
+            }
+            case 2 -> {
+                butAr[x][y].setStyle("-fx-background-color: #000001; ");
+            }
+            case 3 -> {
+                butAr[x][y].setStyle("-fx-background-color: #00000f; ");
+            }
+            case 4 -> {
+                butAr[x][y].setStyle("-fx-background-color: #00001f; ");
+            }
+            case 5 -> {
+                butAr[x][y].setStyle("-fx-background-color: #0000ff; ");
+            }
+            case 6 -> {
+                butAr[x][y].setStyle("-fx-background-color: #0001ff; ");
+            }
+            case 7 -> {
+                butAr[x][y].setStyle("-fx-background-color: #000fff; ");
+            }
+            case 8 -> {
+                butAr[x][y].setStyle("-fx-background-color: #001fff; ");
+            }
+            case 9 -> {
+                butAr[x][y].setStyle("-fx-background-color: #00ffff; ");
+            }
+
+
+        }
         //add different colors
         System.out.println("Current players Tiles (who just played)");
         Game.getInstance().getCurrentPlayer().printTiles();
@@ -133,38 +165,7 @@ public class MainUI extends Application {
         System.out.println(gameState);
         switch (gameState){
             case "PLAY" -> {
-                System.out.println("UI State: PLAY");
-                Tile tile = null;
-                Player tempPlayer = game.getCurrentPlayer();
-                if(toggleGroup.getSelectedToggle() == tileRB1){
-                    tile = tempPlayer.removeTile(0);
-                    System.out.println("0 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB2){
-                    tile = tempPlayer.removeTile(1);
-                    System.out.println("1 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB3){
-                    tile = tempPlayer.removeTile(2);
-                    System.out.println("2 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB4){
-                    tile = tempPlayer.removeTile(3);
-                    System.out.println("3 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB5){
-                    tile = tempPlayer.removeTile(4);
-                    System.out.println("4 tile played by " + tempPlayer);
-                }
-                else if(toggleGroup.getSelectedToggle() == tileRB6){
-                    tile = tempPlayer.removeTile(5);
-                    System.out.println("5 tile played by " + tempPlayer);
-                }
-
-                if(tile!=null){
-                    System.out.println(tile.toString());
-                    game.playTile(tile);
-                }
+                playTile();
                 game.nextState();
                 System.out.println("MainUi.java end switch play:");
                 System.out.println(gameState);
@@ -180,7 +181,40 @@ public class MainUI extends Application {
             }
         }
     }
+    private void playTile(){
+        System.out.println("UI State: PLAY");
+        Tile tile = null;
+        Player tempPlayer = game.getCurrentPlayer();
+        if(toggleGroup.getSelectedToggle() == tileRB1){
+            tile = tempPlayer.removeTile(0);
+            System.out.println("0 tile played by " + tempPlayer);
+        }
+        else if(toggleGroup.getSelectedToggle() == tileRB2){
+            tile = tempPlayer.removeTile(1);
+            System.out.println("1 tile played by " + tempPlayer);
+        }
+        else if(toggleGroup.getSelectedToggle() == tileRB3){
+            tile = tempPlayer.removeTile(2);
+            System.out.println("2 tile played by " + tempPlayer);
+        }
+        else if(toggleGroup.getSelectedToggle() == tileRB4){
+            tile = tempPlayer.removeTile(3);
+            System.out.println("3 tile played by " + tempPlayer);
+        }
+        else if(toggleGroup.getSelectedToggle() == tileRB5){
+            tile = tempPlayer.removeTile(4);
+            System.out.println("4 tile played by " + tempPlayer);
+        }
+        else if(toggleGroup.getSelectedToggle() == tileRB6){
+            tile = tempPlayer.removeTile(5);
+            System.out.println("5 tile played by " + tempPlayer);
+        }
 
+        if(tile!=null){
+            System.out.println(tile.toString());
+            game.playTile(tile);
+        }
+    }
     /**
      * moves turn to next Player
      */
@@ -269,7 +303,11 @@ public class MainUI extends Application {
         System.out.println("MainUI.java dispMenu()");
 
     }
-    private void chooseCorp(){
+
+    /**
+     * Displays a new window to select starting a new corporation
+     */
+    public void chooseCorp(List<Corporation> corporations, int type){
         Stage disp = new Stage();
         disp.setTitle("Choose a corporation");
 
@@ -278,7 +316,7 @@ public class MainUI extends Application {
         scene.setFill(Color.LIGHTGRAY);
 
         ComboBox<String> comboBox = new ComboBox<>();
-        List<Corporation> corporations = game.getUnplacedCorporations();
+
         for (Corporation item: corporations) {
             comboBox.getItems().add(item.toString());
         }
@@ -289,7 +327,13 @@ public class MainUI extends Application {
             public void handle(ActionEvent event) {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
-                        game.playCorporation(item);
+                        if (type == 1){
+                            game.playCorporation(item);
+                            game.getLastTile().setCorp(item);
+                        }
+                        else{
+                            game.getGameBoard().mergeCorp(corporations, item, game.getLastTile());
+                        }
                     }
                 }
                 disp.hide();

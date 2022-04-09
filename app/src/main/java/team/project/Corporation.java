@@ -208,6 +208,9 @@ public class Corporation {
     public void addTile(Tile tiles){
         playTiles.add(tiles);
     }
+    public Stack<Tile> getPlayTiles(){
+        return playTiles;
+    }
 
 }
 

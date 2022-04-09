@@ -28,6 +28,7 @@ package team.project;
 public class Tile {
     private final String letterID;
     private final int numbers;
+    private Corporation corp;
 
     /**
      * Instance Variables
@@ -38,6 +39,7 @@ public class Tile {
     public Tile(String lett, int num){
         this.letterID = lett;
         this.numbers = num;
+        this.corp = null;
     }
 
     public int getNumbers(){return numbers;}
@@ -65,6 +67,12 @@ public class Tile {
         }
     }
 
+    public Corporation getCorp(){
+        return corp;
+    }
+    public void setCorp(Corporation corporation){
+        this.corp = corp;
+    }
     @Override
     public String toString() {
         String sb = getLetterID() + getNumbers();
