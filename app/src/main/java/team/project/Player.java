@@ -36,8 +36,8 @@ import java.util.Stack;
 public class Player {
     private Tile[] playerTiles;
     private String name;
-    private ArrayList<Corporation> founded;
-    private ArrayList<Stack<Stock>> corps;
+    private final ArrayList<Corporation> founded;
+    private final ArrayList<Stack<Stock>> corps;
     private Stack<Stock> corp1;
     private Stack<Stock> corp2;
     private Stack<Stock> corp3;
@@ -55,6 +55,8 @@ public class Player {
      * @author Baylor McElroy
      */
     public Player(String name) {
+        founded = new ArrayList<>();
+        corps = new ArrayList<>();
         playerTiles = new Tile[6];
         this.name = name;
         this.money = 6000;
