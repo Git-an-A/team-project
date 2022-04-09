@@ -61,33 +61,66 @@ public class GameBoard {
         }
     }
 
+    /**
+     * This will give the players the sharebonus when a corporation is merged
+     *
+     * @param corp corporation that is merged
+     */
     public void ShareBonus(Corporation corp){
         Queue playerList = Game.getInstance().playerQueue();
         Player next = findPlayer();
         List<Player> tempCompare = null;
 
+//        playerList.add(new Object());
+//        playerList.add(new Object());
+
+
         int maxStock = 1;
+        int secondStock = 1;
         for(int i= 0; i< playerList.size(); i++){
             if(next.getCorps().contains(corp.getName())){
                 tempCompare.add(next);
                 continue;
             }
             findNext();
+//            System.out.println(next.toString());
+//            System.out.println("Got this far");
         }
-//        for(int i=0; i< tempCompare.size(); i++) {
-//            int current = tempCompare.get(i).getCorps().size();
-//            if(current > maxStock){
-//                maxStock = current;
-//                continue;
-//            }
-//            for(int n= 10; n > 0; n--) {
-//                int check = tempCompare.get(n).getCorps().size();
-//                if(check > maxStock) {
-//                    maxStock = current;
-//                }
-//            }
-//        }
+
+        Player majorWinner = null;
+        Player minorWinner = null;
+        for(int i=0; i< tempCompare.size(); i++) {
+            int current = tempCompare.get(i).getCorps().size();
+            if(current > maxStock){
+                maxStock = current;
+                majorWinner = tempCompare.get(i);
+            }
+//            System.out.println(current);
+        }
+        for(int i=0; i< tempCompare.size(); i++) {
+            tempCompare.remove(majorWinner);
+            int current = tempCompare.get(i).getCorps().size();
+
+            if (current > secondStock) {
+                secondStock = current;
+                minorWinner = tempCompare.get(i);
+            }
+        }
+
+        majorWinner.giveMoney(corp.giveMajorBonus());
+        minorWinner.giveMoney(corp.giveMinorBonus());
+//        System.out.println(majorWinner.toString() + minorWinner.toString());
     }
+//    public static void main(String[] args) {
+//        GameBoard testing = new GameBoard();
+//        Corporation corp = new Corporation("name", 3);
+//        Player player1 = new Player("player1");
+//        player1.buyStock(corp,0,0);
+//        Player player2 = new Player("player2");
+//        player2.buyStock(corp,0,0);
+//        player2.buyStock(corp,0,0);
+//        testing.ShareBonus(corp);
+//    }
 
     public Player findPlayer(){
         Player player = Game.getInstance().getCurrentPlayer();
