@@ -41,6 +41,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.lang.management.ClassLoadingMXBean;
@@ -121,49 +122,41 @@ public class MainUI extends Application {
         int y = tile.getYpos();
 
         switch (colorType){
-            case 1 -> {
+            case 0 -> {
                 //black
                 butAr[x][y].setStyle("-fx-background-color: #12090d; ");
             }
-            case 2 -> {
+            case 1 -> {
                 //blue
                 butAr[x][y].setStyle("-fx-background-color: #3434eb; ");
             }
-            case 3 -> {
+            case 2 -> {
                 //yellow
                 butAr[x][y].setStyle("-fx-background-color: #e2eb34; ");
             }
-            case 4 -> {
+            case 3 -> {
                 //red
                 butAr[x][y].setStyle("-fx-background-color: #d40f0f; ");
             }
-            case 5 -> {
+            case 4 -> {
                 //purple
                 butAr[x][y].setStyle("-fx-background-color: #cf11a9; ");
             }
-            case 6 -> {
+            case 5 -> {
                 //green
                 butAr[x][y].setStyle("-fx-background-color: #13cc10; ");
             }
-            case 7 -> {
+            case 6 -> {
                 //orange
                 butAr[x][y].setStyle("-fx-background-color: #cc930e; ");
             }
-            case 8 -> {
-                //brown
-                butAr[x][y].setStyle("-fx-background-color: #523a02; ");
-            }
-            case 9 -> {
+            case 7 -> {
                 //pink
                 butAr[x][y].setStyle("-fx-background-color: #ff5ca8; ");
             }
-
-
         }
         //add different colors
-        System.out.println("Current players Tiles (who just played)");
-        Game.getInstance().getCurrentPlayer().printTiles();
-        System.out.println("Play tile bottom");
+
 
     }
 
@@ -198,31 +191,31 @@ public class MainUI extends Application {
         Player tempPlayer = game.getCurrentPlayer();
         if(toggleGroup.getSelectedToggle() == tileRB1){
             tile = tempPlayer.removeTile(0);
-            System.out.println("0 tile played by " + tempPlayer);
+            //System.out.println("0 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB2){
             tile = tempPlayer.removeTile(1);
-            System.out.println("1 tile played by " + tempPlayer);
+            //System.out.println("1 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB3){
             tile = tempPlayer.removeTile(2);
-            System.out.println("2 tile played by " + tempPlayer);
+            //System.out.println("2 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB4){
             tile = tempPlayer.removeTile(3);
-            System.out.println("3 tile played by " + tempPlayer);
+            //System.out.println("3 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB5){
             tile = tempPlayer.removeTile(4);
-            System.out.println("4 tile played by " + tempPlayer);
+            //System.out.println("4 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB6){
             tile = tempPlayer.removeTile(5);
-            System.out.println("5 tile played by " + tempPlayer);
+            //System.out.println("5 tile played by " + tempPlayer);
         }
 
         if(tile!=null){
-            System.out.println(tile.toString());
+            System.out.println(tile.toString() + " has been played!");
             game.playTile(tile);
         }
     }
@@ -322,7 +315,7 @@ public class MainUI extends Application {
         stage.hide();
 
         Stage disp = new Stage();
-
+        disp.initStyle(StageStyle.UNDECORATED);
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -353,6 +346,7 @@ public class MainUI extends Application {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
                         if (type == 1){
+                            System.out.println("Type = 1");
                             game.playCorporation(item);
                             game.getLastTile().setCorp(item);
                         }
@@ -368,7 +362,7 @@ public class MainUI extends Application {
 
         disp.setResizable(false);
         disp.setScene(scene);
-        disp.show();
+        disp.showAndWait();
 
 
     }

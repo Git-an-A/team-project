@@ -73,7 +73,7 @@ public class Tiles{
      */
     public Tile dealTile(){
         if(tileList.size()> 0){
-            System.out.println("Tile delt: " + tileList.pop());
+            //System.out.println("Tile delt: " + tileList.pop());
             return tileList.remove(0);
         }
 

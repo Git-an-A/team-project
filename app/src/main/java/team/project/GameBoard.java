@@ -58,6 +58,7 @@ public class GameBoard {
                 t.setCorp(corporation);
             }
             tile.setCorp(corporation);
+            Game.getInstance().colorTile(tile, corporation.getColorNum());
         }
     }
 
@@ -157,7 +158,7 @@ public class GameBoard {
      * @author Baylor McELroy
      */
     public void nextState(){
-        System.out.println("Game board next state top");
+        //System.out.println("Game board next state top");
         switch (boardState){
             case play -> {
                 boardState = exchange;
@@ -178,13 +179,13 @@ public class GameBoard {
      */
     private List<Corporation> createCorporationList(){
         List<Corporation> corporations = new ArrayList<>();
-        corporations.add(new Corporation("Worldwide", 1));
-        corporations.add(new Corporation("Sackson", 1));
-        corporations.add(new Corporation("Festival", 2));
-        corporations.add(new Corporation("Imperial", 2));
-        corporations.add(new Corporation("American", 2));
-        corporations.add(new Corporation("Continental", 3));
-        corporations.add(new Corporation("Tower", 3));
+        corporations.add(new Corporation("Worldwide", 1, 1));
+        corporations.add(new Corporation("Sackson", 1, 2));
+        corporations.add(new Corporation("Festival", 2, 3));
+        corporations.add(new Corporation("Imperial", 2, 4));
+        corporations.add(new Corporation("American", 2, 5));
+        corporations.add(new Corporation("Continental", 3, 6));
+        corporations.add(new Corporation("Tower", 3, 7));
 
         return corporations;
     }
@@ -197,7 +198,7 @@ public class GameBoard {
         return tiles;
     }
     public List<Corporation> getUnplacedCorporations(){
-        List<Corporation> tempList= new ArrayList<>();
+        List<Corporation> tempList = new ArrayList<>();
         for (Corporation c: corporationList) {
             if (!c.getPlayed()){
                 tempList.add(c);
