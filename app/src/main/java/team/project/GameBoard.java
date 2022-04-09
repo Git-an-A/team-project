@@ -32,9 +32,9 @@ import java.util.Stack;
 
 public class GameBoard {
     private Tiles tiles;
-    private int corporationsPlaced;
+    //private int corporationsPlaced;
     private int size;
-    List<Stack<Stock>> corps;
+    List<Corporation> corporationList;
     private int[][] board;
     private final String play = "PLAY";
     private final String exchange = "EXCHANGE";
@@ -46,10 +46,9 @@ public class GameBoard {
         for(int i=0;i<10;i++){
             tiles.shuffle();
         }
-        corps = new ArrayList<Stack<Stock>>();
-        for(int i=0;i<8;i++){
-            corps.add(new Stack<Stock>());
-        }
+        corporationList = new ArrayList<Corporation>();
+
+        corporationList = createCorporationList();
 
         boardState = play;
     }
@@ -98,7 +97,23 @@ public class GameBoard {
             }
         }
     }
+    /**
+     * Corporation makings
+     * @return the list of the 7 corporation
+     * Needs more work
+     */
+    private List<Corporation> createCorporationList(){
+        List<Corporation> corporations = new ArrayList<>();
+        corporations.add(new Corporation("Worldwide", 1));
+        corporations.add(new Corporation("Sackson", 1));
+        corporations.add(new Corporation("Festival", 2));
+        corporations.add(new Corporation("Imperial", 2));
+        corporations.add(new Corporation("American", 2));
+        corporations.add(new Corporation("Continental", 3));
+        corporations.add(new Corporation("Tower", 3));
 
+        return corporations;
+    }
     public String getBoardState(){
         return boardState;
     }
@@ -106,5 +121,14 @@ public class GameBoard {
     public Tiles getTiles(){
 
         return tiles;
+    }
+    public List<Corporation> getUnplacedCorporations(){
+        List<Corporation> tempList= new ArrayList<>();
+        for (Corporation c: corporationList) {
+            if (c.getPlayed()){
+                tempList.add(c);
+            }
+        }
+        return tempList;
     }
 }

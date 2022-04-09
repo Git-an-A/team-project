@@ -44,7 +44,7 @@ public class Game {
     private List<Corporation> corporationList;
 
     private Game(){
-        corporationList = createCorporationList();
+
         playedTiles = new Stack<>();
     }
     /**
@@ -121,23 +121,7 @@ public class Game {
         return instance;
     }
 
-    /**
-     * Corporation makings
-     * @return the list of the 7 corporation
-     * Needs more work
-     */
-    private List<Corporation> createCorporationList(){
-        List<Corporation> corporations = new ArrayList<>();
-        corporations.add(new Corporation("Worldwide", 1));
-        corporations.add(new Corporation("Sackson", 1));
-        corporations.add(new Corporation("Festival", 2));
-        corporations.add(new Corporation("Imperial", 2));
-        corporations.add(new Corporation("American", 2));
-        corporations.add(new Corporation("Continental", 3));
-        corporations.add(new Corporation("Tower", 3));
 
-        return corporations;
-    }
 
     /**
      * saves current game state
@@ -234,6 +218,14 @@ public class Game {
 
     public Tile getLastTile(){
         return playedTiles.peek();
+    }
+
+    public List<Corporation> getUnplacedCorporations(){
+        return gameBoard.getUnplacedCorporations();
+    }
+
+    public void playCorporation(Corporation corporation){
+
     }
 
     public void endGame() {}

@@ -35,6 +35,7 @@ public class Corporation {
     private Stack<Stock> stocks;
     private String companyName;
     private int number;
+    private boolean played;
 
     // I put this here to note the prices
     private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
@@ -58,7 +59,7 @@ public class Corporation {
         this.companyName = companyName;
         this.stocks = new Stack<Stock>();
         stocks = startingStock();
-
+        played = false;
         if(number == 1){
             this.baseValue = 200;
         }
@@ -195,7 +196,15 @@ public class Corporation {
             this.baseValue = getValue(1);
         }
     }
-
+    public void setPlayed(boolean played){
+        this.played = played;
+    }
+    public boolean getPlayed(){
+        return played;
+    }
+    public String toString(){
+        return companyName;
+    }
     public void addTile(Tile tiles){
         playTiles.add(tiles);
     }

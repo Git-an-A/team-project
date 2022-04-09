@@ -43,6 +43,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.lang.management.ClassLoadingMXBean;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -266,6 +267,40 @@ public class MainUI extends Application {
         disp.show();
 
         System.out.println("MainUI.java dispMenu()");
+
+    }
+    private void chooseCorp(){
+        Stage disp = new Stage();
+        disp.setTitle("Choose a corporation");
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+        scene.setFill(Color.LIGHTGRAY);
+
+        ComboBox<String> comboBox = new ComboBox<>();
+        List<Corporation> corporations = game.getUnplacedCorporations();
+        for (Corporation item: corporations) {
+            comboBox.getItems().add(item.toString());
+        }
+
+        Button button = createButton("Select", 100, 100);
+        comboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (Corporation item: corporations) {
+                    if(comboBox.getValue().equals(item.toString())){
+                        game.playCorporation(item);
+                    }
+                }
+                disp.hide();
+            }
+        });
+        root.getChildren().add(comboBox);
+
+        disp.setResizable(false);
+        disp.setScene(scene);
+        disp.show();
+
 
     }
     /**
