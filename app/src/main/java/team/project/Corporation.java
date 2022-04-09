@@ -125,7 +125,7 @@ public class Corporation {
     private int getValue(int number){
         return baseValue + 100 * number;
     }
-    
+
     //    public void sellStock(Player player, Stock stock){
 //        player.giveMoney(stock.getValue());
 //        stocks.add(stock);
