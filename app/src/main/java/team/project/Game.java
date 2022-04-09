@@ -169,7 +169,12 @@ public class Game {
      */
     public void nextTurn() {
         players.add(currentPlayer);
-        currentPlayer  = players.poll();
+        this.currentPlayer  = players.poll();
+    }
+
+    public Queue playerQueue(){
+        Queue playerList = players;
+        return playerList;
     }
 
     public boolean tallyScore(Player player, int amount) {
