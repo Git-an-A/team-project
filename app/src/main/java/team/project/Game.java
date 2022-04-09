@@ -25,7 +25,7 @@
 package team.project;
 
 import javafx.stage.Stage;
-import org.apache.commons.collections4.CollectionUtils;
+
 
 import java.util.*;
 
@@ -83,13 +83,9 @@ public class Game {
             for(int j=0; j<6; j++){
 //                System.out.println("j (of 6 tiles)" + j);
                 player.addTile(gameBoard.getTiles().dealTile()); //error here
-                System.out.println();
 //                System.out.println("Player get start tile? " + player.getTile(j));
             }
-            System.out.println("All player tiles: ");
-            for(int k=0;k<6;k++){
-                System.out.println("k " + k + " tile " + player.getTile(k));
-            }
+
 //            System.out.println(player);
         }
         System.out.println("Game.java startGame() post for loop");
@@ -99,7 +95,6 @@ public class Game {
 //        System.out.println("current player" + currentPlayer);
 //        System.out.println(currentPlayer.toString());
         try {
-            System.out.println("test");
             gameOptions.hide();
             mainUI.start(new Stage());
         } catch (Exception e) {
@@ -220,21 +215,26 @@ public class Game {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
             //left
-            if(playedTileXpos - tileXpos == 1){
+            if(playedTileXpos - tileXpos == 1 && playedTileYpos - tileYpos == 0){
+                System.out.println("left");
                 tileStack.add(playedTile);
             }
             //right
-            else if(tileXpos - playedTileXpos == 1){
+            else if(tileXpos - playedTileXpos == 1 && playedTileYpos - tileYpos == 0){
+                System.out.println("right");
                 tileStack.add(playedTile);
             }
             //above
-            else if(playedTileYpos - tileYpos == 1){
+            else if(playedTileYpos - tileYpos == 1 && playedTileXpos - tileXpos == 0){
+                System.out.println("above");
                 tileStack.add(playedTile);
             }
             //below
-            else if(tileYpos - playedTileYpos == 1){
+            else if(tileYpos - playedTileYpos == 1 && playedTileXpos - tileXpos == 0){
+                System.out.println("below");
                 tileStack.add(playedTile);
             }
+
         }
         //add tile to corporation
         if(tileStack.size()==0){
@@ -251,11 +251,20 @@ public class Game {
             else {
                 //make corporation
                 List<Corporation> corps = getUnplacedCorporations();
+                System.out.println(corps.toString() + " corps ");
                 mainUI.chooseCorp(corps, 1);
+                System.out.println("Unchosen corps" + getUnplacedCorporations());
                 //get chosen corp
-                Collection<Corporation> aMinusB = CollectionUtils.subtract(corps, getUnplacedCorporations());
-                Corporation c = aMinusB.iterator().next();
+                Corporation tempCorp = null;
+                for (Corporation corporation: corps) {
+                    if(!getUnplacedCorporations().contains(corporation)){
+                        tempCorp = corporation;
+                    }
+                }
+                Corporation c = tempCorp;
+                System.out.println("new color number: " + c.getColorNum());
                 mainUI.colorTile(tile, c.getColorNum());
+                mainUI.colorTile(tempTile, c.getColorNum());
                 //make other tile corporation
                 tempTile.setCorp(c);
             }

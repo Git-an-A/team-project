@@ -149,7 +149,7 @@ public class GameBoard {
      * @author Baylor McELroy
      */
     public void nextState(){
-        System.out.println("Game board next state top");
+        //System.out.println("Game board next state top");
         switch (boardState){
             case play -> {
                 boardState = exchange;
@@ -189,7 +189,7 @@ public class GameBoard {
         return tiles;
     }
     public List<Corporation> getUnplacedCorporations(){
-        List<Corporation> tempList= new ArrayList<>();
+        List<Corporation> tempList = new ArrayList<>();
         for (Corporation c: corporationList) {
             if (!c.getPlayed()){
                 tempList.add(c);

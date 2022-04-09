@@ -156,9 +156,7 @@ public class MainUI extends Application {
             }
         }
         //add different colors
-        System.out.println("Current players Tiles (who just played)");
-        Game.getInstance().getCurrentPlayer().printTiles();
-        System.out.println("Play tile bottom");
+
 
     }
 
@@ -193,31 +191,31 @@ public class MainUI extends Application {
         Player tempPlayer = game.getCurrentPlayer();
         if(toggleGroup.getSelectedToggle() == tileRB1){
             tile = tempPlayer.removeTile(0);
-            System.out.println("0 tile played by " + tempPlayer);
+            //System.out.println("0 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB2){
             tile = tempPlayer.removeTile(1);
-            System.out.println("1 tile played by " + tempPlayer);
+            //System.out.println("1 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB3){
             tile = tempPlayer.removeTile(2);
-            System.out.println("2 tile played by " + tempPlayer);
+            //System.out.println("2 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB4){
             tile = tempPlayer.removeTile(3);
-            System.out.println("3 tile played by " + tempPlayer);
+            //System.out.println("3 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB5){
             tile = tempPlayer.removeTile(4);
-            System.out.println("4 tile played by " + tempPlayer);
+            //System.out.println("4 tile played by " + tempPlayer);
         }
         else if(toggleGroup.getSelectedToggle() == tileRB6){
             tile = tempPlayer.removeTile(5);
-            System.out.println("5 tile played by " + tempPlayer);
+            //System.out.println("5 tile played by " + tempPlayer);
         }
 
         if(tile!=null){
-            System.out.println(tile.toString());
+            System.out.println(tile.toString() + " has been played!");
             game.playTile(tile);
         }
     }
@@ -348,6 +346,7 @@ public class MainUI extends Application {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
                         if (type == 1){
+                            System.out.println("Type = 1");
                             game.playCorporation(item);
                             game.getLastTile().setCorp(item);
                         }
@@ -363,7 +362,7 @@ public class MainUI extends Application {
 
         disp.setResizable(false);
         disp.setScene(scene);
-        disp.show();
+        disp.showAndWait();
 
 
     }

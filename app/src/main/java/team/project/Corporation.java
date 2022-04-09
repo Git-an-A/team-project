@@ -59,6 +59,7 @@ public class Corporation {
     public Corporation(String companyName, int number, int colorNum){
         this.companyName = companyName;
         this.stocks = new Stack<Stock>();
+        this.colorNum = colorNum;
         stocks = startingStock();
         played = false;
         if(number == 1){
