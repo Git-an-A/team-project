@@ -41,6 +41,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class MainUI extends Application {
     private Group root;
     private Label turnLabel;
     private GridPane buttonGrid;
-    Button[][] butAr;
+    private Button[][] butAr;
     private Button menuButton;
     private GridPane infoTable;
     private Label yourTileLabel;
@@ -75,6 +76,7 @@ public class MainUI extends Application {
     private Label moneyLabel;
     private Button next;
     final ToggleGroup toggleGroup = new ToggleGroup();
+    private final Stage stage = new Stage();
 
     /**
      * Adds all controls to UI
@@ -248,7 +250,7 @@ public class MainUI extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-
+        stage = this.stage;
         System.out.println("MainUI.java start() top");
         stage.setTitle("Acquire");
 
@@ -317,7 +319,20 @@ public class MainUI extends Application {
      * Displays a new window to select starting a new corporation
      */
     public void chooseCorp(List<Corporation> corporations, int type){
+        stage.hide();
+
         Stage disp = new Stage();
+
+        disp.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         disp.setTitle("Choose a corporation");
 
         Group root = new Group();

@@ -54,15 +54,15 @@ public class Tile {
 
     public int getYpos(){
         switch (letterID){
-            case "A" : return 1;
-            case "B" : return 2;
-            case "C" : return 3;
-            case "D" : return 4;
-            case "E" : return 5;
-            case "F" : return 6;
-            case "G" : return 7;
-            case "H" : return 8;
-            case "I" : return 9;
+            case "A" : return 0;
+            case "B" : return 1;
+            case "C" : return 2;
+            case "D" : return 3;
+            case "E" : return 4;
+            case "F" : return 5;
+            case "G" : return 6;
+            case "H" : return 7;
+            case "I" : return 8;
             default : return -1;
         }
     }
