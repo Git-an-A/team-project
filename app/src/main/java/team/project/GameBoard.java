@@ -46,8 +46,6 @@ public class GameBoard {
         for(int i=0;i<10;i++){
             tiles.shuffle();
         }
-        corporationList = new ArrayList<Corporation>();
-
         corporationList = createCorporationList();
 
         boardState = play;
@@ -121,7 +119,7 @@ public class GameBoard {
     public List<Corporation> getUnplacedCorporations(){
         List<Corporation> tempList= new ArrayList<>();
         for (Corporation c: corporationList) {
-            if (c.getPlayed()){
+            if (!c.getPlayed()){
                 tempList.add(c);
             }
         }

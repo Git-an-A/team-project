@@ -233,7 +233,7 @@ public class Game {
         //add tile to corporation
         if(tileStack.size()==0){
             //no corporation
-            mainUI.colorTile(tile, 0);
+            mainUI.colorTile(tile, 1);
         }
         else if (tileStack.size() == 1){
             //add to corporation

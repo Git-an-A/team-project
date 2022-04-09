@@ -120,31 +120,40 @@ public class MainUI extends Application {
 
         switch (colorType){
             case 1 -> {
-                butAr[x][y].setStyle("-fx-background-color: #ffffff; ");
+                //black
+                butAr[x][y].setStyle("-fx-background-color: #12090d; ");
             }
             case 2 -> {
-                butAr[x][y].setStyle("-fx-background-color: #000001; ");
+                //blue
+                butAr[x][y].setStyle("-fx-background-color: #3434eb; ");
             }
             case 3 -> {
-                butAr[x][y].setStyle("-fx-background-color: #00000f; ");
+                //yellow
+                butAr[x][y].setStyle("-fx-background-color: #e2eb34; ");
             }
             case 4 -> {
-                butAr[x][y].setStyle("-fx-background-color: #00001f; ");
+                //red
+                butAr[x][y].setStyle("-fx-background-color: #d40f0f; ");
             }
             case 5 -> {
-                butAr[x][y].setStyle("-fx-background-color: #0000ff; ");
+                //purple
+                butAr[x][y].setStyle("-fx-background-color: #cf11a9; ");
             }
             case 6 -> {
-                butAr[x][y].setStyle("-fx-background-color: #0001ff; ");
+                //green
+                butAr[x][y].setStyle("-fx-background-color: #13cc10; ");
             }
             case 7 -> {
-                butAr[x][y].setStyle("-fx-background-color: #000fff; ");
+                //orange
+                butAr[x][y].setStyle("-fx-background-color: #cc930e; ");
             }
             case 8 -> {
-                butAr[x][y].setStyle("-fx-background-color: #001fff; ");
+                //brown
+                butAr[x][y].setStyle("-fx-background-color: #523a02; ");
             }
             case 9 -> {
-                butAr[x][y].setStyle("-fx-background-color: #00ffff; ");
+                //pink
+                butAr[x][y].setStyle("-fx-background-color: #ff5ca8; ");
             }
 
 
@@ -316,9 +325,10 @@ public class MainUI extends Application {
         scene.setFill(Color.LIGHTGRAY);
 
         ComboBox<String> comboBox = new ComboBox<>();
-
+        System.out.println(corporations);
         for (Corporation item: corporations) {
             comboBox.getItems().add(item.toString());
+            System.out.println(item + "item");
         }
 
         Button button = createButton("Select", 100, 100);
