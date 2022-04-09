@@ -57,6 +57,7 @@ public class GameBoard {
                 t.setCorp(corporation);
             }
             tile.setCorp(corporation);
+            Game.getInstance().colorTile(tile, corporation.getColorNum());
         }
     }
     public boolean giveStocks(Stock stockName, int amount){
@@ -98,13 +99,13 @@ public class GameBoard {
      */
     private List<Corporation> createCorporationList(){
         List<Corporation> corporations = new ArrayList<>();
-        corporations.add(new Corporation("Worldwide", 1));
-        corporations.add(new Corporation("Sackson", 1));
-        corporations.add(new Corporation("Festival", 2));
-        corporations.add(new Corporation("Imperial", 2));
-        corporations.add(new Corporation("American", 2));
-        corporations.add(new Corporation("Continental", 3));
-        corporations.add(new Corporation("Tower", 3));
+        corporations.add(new Corporation("Worldwide", 1, 1));
+        corporations.add(new Corporation("Sackson", 1, 2));
+        corporations.add(new Corporation("Festival", 2, 3));
+        corporations.add(new Corporation("Imperial", 2, 4));
+        corporations.add(new Corporation("American", 2, 5));
+        corporations.add(new Corporation("Continental", 3, 6));
+        corporations.add(new Corporation("Tower", 3, 7));
 
         return corporations;
     }

@@ -41,6 +41,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.lang.management.ClassLoadingMXBean;
@@ -121,44 +122,38 @@ public class MainUI extends Application {
         int y = tile.getYpos();
 
         switch (colorType){
-            case 1 -> {
+            case 0 -> {
                 //black
                 butAr[x][y].setStyle("-fx-background-color: #12090d; ");
             }
-            case 2 -> {
+            case 1 -> {
                 //blue
                 butAr[x][y].setStyle("-fx-background-color: #3434eb; ");
             }
-            case 3 -> {
+            case 2 -> {
                 //yellow
                 butAr[x][y].setStyle("-fx-background-color: #e2eb34; ");
             }
-            case 4 -> {
+            case 3 -> {
                 //red
                 butAr[x][y].setStyle("-fx-background-color: #d40f0f; ");
             }
-            case 5 -> {
+            case 4 -> {
                 //purple
                 butAr[x][y].setStyle("-fx-background-color: #cf11a9; ");
             }
-            case 6 -> {
+            case 5 -> {
                 //green
                 butAr[x][y].setStyle("-fx-background-color: #13cc10; ");
             }
-            case 7 -> {
+            case 6 -> {
                 //orange
                 butAr[x][y].setStyle("-fx-background-color: #cc930e; ");
             }
-            case 8 -> {
-                //brown
-                butAr[x][y].setStyle("-fx-background-color: #523a02; ");
-            }
-            case 9 -> {
+            case 7 -> {
                 //pink
                 butAr[x][y].setStyle("-fx-background-color: #ff5ca8; ");
             }
-
-
         }
         //add different colors
         System.out.println("Current players Tiles (who just played)");
@@ -322,7 +317,7 @@ public class MainUI extends Application {
         stage.hide();
 
         Stage disp = new Stage();
-
+        disp.initStyle(StageStyle.UNDECORATED);
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {

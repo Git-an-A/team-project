@@ -25,6 +25,7 @@
 package team.project;
 
 import javafx.stage.Stage;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.*;
 
@@ -205,11 +206,11 @@ public class Game {
      */
     public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
-        playedTiles.add(tile);
+
         int tileXpos = tile.getXpos();
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
-        Tile tempTile = new Tile("z", 26);
+        Tile tempTile;
         for (Tile playedTile: playedTiles) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
@@ -218,32 +219,40 @@ public class Game {
                 tileStack.add(playedTile);
             }
             //right
-            if(tileXpos - playedTileXpos == 1){
+            else if(tileXpos - playedTileXpos == 1){
                 tileStack.add(playedTile);
             }
             //above
-            if(playedTileYpos - tileYpos == 1){
+            else if(playedTileYpos - tileYpos == 1){
                 tileStack.add(playedTile);
             }
             //below
-            if(tileYpos - playedTileYpos == 1){
+            else if(tileYpos - playedTileYpos == 1){
                 tileStack.add(playedTile);
             }
         }
         //add tile to corporation
         if(tileStack.size()==0){
             //no corporation
-            mainUI.colorTile(tile, 1);
+            mainUI.colorTile(tile, 0);
         }
         else if (tileStack.size() == 1){
             //add to corporation
             tempTile = tileStack.pop();
             if(tempTile.getCorp() != null){
                 tile.setCorp(tempTile.getCorp());
+                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
             }
             else {
                 //make corporation
-                mainUI.chooseCorp(getUnplacedCorporations(), 1);
+                List<Corporation> corps = getUnplacedCorporations();
+                mainUI.chooseCorp(corps, 1);
+                //get chosen corp
+                Collection<Corporation> aMinusB = CollectionUtils.subtract(corps, getUnplacedCorporations());
+                Corporation c = aMinusB.iterator().next();
+                mainUI.colorTile(tile, c.getColorNum());
+                //make other tile corporation
+                tempTile.setCorp(c);
             }
         }
         else {
@@ -256,7 +265,7 @@ public class Game {
 
         }
 
-
+        playedTiles.add(tile);
         //get corporation color
 
 
@@ -280,7 +289,9 @@ public class Game {
         corporation.giveStock(currentPlayer);
         corporation.setPlayed(true);
     }
-
+    public void colorTile(Tile tile, int colorType){
+        mainUI.colorTile(tile, colorType);
+    }
     public GameBoard getGameBoard(){
         return gameBoard;
     }
