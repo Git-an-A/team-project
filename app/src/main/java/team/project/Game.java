@@ -173,8 +173,7 @@ public class Game {
     }
 
     public Queue playerQueue(){
-        Queue playerList = players;
-        return playerList;
+        return players;
     }
 
     public boolean tallyScore(Player player, int amount) {

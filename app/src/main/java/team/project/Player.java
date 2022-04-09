@@ -72,7 +72,7 @@ public class Player {
      * @author Baylor McElroy
      */
     public void addTile(Tile tile){
-        System.out.println("Player.java addTile() top");
+//        System.out.println("Player.java addTile() top");
         for(int i=0;i<6;i++){
             if(playerTiles[i]==null){
 //                System.out.println("Player tiles pre " + playerTiles[i] + " location " + i);
@@ -139,13 +139,16 @@ public class Player {
         }
     }
 
-    public void buyStock(Corporation corporation, int cost, int value) {
+    /**
+     * Player buys a stock
+     * @param corporation desired corporation they buy from
+     */
+    public void buyStock(Corporation corporation) {
         //remove stock to corporation stack
         int number = corporation.getNumber();
         Stack<Stock> tempStack = corps.get(number);
         tempStack.add(corporation.giveStock(this));
         corps.set(number, tempStack);
-        takeMoney(cost);
     }
 
     /**
@@ -183,7 +186,11 @@ public class Player {
         return corps;
     }
 
-    //will work more on this
+    /**
+     * Trade stocks with a ratio of 3:1
+     * @param oldCorporation old corporation which lost the merge
+     * @param newCorporation new corporation which won the merge
+     */
     public void tradeStocks(Corporation oldCorporation, Corporation newCorporation) {
         //get old corporation number
         int number = oldCorporation.getNumber();
@@ -217,13 +224,18 @@ public class Player {
         //System.out.println("Works; old: " + oldCorporation.getSize() + "new:" + newCorporation.getSize());
     }
 
-    public void sellStocks(Corporation corporation, int cost, int value) {
+    /**
+     * Player sells stocks back to the corporation
+     *
+     * @param corporation respective corporation which the stocks are from
+     */
+    public void sellStocks(Corporation corporation) {
         //remove stock from player's inventory
         int number = corporation.getNumber();
         Stack<Stock> tempStack = corps.get(number);
-        int amount = value * tempStack.size();
+        int amount = corporation.getValue(tempStack.size());
         giveMoney(amount);
-
+        corporation.removeStock(this);
         corps.remove(tempStack);
     }
 
@@ -235,9 +247,19 @@ public class Player {
         return new GameOptions();
     }
 
+    /**
+     * Founding a corporation
+     * @param corporation corporation which the player is founding
+     */
     public void addFounded(Corporation corporation){
         founded.add(corporation);
     }
+
+    /**
+     * Methods that deals with money
+     *
+     * @param amount price
+     */
     public void takeMoney(int amount){
         money = money - amount;
     }

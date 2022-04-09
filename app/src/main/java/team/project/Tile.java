@@ -33,11 +33,11 @@ public class Tile {
     /**
      * Instance Variables
      *
-     * @param lett is the letters of the tiles
+     * @param letter is the letters of the tiles
      * @param num is the numbers of the tiles
      */
-    public Tile(String lett, int num){
-        this.letterID = lett;
+    public Tile(String letter, int num){
+        this.letterID = letter;
         this.numbers = num;
         this.corp = null;
     }
