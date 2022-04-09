@@ -193,7 +193,7 @@ public class Corporation {
     }
 
     public void setBaseValue() {
-        if(playTiles.size() >2) {
+        if(playTiles.size() >2 && playTiles.size()<11) {
             this.baseValue = getValue(1);
         }
     }
