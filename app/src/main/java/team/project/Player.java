@@ -169,12 +169,12 @@ public class Player {
         return counter;
     }
 
-    //testing to see if it works
+//    //testing to see if it works
 //    public static void main(String[] args) {
 //        Player person = new Player("some");
 //        person.viewStocks("WorldWide", person);
-//        Corporation corp1 = new Corporation("WorldWide", 1,1);
-//        Corporation corp2 = new Corporation("America", 2,2);
+//        Corporation corp1 = new Corporation("WorldWide", 1);
+//        Corporation corp2 = new Corporation("America", 2);
 //
 //        person.tradeStocks(corp1,corp2);
 //    }

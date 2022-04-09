@@ -28,6 +28,7 @@ import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class GameBoard {
@@ -66,6 +67,43 @@ public class GameBoard {
 
         return null; //new corp
     }
+
+    public void ShareBonus(Corporation corp){
+        Queue playerList = Game.getInstance().playerQueue();
+        Player next = findPlayer();
+        List<Player> tempCompare = null;
+
+        int maxStock = 1;
+        for(int i= 0; i< playerList.size(); i++){
+            if(next.getCorps().contains(corp.getName())){
+                tempCompare.add(next);
+                continue;
+            }
+            findNext();
+        }
+//        for(int i=0; i< tempCompare.size(); i++) {
+//            int current = tempCompare.get(i).getCorps().size();
+//            if(current > maxStock){
+//                maxStock = current;
+//                continue;
+//            }
+//            for(int n= 10; n > 0; n--) {
+//                int check = tempCompare.get(n).getCorps().size();
+//                if(check > maxStock) {
+//                    maxStock = current;
+//                }
+//            }
+//        }
+    }
+
+    public Player findPlayer(){
+        Player player = Game.getInstance().getCurrentPlayer();
+        return player;
+    }
+    public void findNext(){
+        Game.getInstance().playerQueue().poll();
+    }
+
     public boolean giveStocks(Stock stockName, int amount){
         return true;
     }
