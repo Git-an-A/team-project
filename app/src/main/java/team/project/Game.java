@@ -127,16 +127,16 @@ public class Game {
      * Needs more work
      */
     private List<Corporation> createCorporationList(){
-        List<Corporation> hotelChains = new ArrayList<>();
-        hotelChains.add(new Corporation("Worldwide", 1, 1));
-        hotelChains.add(new Corporation("Sackson", 2, 2));
-        hotelChains.add(new Corporation("Festival", 3, 3));
-        hotelChains.add(new Corporation("Imperial", 4, 4));
-        hotelChains.add(new Corporation("American", 5, 5));
-        hotelChains.add(new Corporation("Continental", 6, 6));
-        hotelChains.add(new Corporation("Tower", 7, 7));
+        List<Corporation> corporations = new ArrayList<>();
+        corporations.add(new Corporation("Worldwide", 1));
+        corporations.add(new Corporation("Sackson", 1));
+        corporations.add(new Corporation("Festival", 2));
+        corporations.add(new Corporation("Imperial", 2));
+        corporations.add(new Corporation("American", 2));
+        corporations.add(new Corporation("Continental", 3));
+        corporations.add(new Corporation("Tower", 3));
 
-        return hotelChains;
+        return corporations;
     }
 
     /**

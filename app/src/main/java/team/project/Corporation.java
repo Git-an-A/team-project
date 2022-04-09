@@ -30,7 +30,7 @@ import java.util.Stack;
 
 public class Corporation {
     private Stack<Tile> playTiles;
-    private int basePrice;
+    private int baseValue;
     private int size;
     private Stack<Stock> stocks;
     private String companyName;
@@ -50,16 +50,24 @@ public class Corporation {
      */
 
     /**
-     * Constructor and sets up the two stock lists (owned and free)
-     * @param companyName Name of the corporation
-     * @param basePrice base value of the corporation
+     * Constructor of corporation
+     * @param companyName name of corporation
+     * @param number identifier
      */
-    public Corporation(String companyName, int basePrice, int number){
+    public Corporation(String companyName, int number){
         this.companyName = companyName;
-        basePrice = basePrice;
         this.stocks = new Stack<Stock>();
         stocks = startingStock();
-        this.number = number;
+
+        if(number == 1){
+            this.baseValue = 200;
+        }
+        else if(number == 2){
+            this.baseValue = 300;
+        }
+        else if(number == 3){
+            this.baseValue = 400;
+        }
     }
 
     /**
@@ -115,18 +123,14 @@ public class Corporation {
         //something that takes money from player
     }
     private int getValue(int number){
-        return basePrice + 100 * number;
+        return baseValue + 100 * number;
     }
-    /**
-     * When the player buys a stock
-     * @param player player who bought it
-     * @param stock stock sold back to corporation
-     */
-    public void sellStock(Player player, Stock stock){
-        player.giveMoney(stock.getValue());
-        stocks.add(stock);
-        //something that changes player's money
-    }
+
+    //    public void sellStock(Player player, Stock stock){
+//        player.giveMoney(stock.getValue());
+//        stocks.add(stock);
+//        //something that changes player's money
+//    }
 
     /**
      * removes stock from player
@@ -135,20 +139,9 @@ public class Corporation {
      */
     public void removeStock(Player playerName){
         Stock stock = null; // null for now
-        int amount = playerName.getCorps().size();
+        int numb = playerName.getCorps().size();
 
         //something that takes stock from player
-
-    }
-    /**
-     * This figures out the current value of the stocks and Corporations
-     *
-     *  @return the value of the stock
-     */
-    public int calculateStockValue(){
-        int size = playTiles.size();
-
-        return size;
     }
 
     /**
@@ -160,11 +153,11 @@ public class Corporation {
     }
 
 
-    public boolean giveMajorBonus(Player player){
-        return true;
+    public int giveMajorBonus(){
+        return getPrice()*10;
     }
 
-    public boolean giveMinorBonus(Player player){return true;}
+    public int giveMinorBonus(){return giveMajorBonus()/2;}
 
     /**
      * Check if the corporation is safe or not
@@ -190,15 +183,17 @@ public class Corporation {
     }
 
     public int getPrice() {
-        return basePrice;
+        return baseValue;
     }
 
     public String getName() {
         return companyName;
     }
 
-    public void setPrice(int basePrice) {
-        this.basePrice = basePrice;
+    public void setBaseValue() {
+        if(playTiles.size() >2) {
+            this.baseValue = getValue(1);
+        }
     }
 
     public void addTile(Tile tiles){

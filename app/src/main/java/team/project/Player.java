@@ -136,21 +136,46 @@ public class Player {
             System.out.println(tile.toString() + "\t");
         }
     }
+
     public void buyStock(Corporation corporation, int cost, int value) {
         //remove stock to corporation stack
         int number = corporation.getNumber();
         Stack<Stock> tempStack = corps.get(number);
         tempStack.add(corporation.giveStock(this));
         corps.set(number, tempStack);
-
-        //subtract price if necessary
         takeMoney(cost);
-
     }
 
-    public PlayerInv viewStocks() {
-        return new PlayerInv();
+    /**
+     * See how many stocks the player has
+     *
+     * @param stockName is the stock name
+     * @param player player who wants to see it
+     * @return the number of stocks they own of that type
+     */
+    public int viewStocks(String stockName, Player player) {
+        int counter= 0;
+        for(int i=0; i< player.corps.size(); i++){
+            String check = player.corps.get(i).toString();
+            if(check == stockName){
+                counter++;
+            }
+//            else{
+//                System.out.println("This works");
+//            }
+        }
+        return counter;
     }
+
+    //testing to see if it works
+//    public static void main(String[] args) {
+//        Player person = new Player("some");
+//        person.viewStocks("WorldWide", person);
+//        Corporation corp1 = new Corporation("WorldWide", 1,1);
+//        Corporation corp2 = new Corporation("America", 2,2);
+//
+//        person.tradeStocks(corp1,corp2);
+//    }
 
     public ArrayList<Stack<Stock>> getCorps() {
         return corps;
@@ -187,7 +212,7 @@ public class Player {
         oldCorporation.removeStock(this);
         corps.add(newStack);
         oldCorporation.giveStock(this);
-
+        //System.out.println("Works; old: " + oldCorporation.getSize() + "new:" + newCorporation.getSize());
     }
 
     public void sellStocks(Corporation corporation, int cost, int value) {
@@ -198,7 +223,6 @@ public class Player {
         giveMoney(amount);
 
         corps.remove(tempStack);
-
     }
 
     public boolean discardDeadTile(Tile tile) {
