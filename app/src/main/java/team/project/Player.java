@@ -38,14 +38,6 @@ public class Player {
     private String name;
     private final ArrayList<Corporation> founded;
     private final ArrayList<Stack<Stock>> corps;
-    private Stack<Stock> corp1;
-    private Stack<Stock> corp2;
-    private Stack<Stock> corp3;
-    private Stack<Stock> corp4;
-    private Stack<Stock> corp5;
-    private Stack<Stock> corp6;
-    private Stack<Stock> corp7;
-    private Stack<Stock> corp8;
     private int money;
 
     /**
@@ -266,5 +258,8 @@ public class Player {
     public void giveMoney(int amount){
         money = money + amount;
     }
-    public int checkMoney(){return money;}
+
+    public int checkMoney(){
+        return money;
+    }
 }

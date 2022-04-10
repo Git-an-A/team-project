@@ -80,7 +80,7 @@ public class Corporation {
         for(int i=0; i<25; i++){
             startStock.add(new Stock(companyName));
         }
-        return startStock;
+        return this.stocks=startStock;
     }
 
     /**
@@ -237,6 +237,8 @@ public class Corporation {
     public Stack<Tile> getPlayTiles(){
         return playTiles;
     }
-
+    public Stack<Stock> getStocks() {
+        return stocks;
+    }
 }
 

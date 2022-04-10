@@ -38,7 +38,6 @@ public class Game {
     private Queue<Player> players;
     private Player currentPlayer;
     private GameBoard gameBoard;
-    private final int startMoney = 6000;
     private GameOptions gameOptions;
     private MainUI mainUI;
     private List<Corporation> corporationList;
@@ -120,8 +119,6 @@ public class Game {
         }
         return instance;
     }
-
-
 
     /**
      * saves current game state
@@ -288,5 +285,71 @@ public class Game {
     public GameBoard getGameBoard(){
         return gameBoard;
     }
-    public void endGame() {}
+
+
+    //End Game Section to get results
+    public List<Corporation> playedCorps(){
+        List<Corporation> placed = corporationList;
+
+        for(int i=0; i<corporationList.size(); i++){
+            if(corporationList.contains(getUnplacedCorporations().get(i))){
+                placed.remove(i);
+            }
+        }
+        return placed;
+    }
+
+    public void distributeMoney(){
+        for(Player player : players) {
+            for (Corporation corporation : playedCorps()) {
+                player.sellStocks(corporation);
+            }
+        }
+        for(Corporation corporation : playedCorps()){
+            GameBoard calculate = getGameBoard();
+            calculate.ShareBonus(corporation);
+        }
+    }
+
+    public String getWinner(){
+        String m = "";
+        int mostMoney = 0;
+        Player winner = null;
+
+        for(Player player : players){
+            if(player.checkMoney() > mostMoney){
+                mostMoney = player.checkMoney();
+                winner = player;
+            }
+        }
+        m = winner.getName() + " is the winner with $" + winner.checkMoney();
+        return m;
+    }
+
+    public boolean checkEndGame(){
+        String m = "";
+        for(Corporation corporation : playedCorps()){
+            if(corporation.getPlayTiles().size() > 41 || corporation.getPlayTiles().size() > 11){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void endGame(){
+        if(checkEndGame()){
+            distributeMoney();
+            getWinner();
+        }
+        //else{ System.out.println("This part is working");}
+    }
+
+//    public static void main(String[] args) {
+//        getInstance().endGame();
+//    }
+
+
 }

@@ -182,5 +182,9 @@ public class GameOptions extends Application {
     public void hide(){
         disp.hide();
     }
+    
+    public void endGame(){
+        Game.getInstance().endGame();
+    }
 }
 
