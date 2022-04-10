@@ -26,6 +26,7 @@ package team.project;
 
 import javafx.stage.Stage;
 
+
 import java.util.*;
 
 /**
@@ -81,13 +82,9 @@ public class Game {
             for(int j=0; j<6; j++){
 //                System.out.println("j (of 6 tiles)" + j);
                 player.addTile(gameBoard.getTiles().dealTile()); //error here
-                System.out.println();
 //                System.out.println("Player get start tile? " + player.getTile(j));
             }
-            System.out.println("All player tiles: ");
-            for(int k=0;k<6;k++){
-                System.out.println("k " + k + " tile " + player.getTile(k));
-            }
+
 //            System.out.println(player);
         }
         System.out.println("Game.java startGame() post for loop");
@@ -97,7 +94,6 @@ public class Game {
 //        System.out.println("current player" + currentPlayer);
 //        System.out.println(currentPlayer.toString());
         try {
-            System.out.println("test");
             gameOptions.hide();
             mainUI.start(new Stage());
         } catch (Exception e) {
@@ -206,45 +202,70 @@ public class Game {
      */
     public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
-        playedTiles.add(tile);
+
         int tileXpos = tile.getXpos();
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
-        Tile tempTile = new Tile("z", 26);
+        Tile tempTile;
         for (Tile playedTile: playedTiles) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
             //left
-            if(playedTileXpos - tileXpos == 1){
+            if(playedTileXpos - tileXpos == 1 && playedTileYpos - tileYpos == 0){
+                System.out.println("left");
                 tileStack.add(playedTile);
             }
             //right
-            if(tileXpos - playedTileXpos == 1){
+            else if(tileXpos - playedTileXpos == 1 && playedTileYpos - tileYpos == 0){
+                System.out.println("right");
                 tileStack.add(playedTile);
             }
             //above
-            if(playedTileYpos - tileYpos == 1){
+            else if(playedTileYpos - tileYpos == 1 && playedTileXpos - tileXpos == 0){
+                System.out.println("above");
                 tileStack.add(playedTile);
             }
             //below
-            if(tileYpos - playedTileYpos == 1){
+            else if(tileYpos - playedTileYpos == 1 && playedTileXpos - tileXpos == 0){
+                System.out.println("below");
                 tileStack.add(playedTile);
             }
+
         }
         //add tile to corporation
         if(tileStack.size()==0){
             //no corporation
-            mainUI.colorTile(tile, 1);
+            mainUI.colorTile(tile, 0);
         }
         else if (tileStack.size() == 1){
             //add to corporation
+
+            //need to check for one corp not one tile next to it
+
             tempTile = tileStack.pop();
             if(tempTile.getCorp() != null){
                 tile.setCorp(tempTile.getCorp());
+                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
             }
             else {
                 //make corporation
-                mainUI.chooseCorp(getUnplacedCorporations(), 1);
+                List<Corporation> corps = getUnplacedCorporations();
+                System.out.println(corps.toString() + " corps ");
+                mainUI.chooseCorp(corps, 1);
+                System.out.println("Unchosen corps" + getUnplacedCorporations());
+                //get chosen corp
+                Corporation tempCorp = null;
+                for (Corporation corporation: corps) {
+                    if(!getUnplacedCorporations().contains(corporation)){
+                        tempCorp = corporation;
+                    }
+                }
+                Corporation c = tempCorp;
+                System.out.println("new color number: " + c.getColorNum());
+                mainUI.colorTile(tile, c.getColorNum());
+                mainUI.colorTile(tempTile, c.getColorNum());
+                //make other tile corporation
+                tempTile.setCorp(c);
             }
         }
         else {
@@ -253,11 +274,13 @@ public class Game {
             for (Tile t: tileStack) {
                 corporations.add(t.getCorp());
             }
-            mainUI.chooseCorp(corporations, 2);
+
+
+            //sending null corporations
 
         }
 
-
+        playedTiles.add(tile);
         //get corporation color
 
 
@@ -281,10 +304,13 @@ public class Game {
         corporation.giveStock(currentPlayer);
         corporation.setPlayed(true);
     }
-
+    public void colorTile(Tile tile, int colorType){
+        mainUI.colorTile(tile, colorType);
+    }
     public GameBoard getGameBoard(){
         return gameBoard;
     }
+<<<<<<< HEAD
 
 
     //End Game Section to get results
@@ -352,4 +378,28 @@ public class Game {
 //    }
 
 
+=======
+    public void pickMerge(List<Corporation> corporations){
+        mainUI.chooseCorp(corporations, 2);
+    }
+    public void mergeTie(List<Corporation> corporations, Corporation corporation, Tile tile){
+        for (Corporation item: corporations) {
+            for (Tile t : item.getPlayTiles()) {
+                t.setCorp(corporation);
+            }
+            tile.setCorp(corporation);
+            Game.getInstance().colorTile(tile, corporation.getColorNum());
+        }
+    }
+    public List<Corporation> getActiveCorporations(){
+        List<Corporation> corps = new ArrayList<>();
+        for (Corporation c:gameBoard.getCorporationList()) {
+            if(c.getPlayed()){
+                corps.add(c);
+            }
+        }
+        return corps;
+    }
+    public void endGame() {}
+>>>>>>> 44680b53ac097d67b82fa1e9a19cbb7de12fd1db
 }

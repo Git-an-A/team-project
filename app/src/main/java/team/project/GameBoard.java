@@ -52,12 +52,34 @@ public class GameBoard {
         boardState = play;
     }
 
-    public void mergeCorp(List<Corporation> corporations, Corporation corporation , Tile tile){
-        for (Corporation item: corporations) {
-            for (Tile t : item.getPlayTiles()) {
-                t.setCorp(corporation);
+    public void mergeCorp(List<Corporation> corporations, Tile tile){
+        int maxSize = 0;
+        Corporation corporation;
+        for (Corporation c: corporations) {
+            if(c.getSize()>maxSize){
+                maxSize = c.getSize();
+            }
+        }
+        List<Corporation> maxCorps = new ArrayList<>();
+        for (Corporation c : corporations) {
+            if(c.getSize() == maxSize){
+                maxCorps.add(c);
+            }
+        }
+
+        if(maxCorps.size() == 1){
+            corporation = maxCorps.get(0);
+            for (Corporation item: corporations) {
+                for (Tile t : item.getPlayTiles()) {
+                    t.setCorp(corporation);
+                    Game.getInstance().colorTile(t, corporation.getColorNum());
+                }
             }
             tile.setCorp(corporation);
+            Game.getInstance().colorTile(tile, corporation.getColorNum());
+        }
+        else {
+            Game.getInstance().pickMerge(maxCorps);
         }
     }
 
@@ -157,7 +179,7 @@ public class GameBoard {
      * @author Baylor McELroy
      */
     public void nextState(){
-        System.out.println("Game board next state top");
+        //System.out.println("Game board next state top");
         switch (boardState){
             case play -> {
                 boardState = exchange;
@@ -178,13 +200,13 @@ public class GameBoard {
      */
     private List<Corporation> createCorporationList(){
         List<Corporation> corporations = new ArrayList<>();
-        corporations.add(new Corporation("Worldwide", 1));
-        corporations.add(new Corporation("Sackson", 1));
-        corporations.add(new Corporation("Festival", 2));
-        corporations.add(new Corporation("Imperial", 2));
-        corporations.add(new Corporation("American", 2));
-        corporations.add(new Corporation("Continental", 3));
-        corporations.add(new Corporation("Tower", 3));
+        corporations.add(new Corporation("Worldwide", 1, 1));
+        corporations.add(new Corporation("Sackson", 1, 2));
+        corporations.add(new Corporation("Festival", 2, 3));
+        corporations.add(new Corporation("Imperial", 2, 4));
+        corporations.add(new Corporation("American", 2, 5));
+        corporations.add(new Corporation("Continental", 3, 6));
+        corporations.add(new Corporation("Tower", 3, 7));
 
         return corporations;
     }
@@ -197,12 +219,16 @@ public class GameBoard {
         return tiles;
     }
     public List<Corporation> getUnplacedCorporations(){
-        List<Corporation> tempList= new ArrayList<>();
+        List<Corporation> tempList = new ArrayList<>();
         for (Corporation c: corporationList) {
             if (!c.getPlayed()){
                 tempList.add(c);
             }
         }
         return tempList;
+    }
+
+    public List<Corporation> getCorporationList() {
+        return corporationList;
     }
 }

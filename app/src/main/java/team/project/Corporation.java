@@ -36,6 +36,7 @@ public class Corporation {
     private String companyName;
     private int number;
     private boolean played;
+    private int colorNum;
 
     // Reference of the prices
     private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
@@ -55,9 +56,11 @@ public class Corporation {
      * @param companyName name of corporation
      * @param number identifier
      */
-    public Corporation(String companyName, int number){
+    public Corporation(String companyName, int number, int colorNum){
         this.companyName = companyName;
         this.stocks = new Stack<Stock>();
+        this.colorNum = colorNum;
+        this.playTiles = new Stack<>();
         stocks = startingStock();
         played = false;
         if(number == 1){
@@ -203,7 +206,7 @@ public class Corporation {
     public int getNumber(){return number;}
 
     public int getSize(){
-        return size;
+        return playTiles.size();
     }
     public void setSize(int size){
         this.size =  size;
@@ -237,8 +240,13 @@ public class Corporation {
     public Stack<Tile> getPlayTiles(){
         return playTiles;
     }
+<<<<<<< HEAD
     public Stack<Stock> getStocks() {
         return stocks;
+=======
+    public int getColorNum(){
+       return colorNum;
+>>>>>>> 44680b53ac097d67b82fa1e9a19cbb7de12fd1db
     }
 }
 
