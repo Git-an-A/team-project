@@ -129,7 +129,6 @@ public class Corporation {
         int amount = playerName.getCorps().size();
         removeStock(playerName);
         playerName.giveMoney(getValue(amount));
-
     }
 
     /**

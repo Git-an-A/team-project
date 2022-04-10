@@ -24,8 +24,118 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CorporationTest {
+    @Test
+    void testStartingNumberOfStocksInCompany() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        assertEquals(25, corporation.getStocks().size());
+    }
 
+    @Test
+    void testFoundedCompany() {
+        var corporation = new Corporation("Test Company", 1, 1);
+
+    }
+
+    @Test
+    void testGivingStocksToPlayer() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        var player = new Player("Test Name");
+        Stock tempStock = corporation.giveStock(player);
+        assertNotEquals(null, tempStock);
+        int stockCount = player.viewStocks(tempStock.getName(), player);
+        assertEquals(1, stockCount);
+    }
+
+    @Test
+    void testBuyStock() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        var player = new Player("Test Name");
+        int initialPlayerMoney = player.checkMoney();
+        corporation.buyStock(player);
+        int playerCurrentMoney = player.checkMoney();
+        assertNotEquals(initialPlayerMoney, playerCurrentMoney);
+    }
+
+    @Test
+    void getValue() {
+    }
+
+    @Test
+    void sellStock() {
+    }
+
+    @Test
+    void removeStock() {
+    }
+
+    @Test
+    void giveMajorBonus() {
+    }
+
+    @Test
+    void giveMinorBonus() {
+    }
+
+    @Test
+    void isSafe() {
+    }
+
+    @Test
+    void getNumber() {
+    }
+
+    @Test
+    void getSize() {
+    }
+
+    @Test
+    void setSize() {
+    }
+
+    @Test
+    void getPrice() {
+    }
+
+    @Test
+    void getName() {
+    }
+
+    @Test
+    void setBaseValue() {
+    }
+
+    @Test
+    void setPlayed() {
+    }
+
+    @Test
+    void getPlayed() {
+    }
+
+    @Test
+    void testToString() {
+    }
+
+    @Test
+    void addTile() {
+    }
+
+    @Test
+    void getPlayTiles() {
+    }
+
+    @Test
+    void getStocks() {
+    }
+
+    @Test
+    void getColorNum() {
+    }
 }
