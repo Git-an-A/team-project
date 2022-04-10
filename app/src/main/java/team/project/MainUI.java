@@ -25,13 +25,8 @@
 package team.project;
 
 
-import com.google.common.collect.Table;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -40,12 +35,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import java.lang.management.ClassLoadingMXBean;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,6 +71,8 @@ public class MainUI extends Application {
     private Label moneyLabel;
     private Button next;
     private CheckBox buyStockCheck;
+    private Label[][] labArInfo;
+    private Label[][] labArShares;
     final ToggleGroup toggleGroup = new ToggleGroup();
     private final Stage stage = new Stage();
 
@@ -173,6 +168,7 @@ public class MainUI extends Application {
         switch (gameState){
             case "PLAY" -> {
                 playTile();
+                turnLabel.setText("Buy Stock");
                 game.nextState();
                 System.out.println("MainUi.java end switch play:");
                 System.out.println(gameState);
@@ -184,12 +180,13 @@ public class MainUI extends Application {
                         chooseStock();
                     }
                 }
-
+                turnLabel.setText("Draw Tile");
                 game.nextState();
             }
             case "DRAW" -> {
                 game.nextState();
                 System.out.println("UI State: DRAW");
+                turnLabel.setText("Play Tile");
                 nextTurn();
             }
         }
@@ -317,7 +314,11 @@ public class MainUI extends Application {
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                game.saveGame();
+                try {
+                    game.saveGame();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         // button to quit without saving
@@ -451,8 +452,6 @@ public class MainUI extends Application {
         if(corporations.size()!=0){
             disp.showAndWait();
         }
-
-
 
     }
     /**
@@ -678,15 +677,15 @@ public class MainUI extends Application {
         int x = 700;
         int y = 100;
         int gridLength = 5;
-        int gridHeight = 8;
+        int gridHeight = 7;
 
-        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
-        String[] color = {"Blue", "Red", "Green", "Orange", "Brown", "Purple", "Black", "Yellow"};
-        String[] size = {"0", "0", "0", "0", "0", "0", "0", "0"};
-        String[] price = {"100", "100", "100", "100", "100", "100", "100", "100"};
-        String[] status = {"inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive"};
+        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7"};
+        String[] color = {"Blue", "Yellow", "Red", "Purple", "Green", "Orange", "Pink"};
+        String[] size = {"0", "0", "0", "0", "0", "0", "0"};
+        String[] price = {"100", "100", "100", "100", "100", "100", "100"};
+        String[] status = {"inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive"};
         String[][] tableData = {corporationNames, color, size, price, status};
-        Label[][] labAr = new Label[gridLength][gridHeight];
+        labArInfo = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
                 final Label label = new Label();
@@ -695,11 +694,11 @@ public class MainUI extends Application {
                 label.setStyle("-fx-background-color: #ffffff; ");
                 label.setStyle("-fx-border-color: #000000; ");
                 label.setPrefSize(45,30);
-                labAr[i][j] = label;
+                labArInfo[i][j] = label;
             }
         }
 
-        GridPane gridPane = createLabGridpane(labAr, x, y);
+        GridPane gridPane = createLabGridpane(labArInfo, x, y);
         return gridPane;
     }
     /**
@@ -715,7 +714,7 @@ public class MainUI extends Application {
         String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
         String[] amount = {"100", "100", "100", "100", "100", "100", "100", "100"};
         String[][] tableData = {corporationNames, amount};
-        Label[][] labAr = new Label[gridLength][gridHeight];
+        labArShares = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
                 final Label label = new Label();
@@ -730,10 +729,10 @@ public class MainUI extends Application {
                 }
                 label.setStyle("-fx-background-color: #ffffff; ");
                 label.setStyle("-fx-border-color: #000000; ");
-                labAr[i][j] = label;
+                labArShares[i][j] = label;
             }
         }
-        GridPane gridPane = createLabGridpane(labAr, x, y);
+        GridPane gridPane = createLabGridpane(labArShares, x, y);
         return gridPane;
     }
     /**
@@ -750,7 +749,6 @@ public class MainUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 //change text when pressed to depict state
-                //fix states changing on their own
                 nextPhase();
             }
         });

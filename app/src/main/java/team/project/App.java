@@ -91,18 +91,21 @@ public class App extends Application{
         final int titleXloc = 75;
         final int titleYloc = 85;
 
-
+        final ToggleGroup toggleGroup = new ToggleGroup();
         newGame.setLayoutX(newGameXloc);
         newGame.setLayoutY(newGameYloc);
         newGame.setText("New Game");
+        newGame.setToggleGroup(toggleGroup);
 
         loadGame.setLayoutX(loadGameXloc);
         loadGame.setLayoutY(loadGameYloc);
         loadGame.setText("Load Game");
+        loadGame.setToggleGroup(toggleGroup);
 
         start.setLayoutX(startXloc);
         start.setLayoutY(startYloc);
         start.setText("Start!");
+
 
 
         quit.setLayoutX(quitXloc);
@@ -119,7 +122,7 @@ public class App extends Application{
              @Override
              public void handle(ActionEvent event) {
                  Game game;
-                 if(loadGame.isArmed()){
+                 if(toggleGroup.getSelectedToggle()==loadGame){
                      String filename = "save.txt";
                      Gson gson = new Gson();
                      File loadFile = new File(filename);
@@ -134,9 +137,11 @@ public class App extends Application{
                      catch (Exception e){
 
                      }
+                     stage.hide();
                  }
-                 else if(newGame.isArmed()){
+                 else if(toggleGroup.getSelectedToggle()==newGame){
                      game = Game.getInstance();
+                     stage.hide();
                  }
                  stage.setOnHidden(new EventHandler<WindowEvent>() {
                      @Override
@@ -148,7 +153,7 @@ public class App extends Application{
                          }
                      }
                  });
-                 stage.hide();
+
 
              }
         });
