@@ -33,7 +33,7 @@ public class GameBoard {
     private Stack<Tile> tileStack;
     //private int corporationsPlaced;
     private int size;
-    List<Corporation> corporationList;
+    private List<Corporation> corporationList;
     private int[][] board;
     private final String play = "PLAY";
     private final String exchange = "EXCHANGE";

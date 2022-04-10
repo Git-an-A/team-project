@@ -439,6 +439,8 @@ public class Game {
         m = gameBoard.cannotPlace(tile);
         return m;
     }
-
+    public List<Corporation> getCorporationList(){
+        return gameBoard.getCorporationList();
+    }
 
 }

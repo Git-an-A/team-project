@@ -38,6 +38,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import org.checkerframework.checker.units.qual.C;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -240,6 +242,7 @@ public class MainUI extends Application {
         tileRB5.setText(currentPlayer.getTile(4).toString());
         tileRB6.setText(currentPlayer.getTile(5).toString());
         updateSharesTable(game.getPlayerShares());
+        updateInfoTable();
         turnLabel.setText(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn");
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
@@ -253,7 +256,30 @@ public class MainUI extends Application {
     }
     private void updateSharesTable(int[] shares){
         for (int i: shares) {
-            labArShares[1][i].setText(String.valueOf(shares[i]));
+            labArShares[2][i].setText(String.valueOf(shares[i]));
+        }
+    }
+    private void updateInfoTable(){
+        List<Corporation> corporations = game.getCorporationList();
+
+        for(int i=0;i<labArInfo[1].length;i++){
+            labArInfo[1][i].setText(String.valueOf(corporations.get(i).getSize()));
+        }
+        for(int i=0;i<labArInfo[2].length;i++){
+            labArInfo[2][i].setText(String.valueOf(corporations.get(i).getPrice()));
+        }
+//        for(int i=0;i<labArInfo[3].length;i++){
+//            labArInfo[3][i].setText(String.valueOf(corporations.get(i).getStocks().size()));
+//        }
+        for(int i=0;i<labArInfo[4].length;i++){
+            //can change this to be active instead of safe
+            if(corporations.get(i).isSafe()){
+                labArInfo[4][i].setText("Safe");
+            }
+            else{
+                labArInfo[4][i].setText("not safe");
+            }
+
         }
     }
 
@@ -344,6 +370,9 @@ public class MainUI extends Application {
             }
         });
 
+        root.getChildren().add(save);
+        root.getChildren().add(quit);
+
         disp.setResizable(false);
         disp.setScene(scene);
         disp.show();
@@ -416,7 +445,6 @@ public class MainUI extends Application {
         stage.hide();
         Stage disp = new Stage();
         disp.initStyle(StageStyle.UNDECORATED);
-        disp.initStyle(StageStyle.UNDECORATED);
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -448,6 +476,7 @@ public class MainUI extends Application {
                         if (type == 1){
                             System.out.println("Type = 1");
                             game.playCorporation(item);
+                            //needs to change all tiles
                             game.getLastTile().setCorp(item);
                         }
                         else{
