@@ -42,7 +42,7 @@ public class Tiles{
         tileList = new Stack<Tile>();
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
         for (var letterID : letters){
-            for(int i=0; i<=11; i++ ){
+            for(int i=0; i<=12; i++ ){
                 Tile tileMake = new Tile(letterID,i);
                 tileList.add(tileMake);
             }
@@ -78,5 +78,9 @@ public class Tiles{
         }
 
         return null;
+    }
+
+    public Stack<Tile> getTileList() {
+        return tileList;
     }
 }

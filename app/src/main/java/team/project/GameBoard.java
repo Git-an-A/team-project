@@ -26,13 +26,11 @@ package team.project;
 
 import org.checkerframework.checker.units.qual.C;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class GameBoard {
     private Tiles tiles;
+    private Stack<Tile> tileStack;
     //private int corporationsPlaced;
     private int size;
     List<Corporation> corporationList;
@@ -50,6 +48,48 @@ public class GameBoard {
         corporationList = createCorporationList();
 
         boardState = play;
+    }
+
+    public void setTileStack(Stack<Tile> tileStack) {
+        Tiles copy = null;
+        this.tileStack = copy.getTileList();
+    }
+
+    public Stack<Tile> getTileStack() {
+        return tileStack;
+    }
+
+    public String checkNearCorps(Tile tile){
+        Stack<Tile> corpTiles;
+        List<Corporation> nearCorps;
+        int identifier = tile.getXpos();
+        int letter = tile.getYpos();
+
+
+        for(Corporation corporation : corporationList){
+            corpTiles = corporation.getPlayTiles();
+
+            for(Tile tileList : corpTiles){
+                int compare = tileList.getXpos();
+                int comparison = tileList.getYpos();
+
+                if(compare == identifier +1 || compare == identifier -1 || compare == identifier){
+                    if(comparison == letter || comparison == 1 + letter || comparison == letter -1){
+                        return corporation.getName();
+                    }
+                }
+            }
+        }
+        return "This is working";
+    }
+
+    //For dead tiles
+    public String cannotPlace(Tile tile){
+        String m = "";
+        checkNearCorps(tile);
+
+
+        return m;
     }
 
     public void mergeCorp(List<Corporation> corporations, Tile tile){

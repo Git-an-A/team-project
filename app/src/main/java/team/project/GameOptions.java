@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -155,7 +156,7 @@ public class GameOptions extends Application {
      * @param game the current state of the game
      * @author Tori Weir
      */
-    private void saveData(String file, Game game){
+    private void saveData(String file, Game game) throws IOException {
         Gson gson = new Gson();
         try{
             File filing = new File(file);
@@ -168,7 +169,7 @@ public class GameOptions extends Application {
         }catch (Exception e){}
     }
 
-    public void saveDefault(){
+    public void saveDefault() throws IOException {
         String file = "save.txt";
         saveData(file, Game.getInstance());
     }

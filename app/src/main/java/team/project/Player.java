@@ -231,8 +231,11 @@ public class Player {
         corps.remove(tempStack);
     }
 
-    public boolean discardDeadTile(Tile tile) {
-        return true;
+    // Will work on
+    public void discardDeadTile(Tile tile) {
+        String checkTile = Game.getInstance().restrictedAccess(tile);
+
+
     }
 
     public GameOptions endGame() {

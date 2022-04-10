@@ -27,6 +27,7 @@ package team.project;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -43,15 +44,16 @@ public class Game {
     private MainUI mainUI;
     private List<Corporation> corporationList;
 
-    private Game(){
+    private Game() {
 
         playedTiles = new Stack<>();
     }
+
     /**
      * Sets up game with specified game options
      *
      * @param gameOptions intitial game options determined at start of game
-     * @param mainUI UI of game
+     * @param mainUI      UI of game
      * @author Baylor McElroy
      */
     public void setUpGame(GameOptions gameOptions, MainUI mainUI) throws Exception {
@@ -62,10 +64,11 @@ public class Game {
 
     /**
      * Starts game and distributes necessary resources
+     *
      * @author Baylor McElroy
      * @author Tori Weir
      */
-    public void startGame(){
+    public void startGame() {
 //        System.out.println("Game.java startGame() top");
 
         gameBoard = new GameBoard();
@@ -79,7 +82,7 @@ public class Game {
             Player player = new Player(playerName);
             System.out.println("PlayerName = " + playerName);
             players.add(player);
-            for(int j=0; j<6; j++){
+            for (int j = 0; j < 6; j++) {
 //                System.out.println("j (of 6 tiles)" + j);
                 player.addTile(gameBoard.getTiles().dealTile()); //error here
 //                System.out.println("Player get start tile? " + player.getTile(j));
@@ -106,11 +109,12 @@ public class Game {
 
     /**
      * returns singleton instance of game
+     *
      * @return instance of Game
      * @author Baylor McElroy
      */
-    public static Game getInstance(){
-        if(instance == null){
+    public static Game getInstance() {
+        if (instance == null) {
             instance = new Game();
         }
         return instance;
@@ -118,62 +122,71 @@ public class Game {
 
     /**
      * saves current game state
+     *
      * @author Baylor McElroy
      */
-    public void saveGame(){
+    public void saveGame() throws IOException {
         gameOptions.saveDefault();
     }
 
     /**
      * sets the current players of the game. Called once at start of game.
+     *
      * @param players instantiated players starting the game
      * @author Baylor McElroy
      */
-    public void setPlayers(ArrayDeque<Player> players){
+    public void setPlayers(ArrayDeque<Player> players) {
         this.players = players;
     }
-    public int getNumPlayers(){
+
+    public int getNumPlayers() {
         return players.size();
     }
 
     /**
-     *  get player whose turn it currently is
+     * get player whose turn it currently is
+     *
      * @return current player
      */
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
-    public String getGameState(){
+
+    public String getGameState() {
         System.out.println("Game.java getGameState top");
         return gameBoard.getBoardState();
     }
 
     /**
      * moves game to next phase of turn
+     *
      * @author Baylor McElroy
      */
-    public void nextState(){
+    public void nextState() {
         gameBoard.nextState();
     }
 
     /**
      * makes it the next players turn
+     *
      * @author Baylor McElroy
      */
     public void nextTurn() {
         players.add(currentPlayer);
-        this.currentPlayer  = players.poll();
+        this.currentPlayer = players.poll();
     }
 
-    public Queue playerQueue(){
+    public Queue playerQueue() {
         return players;
     }
 
     public boolean tallyScore(Player player, int amount) {
-        return true;}
+        return true;
+    }
 
     public boolean takeTurn(Player player) {
-        return true;}
+        return true;
+    }
 
     public void displayInfo() {
     }
@@ -186,16 +199,20 @@ public class Game {
     }
 
     public boolean buyStock(Stock stockName, int amount) {
-        return true;}
+        return true;
+    }
 
     public boolean sellStock(Stock stockName, int amount) {
-        return true;}
+        return true;
+    }
 
     public Stock viewStocks(Stock stock) {
-        return new Stock();}
+        return new Stock();
+    }
 
     /**
      * Plays tile specified by UI then marks it on UI
+     *
      * @param tile
      * @return
      * @author Baylor McElroy
@@ -207,47 +224,54 @@ public class Game {
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
         Tile tempTile;
-        for (Tile playedTile: playedTiles) {
+        for (Tile playedTile : playedTiles) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
             //left
-            if(playedTileXpos - tileXpos == 1 && playedTileYpos - tileYpos == 0){
+            if (playedTileXpos - tileXpos == 1 && playedTileYpos - tileYpos == 0) {
                 System.out.println("left");
                 tileStack.add(playedTile);
             }
             //right
-            else if(tileXpos - playedTileXpos == 1 && playedTileYpos - tileYpos == 0){
+            else if (tileXpos - playedTileXpos == 1 && playedTileYpos - tileYpos == 0) {
                 System.out.println("right");
                 tileStack.add(playedTile);
             }
             //above
-            else if(playedTileYpos - tileYpos == 1 && playedTileXpos - tileXpos == 0){
+            else if (playedTileYpos - tileYpos == 1 && playedTileXpos - tileXpos == 0) {
                 System.out.println("above");
                 tileStack.add(playedTile);
             }
             //below
-            else if(tileYpos - playedTileYpos == 1 && playedTileXpos - tileXpos == 0){
+            else if (tileYpos - playedTileYpos == 1 && playedTileXpos - tileXpos == 0) {
                 System.out.println("below");
                 tileStack.add(playedTile);
             }
 
         }
         //add tile to corporation
-        if(tileStack.size()==0){
+        if (tileStack.size() == 0) {
             //no corporation
             mainUI.colorTile(tile, 0);
-        }
-        else if (tileStack.size() == 1){
+        } else if (tileStack.size() == 1) {
             //add to corporation
 
             //need to check for one corp not one tile next to it
-
             tempTile = tileStack.pop();
-            if(tempTile.getCorp() != null){
-                tile.setCorp(tempTile.getCorp());
-                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
+            String nearCorporation =  gameBoard.checkNearCorps(tempTile);
+            for(Corporation corps : corporationList){
+                String compare = corps.getName();
+                if (nearCorporation == compare){
+                    tile.setCorp(tempTile.getCorp());
+                    mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
+                }
+
             }
-            else {
+//            if (tempTile.getCorp() != null){
+//                tile.setCorp(tempTile.getCorp());
+//                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
+
+//            } else {
                 //make corporation
                 List<Corporation> corps = getUnplacedCorporations();
                 System.out.println(corps.toString() + " corps ");
@@ -255,8 +279,8 @@ public class Game {
                 System.out.println("Unchosen corps" + getUnplacedCorporations());
                 //get chosen corp
                 Corporation tempCorp = null;
-                for (Corporation corporation: corps) {
-                    if(!getUnplacedCorporations().contains(corporation)){
+                for (Corporation corporation : corps) {
+                    if (!getUnplacedCorporations().contains(corporation)) {
                         tempCorp = corporation;
                     }
                 }
@@ -266,12 +290,11 @@ public class Game {
                 mainUI.colorTile(tempTile, c.getColorNum());
                 //make other tile corporation
                 tempTile.setCorp(c);
-            }
-        }
-        else {
+//            }
+        } else {
             //merge corporation
             Stack<Corporation> corporations = new Stack<>();
-            for (Tile t: tileStack) {
+            for (Tile t : tileStack) {
                 corporations.add(t.getCorp());
             }
 
@@ -285,65 +308,60 @@ public class Game {
 
 
     }
+//    public static void main(String[] args) {
+//        Tile tileEx = new Tile("Z",3);
+//        System.out.println(getInstance().gameBoard.checkNearCorps(tileEx));
+//    }
 
     public boolean tradeStocks(Stock stockName, int amount) {
-        return true;}
+        return true;
+    }
 
     public boolean sellStocks(Stock stockName, int amount) {
-        return true;}
+        return true;
+    }
 
-    public Tile getLastTile(){
+    public Tile getLastTile() {
         return playedTiles.peek();
     }
 
-    public List<Corporation> getUnplacedCorporations(){
+    public List<Corporation> getUnplacedCorporations() {
         return gameBoard.getUnplacedCorporations();
     }
 
-    public void playCorporation(Corporation corporation){
+    public void playCorporation(Corporation corporation) {
         corporation.giveStock(currentPlayer);
         corporation.setPlayed(true);
     }
-    public void colorTile(Tile tile, int colorType){
+
+    public void colorTile(Tile tile, int colorType) {
         mainUI.colorTile(tile, colorType);
     }
-    public GameBoard getGameBoard(){
+
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
-<<<<<<< HEAD
 
 
-    //End Game Section to get results
-    public List<Corporation> playedCorps(){
-        List<Corporation> placed = corporationList;
-
-        for(int i=0; i<corporationList.size(); i++){
-            if(corporationList.contains(getUnplacedCorporations().get(i))){
-                placed.remove(i);
-            }
-        }
-        return placed;
-    }
-
-    public void distributeMoney(){
-        for(Player player : players) {
-            for (Corporation corporation : playedCorps()) {
+    public void distributeMoney() {
+        for (Player player : players) {
+            for (Corporation corporation : getActiveCorporations()) {
                 player.sellStocks(corporation);
             }
         }
-        for(Corporation corporation : playedCorps()){
+        for (Corporation corporation : getActiveCorporations()) {
             GameBoard calculate = getGameBoard();
             calculate.ShareBonus(corporation);
         }
     }
 
-    public String getWinner(){
+    public String getWinner() {
         String m = "";
         int mostMoney = 0;
         Player winner = null;
 
-        for(Player player : players){
-            if(player.checkMoney() > mostMoney){
+        for (Player player : players) {
+            if (player.checkMoney() > mostMoney) {
                 mostMoney = player.checkMoney();
                 winner = player;
             }
@@ -351,39 +369,41 @@ public class Game {
         m = winner.getName() + " is the winner with $" + winner.checkMoney();
         return m;
     }
-
-    public boolean checkEndGame(){
+    public String getOthers(){
         String m = "";
-        for(Corporation corporation : playedCorps()){
-            if(corporation.getPlayTiles().size() > 41 || corporation.getPlayTiles().size() > 11){
+        for(Player player : players){
+            m += player.getName() + " has the total of $" + player.checkMoney();
+        }
+        return m;
+    }
+
+    public boolean checkEndGame() {
+        String m = "";
+        for (Corporation corporation : getActiveCorporations()) {
+            if (corporation.getPlayTiles().size() > 41 || corporation.getPlayTiles().size() > 11) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
         return false;
     }
 
-    public void endGame(){
-        if(checkEndGame()){
+    public void endGame() {
+        if (checkEndGame()) {
             distributeMoney();
+            getOthers();
             getWinner();
         }
-        //else{ System.out.println("This part is working");}
     }
 
-//    public static void main(String[] args) {
-//        getInstance().endGame();
-//    }
 
-
-=======
-    public void pickMerge(List<Corporation> corporations){
+    public void pickMerge(List<Corporation> corporations) {
         mainUI.chooseCorp(corporations, 2);
     }
-    public void mergeTie(List<Corporation> corporations, Corporation corporation, Tile tile){
-        for (Corporation item: corporations) {
+
+    public void mergeTie(List<Corporation> corporations, Corporation corporation, Tile tile) {
+        for (Corporation item : corporations) {
             for (Tile t : item.getPlayTiles()) {
                 t.setCorp(corporation);
             }
@@ -391,15 +411,20 @@ public class Game {
             Game.getInstance().colorTile(tile, corporation.getColorNum());
         }
     }
-    public List<Corporation> getActiveCorporations(){
+
+    public List<Corporation> getActiveCorporations() {
         List<Corporation> corps = new ArrayList<>();
-        for (Corporation c:gameBoard.getCorporationList()) {
-            if(c.getPlayed()){
+        for (Corporation c : gameBoard.getCorporationList()) {
+            if (c.getPlayed()) {
                 corps.add(c);
             }
         }
         return corps;
     }
-    public void endGame() {}
->>>>>>> 44680b53ac097d67b82fa1e9a19cbb7de12fd1db
+
+    public String restrictedAccess(Tile tile){
+        String m = "";
+        m = gameBoard.cannotPlace(tile);
+        return m;
+    }
 }

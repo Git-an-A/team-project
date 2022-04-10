@@ -39,9 +39,9 @@ public class Corporation {
     private int colorNum;
 
     // Reference of the prices
-    private static final int[] stockPrices = new int[]{200,300,400,500,600,700,800,900,1000,1100,1200};
-    private static final int[] majorShare = new int[]{2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000};
-    private static final int[] minorShare = new int[]{1000, 1500,2000,2500,3000,3500,4000,4500,5000,5500,6000};
+    private static final int[] stockPrices = new int[]{200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200};
+    private static final int[] majorShare = new int[]{2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000};
+    private static final int[] minorShare = new int[]{1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000};
 
     /*
     for price:
@@ -53,45 +53,46 @@ public class Corporation {
 
     /**
      * Constructor of corporation
+     *
      * @param companyName name of corporation
-     * @param number identifier
+     * @param number      identifier
      */
-    public Corporation(String companyName, int number, int colorNum){
+    public Corporation(String companyName, int number, int colorNum) {
         this.companyName = companyName;
         this.stocks = new Stack<Stock>();
         this.colorNum = colorNum;
         this.playTiles = new Stack<>();
         stocks = startingStock();
         played = false;
-        if(number == 1){
+        if (number == 1) {
             this.baseValue = 200;
-        }
-        else if(number == 2){
+        } else if (number == 2) {
             this.baseValue = 300;
-        }
-        else if(number == 3){
+        } else if (number == 3) {
             this.baseValue = 400;
         }
     }
 
     /**
      * Starting stock for the corporation
+     *
      * @return the 25 stocks that are given for a corporation
      */
-    private Stack<Stock> startingStock(){
+    private Stack<Stock> startingStock() {
         Stack<Stock> startStock = new Stack<>();
-        for(int i=0; i<25; i++){
+        for (int i = 0; i < 25; i++) {
             startStock.add(new Stock(companyName));
         }
-        return this.stocks=startStock;
+        return this.stocks = startStock;
     }
 
     /**
      * founds a corporation
+     *
      * @param player player founding corporation
-     * @param tile location of corporation
+     * @param tile   location of corporation
      */
-    public void founded(Player player, Tile tile){
+    public void founded(Player player, Tile tile) {
         player.addFounded(this);
         playTiles.add(tile);
     }
@@ -102,17 +103,16 @@ public class Corporation {
      * @param player player who receives it
      * @return stock
      */
-    public Stock giveStock(Player player){
+    public Stock giveStock(Player player) {
         int cost;
         int value;
         Stock tempStock = stocks.pop();
         value = 26 - stocks.size();
-        if(stocks.size()==24){
+        if (stocks.size() == 24) {
             cost = 0;
             founded(player, Game.getInstance().getLastTile());
             tempStock.setCost(cost);
-        }
-        else {
+        } else {
             cost = getValue(value);
             tempStock.setCost(cost);
         }
@@ -125,7 +125,7 @@ public class Corporation {
      *
      * @param playerName player who sold it
      */
-    public void buyStock(Player playerName){
+    public void buyStock(Player playerName) {
         int amount = playerName.getCorps().size();
         removeStock(playerName);
         playerName.giveMoney(getValue(amount));
@@ -138,16 +138,17 @@ public class Corporation {
      * @param number the amount of stocks
      * @return the value
      */
-    public int getValue(int number){
+    public int getValue(int number) {
         return baseValue + 100 * number;
     }
 
     /**
      * Sells the stock to the player
+     *
      * @param player player who is buying it
      * @param amount amount of stocks
      */
-    public void sellStock(Player player, int amount){
+    public void sellStock(Player player, int amount) {
         player.takeMoney(getValue(amount));
         player.buyStock(this);
 
@@ -156,10 +157,10 @@ public class Corporation {
     /**
      * removes stock from player
      *
-      * @param playerName player who lost it
+     * @param playerName player who lost it
      */
-    public void removeStock(Player playerName){
-        for(int i=0; i< playerName.getCorps().size(); i++) {
+    public void removeStock(Player playerName) {
+        for (int i = 0; i < playerName.getCorps().size(); i++) {
             if (companyName.equals(playerName.getCorps())) {
                 int numb = playerName.getCorps().size();
                 for (int n = 0; n < numb; n++) {
@@ -174,8 +175,8 @@ public class Corporation {
      *
      * @return Major bonus
      */
-    public int giveMajorBonus(){
-        return getPrice()*10;
+    public int giveMajorBonus() {
+        return getPrice() * 10;
     }
 
     /**
@@ -183,17 +184,19 @@ public class Corporation {
      *
      * @return Minor bonus
      */
-    public int giveMinorBonus(){return giveMajorBonus()/2;}
+    public int giveMinorBonus() {
+        return giveMajorBonus() / 2;
+    }
 
     /**
      * Check if the corporation is safe or not
      *
      * @return true if corporation is safe, false if it is less than 11
      */
-    public boolean isSafe(){
-        if(size >= 11){
+    public boolean isSafe() {
+        if (size >= 11) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -203,13 +206,16 @@ public class Corporation {
      * Price is the cost/value of the Corporation
      */
 
-    public int getNumber(){return number;}
+    public int getNumber() {
+        return number;
+    }
 
-    public int getSize(){
+    public int getSize() {
         return playTiles.size();
     }
-    public void setSize(int size){
-        this.size =  size;
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getPrice() {
@@ -221,32 +227,37 @@ public class Corporation {
     }
 
     public void setBaseValue() {
-        if(playTiles.size() >2 && playTiles.size()<11) {
+        if (playTiles.size() > 2 && playTiles.size() < 11) {
             this.baseValue = getValue(1);
         }
     }
-    public void setPlayed(boolean played){
+
+    public void setPlayed(boolean played) {
         this.played = played;
     }
-    public boolean getPlayed(){
+
+    public boolean getPlayed() {
         return played;
     }
-    public String toString(){
+
+    public String toString() {
         return companyName;
     }
-    public void addTile(Tile tiles){
+
+    public void addTile(Tile tiles) {
         playTiles.add(tiles);
     }
-    public Stack<Tile> getPlayTiles(){
+
+    public Stack<Tile> getPlayTiles() {
         return playTiles;
     }
-<<<<<<< HEAD
+
     public Stack<Stock> getStocks() {
         return stocks;
-=======
-    public int getColorNum(){
-       return colorNum;
->>>>>>> 44680b53ac097d67b82fa1e9a19cbb7de12fd1db
     }
+
+    public int getColorNum(){
+        return colorNum;
+        }
 }
 
