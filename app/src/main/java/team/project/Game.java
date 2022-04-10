@@ -201,6 +201,7 @@ public class Game {
 
     public void buyStock(Corporation corporation, Player player) {
         player.buyStock(corporation);
+        mainUI.showBought(corporation, player);
     }
 
     public boolean sellStock(Stock stockName, int amount) {

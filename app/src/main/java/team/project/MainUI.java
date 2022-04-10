@@ -243,6 +243,14 @@ public class MainUI extends Application {
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
 
+    public void showBought(Corporation corporation, Player player){
+        String lastText;
+        int newVal;
+        lastText = labArShares[corporation.getColorNum()][0].getText();
+        newVal = Integer.valueOf(lastText) + 1;
+        labArShares[corporation.getColorNum()][0].setText(String.valueOf(newVal));
+    }
+
     /**
      * Shows stage
      * @param stage new stage to show

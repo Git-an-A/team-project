@@ -117,6 +117,17 @@ public class App extends Application{
         title.setText("Welcome to Acquire!");
         title.setFont(new Font("Arial", 32));
 
+        stage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    MainUI mainUI = new MainUI();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         start.setOnAction(new EventHandler<ActionEvent>() {
 
              @Override
@@ -143,17 +154,6 @@ public class App extends Application{
                      game = Game.getInstance();
                      stage.hide();
                  }
-                 stage.setOnHidden(new EventHandler<WindowEvent>() {
-                     @Override
-                     public void handle(WindowEvent event) {
-                         try {
-                             MainUI mainUI = new MainUI();
-                         } catch (Exception e) {
-                             e.printStackTrace();
-                         }
-                     }
-                 });
-
 
              }
         });
