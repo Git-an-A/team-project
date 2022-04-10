@@ -43,6 +43,7 @@ import lombok.Getter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Main class of applictaion, contains start window
@@ -117,15 +118,26 @@ public class App extends Application{
 
              @Override
              public void handle(ActionEvent event) {
-//                 if(loadGame.isArmed()){
-//                     //load game from file
-//                     game = new Game();
-//                 }
-//                 else if(newGame.isArmed()){
-//                     game = new Game();
-//                 }
+                 Game game;
+                 if(loadGame.isArmed()){
+                     String filename = "save.txt";
+                     Gson gson = new Gson();
+                     File loadFile = new File(filename);
 
-                 Game finalGame = Game.getInstance();
+                     try{
+                         Scanner scan = new Scanner(loadFile);
+                         while(scan.hasNextLine()){
+                             game = gson.fromJson(scan.nextLine(),Game.class);
+                         }
+                         scan.close();
+                        }
+                     catch (Exception e){
+
+                     }
+                 }
+                 else if(newGame.isArmed()){
+                     game = Game.getInstance();
+                 }
                  stage.setOnHidden(new EventHandler<WindowEvent>() {
                      @Override
                      public void handle(WindowEvent event) {

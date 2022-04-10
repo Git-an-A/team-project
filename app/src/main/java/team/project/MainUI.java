@@ -310,6 +310,11 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
+
+        //button to call save
+
+        // button to quit without saving
+
         disp.setResizable(false);
         disp.setScene(scene);
         disp.show();

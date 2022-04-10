@@ -129,20 +129,7 @@ public class GameOptions extends Application {
      * @return getGame Game object that holds the game
      * @author Tori Weir
      */
-    public Game load(String filename){
-        Game getGame = null;
-        Gson gson = new Gson();
-        File loadFile = new File(filename);
 
-        try{
-            Scanner scan = new Scanner(loadFile);
-            while(scan.hasNextLine()){
-                getGame = gson.fromJson(scan.nextLine(),Game.class);
-            }
-            scan.close();
-        }catch (Exception e){}
-        return getGame;
-    }
 
 //    public GameOptions readData(String filepath){
 //        return new GameOptions();
