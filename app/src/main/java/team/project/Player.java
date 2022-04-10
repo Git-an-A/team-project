@@ -232,15 +232,26 @@ public class Player {
         corps.remove(tempStack);
     }
 
-    // Will work on
+
     public void discardDeadTile(Tile tile) {
-        String checkTile = Game.getInstance().restrictedAccess(tile);
-
-
+//        boolean checkTile = Game.getInstance().restrictedAccess(tile);
+//        if(checkTile){
+            for(int i = 0; i< playerTiles.length; i++){
+                if(getTile(i)==tile) {
+                    removeTile(i);
+//                }
+            }
+        }
     }
 
-    public GameOptions endGame() {
-        return new GameOptions();
+    public static void main(String[] args) {
+
+        System.out.println();
+    }
+
+
+    public void endGame(){
+        Game.getInstance().endGame();
     }
 
     /**

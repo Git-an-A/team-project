@@ -64,6 +64,7 @@ public class GameBoard {
         Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
+        List<Corporation> moreThanOne = null;
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
 
@@ -76,11 +77,16 @@ public class GameBoard {
 
                 if(compare == identifier + 1 || compare == identifier - 1 || compare == identifier){
                     if(comparison == letter || comparison == 1 + letter || comparison == letter - 1){
+                        moreThanOne.add(corporation);
                         return corporation.getName();
                     }
                 }
             }
         }
+        if(moreThanOne.size() >2){
+            return "Dead Tile";
+        }
+
         return "This is working";
     }
 
@@ -91,21 +97,29 @@ public class GameBoard {
 //        System.out.println(trying.getYpos());
 //
 //        GameBoard testing = new GameBoard();
-//        testing.getTileStack();
-//        System.out.println(testing.getTileStack().toString());
-//        testing.createCorporationList();
-//        System.out.println(testing.getCorporationList().toString());
-//        String works = testing.checkNearCorps(trying);
-//        System.out.println(works);
+////        testing.getTileStack();
+////        System.out.println(testing.getTileStack().toString());
+////        testing.createCorporationList();
+////        System.out.println(testing.getCorporationList().toString());
+////        String works = testing.checkNearCorps(trying);
+////        System.out.println(works);
+//        boolean te = testing.checkPlace(trying);
+//        System.out.println(te);
 //    }
 
     //For dead tiles
-    public String cannotPlace(Tile tile){
-        String m = "";
-        checkNearCorps(tile);
+    public boolean checkPlace(Tile tile){
+        String check = checkNearCorps(tile);
 
+        if(check == "Dead Tile"){
+            cannotPlace(tile);
+            return true;
+        }
+        return false;
+    }
 
-        return m;
+    public void cannotPlace(Tile tile){
+        findPlayer().discardDeadTile(tile);
     }
 
     public void mergeCorp(List<Corporation> corporations, Tile tile){
