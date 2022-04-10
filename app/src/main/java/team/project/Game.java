@@ -198,8 +198,13 @@ public class Game {
         return true;
     }
 
+<<<<<<< HEAD
     public boolean buyStock(Stock stockName, int amount) {
         return true;
+=======
+    public void buyStock(Corporation corporation, Player player) {
+        player.buyStock(corporation);
+>>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
     }
 
     public boolean sellStock(Stock stockName, int amount) {
@@ -341,7 +346,10 @@ public class Game {
     public GameBoard getGameBoard() {
         return gameBoard;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
 
     public void distributeMoney() {
         for (Player player : players) {
@@ -398,7 +406,12 @@ public class Game {
     }
 
 
+<<<<<<< HEAD
     public void pickMerge(List<Corporation> corporations) {
+=======
+
+    public void pickMerge(List<Corporation> corporations){
+>>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
         mainUI.chooseCorp(corporations, 2);
     }
 
@@ -422,9 +435,12 @@ public class Game {
         return corps;
     }
 
+<<<<<<< HEAD
     public String restrictedAccess(Tile tile){
         String m = "";
         m = gameBoard.cannotPlace(tile);
         return m;
     }
+=======
+>>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
 }
