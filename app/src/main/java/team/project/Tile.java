@@ -71,8 +71,9 @@ public class Tile {
         return corp;
     }
     public void setCorp(Corporation corporation){
-        this.corp = corp;
+        this.corp = corporation;
     }
+
     @Override
     public String toString() {
         String sb = getLetterID() + getNumbers();

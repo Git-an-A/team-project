@@ -24,6 +24,7 @@
 
 package team.project;
 
+import com.sun.scenario.animation.shared.FiniteClipEnvelope;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
@@ -60,21 +61,21 @@ public class GameBoard {
     }
 
     public String checkNearCorps(Tile tile){
-        Stack<Tile> corpTiles;
-        List<Corporation> nearCorps;
+        Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
+        List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
 
-        for(Corporation corporation : corporationList){
+        for(Corporation corporation : corpor){
             corpTiles = corporation.getPlayTiles();
 
             for(Tile tileList : corpTiles){
                 int compare = tileList.getXpos();
                 int comparison = tileList.getYpos();
 
-                if(compare == identifier +1 || compare == identifier -1 || compare == identifier){
-                    if(comparison == letter || comparison == 1 + letter || comparison == letter -1){
+                if(compare == identifier + 1 || compare == identifier - 1 || compare == identifier){
+                    if(comparison == letter || comparison == 1 + letter || comparison == letter - 1){
                         return corporation.getName();
                     }
                 }
@@ -82,6 +83,21 @@ public class GameBoard {
         }
         return "This is working";
     }
+
+//    public static void main(String[] args) {
+//        Tile trying = new Tile("Z", 3);
+//        int letter = trying.getXpos() + trying.getYpos();
+//        System.out.println(letter);
+//        System.out.println(trying.getYpos());
+//
+//        GameBoard testing = new GameBoard();
+//        testing.getTileStack();
+//        System.out.println(testing.getTileStack().toString());
+//        testing.createCorporationList();
+//        System.out.println(testing.getCorporationList().toString());
+//        String works = testing.checkNearCorps(trying);
+//        System.out.println(works);
+//    }
 
     //For dead tiles
     public String cannotPlace(Tile tile){
@@ -234,11 +250,11 @@ public class GameBoard {
         }
     }
     /**
-     * Corporation makings
+     * Corporation List
+     *
      * @return the list of the 7 corporation
-     * Needs more work
      */
-    private List<Corporation> createCorporationList(){
+    public List<Corporation> createCorporationList(){
         List<Corporation> corporations = new ArrayList<>();
         corporations.add(new Corporation("Worldwide", 1, 1));
         corporations.add(new Corporation("Sackson", 1, 2));

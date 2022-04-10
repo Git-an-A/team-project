@@ -245,6 +245,7 @@ public class Player {
 
     /**
      * Founding a corporation
+     *
      * @param corporation corporation which the player is founding
      */
     public void addFounded(Corporation corporation){

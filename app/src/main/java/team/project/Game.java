@@ -269,13 +269,13 @@ public class Game {
             //need to check for one corp not one tile next to it
             tempTile = tileStack.pop();
             String nearCorporation = gameBoard.checkNearCorps(tempTile);
-            for (Corporation corps : corporationList) {
+            List<Corporation> active = getActiveCorporations();
+            for (Corporation corps : active) {
                 String compare = corps.getName();
-                if (nearCorporation == compare) {
+                if (Objects.equals(nearCorporation, compare)) {
                     tile.setCorp(tempTile.getCorp());
                     mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
                 }
-
             }
 //            if (tempTile.getCorp() != null){
 //                tile.setCorp(tempTile.getCorp());
@@ -286,7 +286,7 @@ public class Game {
             List<Corporation> corps = getUnplacedCorporations();
             System.out.println(corps.toString() + " corps ");
             mainUI.chooseCorp(corps, 1);
-            System.out.println("Unchosen corps" + getUnplacedCorporations());
+            System.out.println("Available corps" + getUnplacedCorporations());
             //get chosen corp
             Corporation tempCorp = null;
             for (Corporation corporation : corps) {
@@ -307,12 +307,8 @@ public class Game {
             for (Tile t : tileStack) {
                 corporations.add(t.getCorp());
             }
-
-
             //sending null corporations
-
         }
-
         playedTiles.add(tile);
         //get corporation color
 
@@ -320,7 +316,14 @@ public class Game {
     }
 //    public static void main(String[] args) {
 //        Tile tileEx = new Tile("Z",3);
-//        System.out.println(getInstance().gameBoard.checkNearCorps(tileEx));
+////        System.out.println(getInstance().gameBoard.checkNearCorps(tileEx));
+//        GameBoard createCorp = new GameBoard();
+//        List<Corporation> createList = createCorp.createCorporationList();
+//        System.out.println(createList.toString());
+//        Corporation testMakeCorp = createList.get(1);
+//        tileEx.setCorp(testMakeCorp);
+//        System.out.println(tileEx.getCorp().toString());
+//        System.out.println("Making it work");
 //    }
 
     public boolean tradeStocks(Stock stockName, int amount) {
