@@ -176,6 +176,12 @@ public class MainUI extends Application {
             }
             case "EXCHANGE" -> {
                 System.out.println("UI State: EXCHANGE");
+                for(int i=0;i<3;i++){
+                    if(game.getActiveCorporations().size()>0){
+                        chooseStock();
+                    }
+                }
+
                 game.nextState();
             }
             case "DRAW" -> {
@@ -308,6 +314,70 @@ public class MainUI extends Application {
 
     }
 
+    private void chooseStock(){
+        stage.hide();
+        Stage disp = new Stage();
+        disp.setTitle("Courses");
+
+        disp.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        disp.setTitle("Choose a stock to buy");
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+        scene.setFill(Color.LIGHTGRAY);
+
+        List<Corporation> corporations = game.getActiveCorporations();
+
+        ComboBox<String> comboBox = new ComboBox<>();
+        System.out.println(corporations);
+        for (Corporation item: corporations) {
+            comboBox.getItems().add(item.toString());
+            System.out.println(item + "item");
+        }
+
+        Button button = createButton("Quit", 20, 20);
+        button.setCancelButton(true);
+        comboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (Corporation item: corporations) {
+                    if(comboBox.getValue().equals(item.toString())){
+                        game.getCurrentPlayer().buyStock(item);
+                    }
+                }
+                disp.hide();
+            }
+        });
+        root.getChildren().add(comboBox);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                disp.hide();
+            }
+        });
+
+
+
+
+        disp.setResizable(false);
+        disp.setScene(scene);
+
+        disp.showAndWait();
+
+
+        System.out.println("MainUI.java dispMenu()");
+
+    }
     /**
      * Displays a new window to select starting a new corporation
      */
@@ -339,7 +409,6 @@ public class MainUI extends Application {
             System.out.println(item + "item");
         }
 
-        Button button = createButton("Select", 100, 100);
         comboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

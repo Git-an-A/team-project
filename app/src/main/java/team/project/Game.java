@@ -325,5 +325,14 @@ public class Game {
             Game.getInstance().colorTile(tile, corporation.getColorNum());
         }
     }
+    public List<Corporation> getActiveCorporations(){
+        List<Corporation> corps = new ArrayList<>();
+        for (Corporation c:gameBoard.getCorporationList()) {
+            if(c.getPlayed()){
+                corps.add(c);
+            }
+        }
+        return corps;
+    }
     public void endGame() {}
 }
