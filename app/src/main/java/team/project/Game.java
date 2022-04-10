@@ -203,6 +203,14 @@ public class Game {
         player.buyStock(corporation);
         mainUI.showBought(corporation, player);
     }
+    public int[] getPlayerShares(){
+        int[] shares = new int[7];
+        int i = 0;
+        for (Stack<Stock> stack: currentPlayer.getCorps()) {
+            shares[i] = stack.size();
+        }
+        return shares;
+    }
 
     public boolean sellStock(Stock stockName, int amount) {
         return true;

@@ -168,7 +168,7 @@ public class MainUI extends Application {
         switch (gameState){
             case "PLAY" -> {
                 playTile();
-                turnLabel.setText("Buy Stock");
+                next.setText("Buy Stock");
                 game.nextState();
                 System.out.println("MainUi.java end switch play:");
                 System.out.println(gameState);
@@ -180,13 +180,13 @@ public class MainUI extends Application {
                         chooseStock();
                     }
                 }
-                turnLabel.setText("Draw Tile");
+                next.setText("Draw Tile");
                 game.nextState();
             }
             case "DRAW" -> {
                 game.nextState();
                 System.out.println("UI State: DRAW");
-                turnLabel.setText("Play Tile");
+                next.setText("Play Tile");
                 nextTurn();
             }
         }
@@ -239,6 +239,7 @@ public class MainUI extends Application {
         tileRB4.setText(currentPlayer.getTile(3).toString());
         tileRB5.setText(currentPlayer.getTile(4).toString());
         tileRB6.setText(currentPlayer.getTile(5).toString());
+        updateSharesTable(game.getPlayerShares());
         turnLabel.setText(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn");
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
@@ -246,9 +247,14 @@ public class MainUI extends Application {
     public void showBought(Corporation corporation, Player player){
         String lastText;
         int newVal;
-        lastText = labArShares[corporation.getColorNum()][0].getText();
+        lastText = labArShares[corporation.getColorNum()][1].getText();
         newVal = Integer.valueOf(lastText) + 1;
-        labArShares[corporation.getColorNum()][0].setText(String.valueOf(newVal));
+        labArShares[corporation.getColorNum()][1].setText(String.valueOf(newVal));
+    }
+    private void updateSharesTable(int[] shares){
+        for (int i: shares) {
+            labArShares[1][i].setText(String.valueOf(shares[i]));
+        }
     }
 
     /**
@@ -720,7 +726,7 @@ public class MainUI extends Application {
         int gridHeight = 8;
 
         String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
-        String[] amount = {"100", "100", "100", "100", "100", "100", "100", "100"};
+        String[] amount = {"0", "0", "0", "0", "0", "0", "0", "0"};
         String[][] tableData = {corporationNames, amount};
         labArShares = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
