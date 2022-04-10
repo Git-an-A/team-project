@@ -229,6 +229,7 @@ public class Game {
      */
     public void playTile(Tile tile) {
         currentPlayer.addTile(gameBoard.getTiles().dealTile());
+        gameBoard.checkPlace(tile);
 
         int tileXpos = tile.getXpos();
         int tileYpos = tile.getYpos();
@@ -437,11 +438,11 @@ public class Game {
     }
 
 
-    public String restrictedAccess(Tile tile) {
-        String m = "";
-        m = gameBoard.cannotPlace(tile);
-        return m;
+    public boolean checkingPlace(Tile tile) {
+        boolean check = gameBoard.checkPlace(tile);
+        return check;
     }
+
     public List<Corporation> getCorporationList(){
         return gameBoard.getCorporationList();
     }
