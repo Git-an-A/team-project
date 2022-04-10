@@ -76,6 +76,7 @@ public class MainUI extends Application {
     private Label moneyAvailableLabel;
     private Label moneyLabel;
     private Button next;
+    private CheckBox buyStockCheck;
     final ToggleGroup toggleGroup = new ToggleGroup();
     private final Stage stage = new Stage();
 
@@ -113,6 +114,7 @@ public class MainUI extends Application {
         moneyAvailableLabel = makeMoneyAvailableLabel();
         moneyLabel = makeMoneyLabel();
         next = makeNextButton();
+        buyStockCheck = makeBuyStockCheck();
         game.setUpGame(new GameOptions(), this);
         System.out.println("MainUI.java MainUI() bottom");
 
@@ -177,7 +179,7 @@ public class MainUI extends Application {
             case "EXCHANGE" -> {
                 System.out.println("UI State: EXCHANGE");
                 for(int i=0;i<3;i++){
-                    if(game.getActiveCorporations().size()>0){
+                    if(game.getActiveCorporations().size()>0 && buyStockCheck.isSelected()){
                         chooseStock();
                     }
                 }
@@ -232,6 +234,7 @@ public class MainUI extends Application {
         System.out.println("MainUI.java nextTurn() top");
         game.nextTurn();
         Player currentPlayer = game.getCurrentPlayer();
+        moneyLabel.setText(String.valueOf(currentPlayer.checkMoney()));
         tileRB1.setText(currentPlayer.getTile(0).toString());
         tileRB2.setText(currentPlayer.getTile(1).toString());
         tileRB3.setText(currentPlayer.getTile(2).toString());
@@ -283,6 +286,7 @@ public class MainUI extends Application {
         root.getChildren().add(moneyAvailableLabel);
         root.getChildren().add(moneyLabel);
         root.getChildren().add(next);
+        root.getChildren().add(buyStockCheck);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
@@ -318,7 +322,8 @@ public class MainUI extends Application {
         stage.hide();
         Stage disp = new Stage();
         disp.setTitle("Courses");
-
+        moneyLabel.setText(String.valueOf(game.getCurrentPlayer().checkMoney()));
+        System.out.println(game.getCurrentPlayer().checkMoney());
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -351,7 +356,7 @@ public class MainUI extends Application {
             public void handle(ActionEvent event) {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
-                        game.getCurrentPlayer().buyStock(item);
+                        game.buyStock(item, game.getCurrentPlayer());
                     }
                 }
                 disp.hide();
@@ -365,18 +370,10 @@ public class MainUI extends Application {
                 disp.hide();
             }
         });
-
-
-
-
         disp.setResizable(false);
         disp.setScene(scene);
-
         disp.showAndWait();
-
-
         System.out.println("MainUI.java dispMenu()");
-
     }
     /**
      * Displays a new window to select starting a new corporation
@@ -740,5 +737,13 @@ public class MainUI extends Application {
         });
         return button;
     }
-
+    private CheckBox makeBuyStockCheck(){
+        int x = 1120;
+        int y = 500;
+        CheckBox checkBox = new CheckBox();
+        checkBox.setLayoutX(x);
+        checkBox.setLayoutY(y);
+        checkBox.setText("Buy Stock?");
+        return checkBox;
+    }
 }

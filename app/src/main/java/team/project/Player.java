@@ -141,6 +141,7 @@ public class Player {
         Stack<Stock> tempStack = corps.get(number);
         tempStack.add(corporation.giveStock(this));
         corps.set(number, tempStack);
+        takeMoney(corporation.getPrice());
     }
 
     /**

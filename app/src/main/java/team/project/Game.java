@@ -185,8 +185,9 @@ public class Game {
         return true;
     }
 
-    public boolean buyStock(Stock stockName, int amount) {
-        return true;}
+    public void buyStock(Corporation corporation, Player player) {
+        player.buyStock(corporation);
+    }
 
     public boolean sellStock(Stock stockName, int amount) {
         return true;}
@@ -310,8 +311,6 @@ public class Game {
     public GameBoard getGameBoard(){
         return gameBoard;
     }
-<<<<<<< HEAD
-
 
     //End Game Section to get results
     public List<Corporation> playedCorps(){
@@ -378,7 +377,6 @@ public class Game {
 //    }
 
 
-=======
     public void pickMerge(List<Corporation> corporations){
         mainUI.chooseCorp(corporations, 2);
     }
@@ -400,6 +398,5 @@ public class Game {
         }
         return corps;
     }
-    public void endGame() {}
->>>>>>> 44680b53ac097d67b82fa1e9a19cbb7de12fd1db
+
 }
