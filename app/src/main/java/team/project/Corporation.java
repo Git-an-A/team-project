@@ -251,21 +251,14 @@ public class Corporation {
     public Stack<Tile> getPlayTiles() {
         return playTiles;
     }
-<<<<<<< HEAD
+
 
     public Stack<Stock> getStocks() {
         return stocks;
-=======
-    public Stack<Stock> getStocks() {
-        return stocks;
-    }
-    public int getColorNum(){
-       return colorNum;
->>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
     }
 
-    public int getColorNum(){
+    public int getColorNum () {
         return colorNum;
-        }
+    }
 }
 

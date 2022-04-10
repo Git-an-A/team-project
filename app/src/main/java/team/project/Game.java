@@ -198,13 +198,9 @@ public class Game {
         return true;
     }
 
-<<<<<<< HEAD
-    public boolean buyStock(Stock stockName, int amount) {
-        return true;
-=======
+
     public void buyStock(Corporation corporation, Player player) {
         player.buyStock(corporation);
->>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
     }
 
     public boolean sellStock(Stock stockName, int amount) {
@@ -263,10 +259,10 @@ public class Game {
 
             //need to check for one corp not one tile next to it
             tempTile = tileStack.pop();
-            String nearCorporation =  gameBoard.checkNearCorps(tempTile);
-            for(Corporation corps : corporationList){
+            String nearCorporation = gameBoard.checkNearCorps(tempTile);
+            for (Corporation corps : corporationList) {
                 String compare = corps.getName();
-                if (nearCorporation == compare){
+                if (nearCorporation == compare) {
                     tile.setCorp(tempTile.getCorp());
                     mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
                 }
@@ -277,24 +273,24 @@ public class Game {
 //                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
 
 //            } else {
-                //make corporation
-                List<Corporation> corps = getUnplacedCorporations();
-                System.out.println(corps.toString() + " corps ");
-                mainUI.chooseCorp(corps, 1);
-                System.out.println("Unchosen corps" + getUnplacedCorporations());
-                //get chosen corp
-                Corporation tempCorp = null;
-                for (Corporation corporation : corps) {
-                    if (!getUnplacedCorporations().contains(corporation)) {
-                        tempCorp = corporation;
-                    }
+            //make corporation
+            List<Corporation> corps = getUnplacedCorporations();
+            System.out.println(corps.toString() + " corps ");
+            mainUI.chooseCorp(corps, 1);
+            System.out.println("Unchosen corps" + getUnplacedCorporations());
+            //get chosen corp
+            Corporation tempCorp = null;
+            for (Corporation corporation : corps) {
+                if (!getUnplacedCorporations().contains(corporation)) {
+                    tempCorp = corporation;
                 }
-                Corporation c = tempCorp;
-                System.out.println("new color number: " + c.getColorNum());
-                mainUI.colorTile(tile, c.getColorNum());
-                mainUI.colorTile(tempTile, c.getColorNum());
-                //make other tile corporation
-                tempTile.setCorp(c);
+            }
+            Corporation c = tempCorp;
+            System.out.println("new color number: " + c.getColorNum());
+            mainUI.colorTile(tile, c.getColorNum());
+            mainUI.colorTile(tempTile, c.getColorNum());
+            //make other tile corporation
+            tempTile.setCorp(c);
 //            }
         } else {
             //merge corporation
@@ -346,10 +342,6 @@ public class Game {
     public GameBoard getGameBoard() {
         return gameBoard;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
 
     public void distributeMoney() {
         for (Player player : players) {
@@ -377,9 +369,10 @@ public class Game {
         m = winner.getName() + " is the winner with $" + winner.checkMoney();
         return m;
     }
-    public String getOthers(){
+
+    public String getOthers() {
         String m = "";
-        for(Player player : players){
+        for (Player player : players) {
             m += player.getName() + " has the total of $" + player.checkMoney();
         }
         return m;
@@ -406,12 +399,8 @@ public class Game {
     }
 
 
-<<<<<<< HEAD
     public void pickMerge(List<Corporation> corporations) {
-=======
 
-    public void pickMerge(List<Corporation> corporations){
->>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
         mainUI.chooseCorp(corporations, 2);
     }
 
@@ -435,12 +424,12 @@ public class Game {
         return corps;
     }
 
-<<<<<<< HEAD
-    public String restrictedAccess(Tile tile){
+
+    public String restrictedAccess(Tile tile) {
         String m = "";
         m = gameBoard.cannotPlace(tile);
         return m;
     }
-=======
->>>>>>> cb94c285dc4085a8fa774f9e47f1b20c5d43b6e9
+
+
 }
