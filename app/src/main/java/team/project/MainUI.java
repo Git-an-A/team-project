@@ -27,6 +27,7 @@ package team.project;
 
 import com.google.common.collect.Table;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -312,8 +313,21 @@ public class MainUI extends Application {
 
 
         //button to call save
-
+        Button save = createButton("save", 50, 50);
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                game.saveGame();
+            }
+        });
         // button to quit without saving
+        Button quit = createButton("Quit", 50, 80);
+        quit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Platform.exit();
+            }
+        });
 
         disp.setResizable(false);
         disp.setScene(scene);
