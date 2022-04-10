@@ -60,6 +60,7 @@ public class Corporation {
         this.companyName = companyName;
         this.stocks = new Stack<Stock>();
         this.colorNum = colorNum;
+        this.playTiles = new Stack<>();
         stocks = startingStock();
         played = false;
         if(number == 1){
@@ -205,7 +206,7 @@ public class Corporation {
     public int getNumber(){return number;}
 
     public int getSize(){
-        return size;
+        return playTiles.size();
     }
     public void setSize(int size){
         this.size =  size;

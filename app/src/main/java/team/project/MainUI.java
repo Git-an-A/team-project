@@ -313,8 +313,8 @@ public class MainUI extends Application {
      */
     public void chooseCorp(List<Corporation> corporations, int type){
         stage.hide();
-
         Stage disp = new Stage();
+        disp.initStyle(StageStyle.UNDECORATED);
         disp.initStyle(StageStyle.UNDECORATED);
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
@@ -351,7 +351,7 @@ public class MainUI extends Application {
                             game.getLastTile().setCorp(item);
                         }
                         else{
-                            game.getGameBoard().mergeCorp(corporations, item, game.getLastTile());
+                            game.mergeTie(corporations, item, game.getLastTile());
                         }
                     }
                 }
@@ -362,7 +362,11 @@ public class MainUI extends Application {
 
         disp.setResizable(false);
         disp.setScene(scene);
-        disp.showAndWait();
+
+        if(corporations.size()!=0){
+            disp.showAndWait();
+        }
+
 
 
     }

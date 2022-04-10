@@ -52,13 +52,34 @@ public class GameBoard {
         boardState = play;
     }
 
-    public void mergeCorp(List<Corporation> corporations, Corporation corporation , Tile tile){
-        for (Corporation item: corporations) {
-            for (Tile t : item.getPlayTiles()) {
-                t.setCorp(corporation);
+    public void mergeCorp(List<Corporation> corporations, Tile tile){
+        int maxSize = 0;
+        Corporation corporation;
+        for (Corporation c: corporations) {
+            if(c.getSize()>maxSize){
+                maxSize = c.getSize();
+            }
+        }
+        List<Corporation> maxCorps = new ArrayList<>();
+        for (Corporation c : corporations) {
+            if(c.getSize() == maxSize){
+                maxCorps.add(c);
+            }
+        }
+
+        if(maxCorps.size() == 1){
+            corporation = maxCorps.get(0);
+            for (Corporation item: corporations) {
+                for (Tile t : item.getPlayTiles()) {
+                    t.setCorp(corporation);
+                    Game.getInstance().colorTile(t, corporation.getColorNum());
+                }
             }
             tile.setCorp(corporation);
             Game.getInstance().colorTile(tile, corporation.getColorNum());
+        }
+        else {
+            Game.getInstance().pickMerge(maxCorps);
         }
     }
 

@@ -242,6 +242,9 @@ public class Game {
         }
         else if (tileStack.size() == 1){
             //add to corporation
+
+            //need to check for one corp not one tile next to it
+
             tempTile = tileStack.pop();
             if(tempTile.getCorp() != null){
                 tile.setCorp(tempTile.getCorp());
@@ -274,7 +277,9 @@ public class Game {
             for (Tile t: tileStack) {
                 corporations.add(t.getCorp());
             }
-            mainUI.chooseCorp(corporations, 2);
+
+
+            //sending null corporations
 
         }
 
@@ -307,6 +312,18 @@ public class Game {
     }
     public GameBoard getGameBoard(){
         return gameBoard;
+    }
+    public void pickMerge(List<Corporation> corporations){
+        mainUI.chooseCorp(corporations, 2);
+    }
+    public void mergeTie(List<Corporation> corporations, Corporation corporation, Tile tile){
+        for (Corporation item: corporations) {
+            for (Tile t : item.getPlayTiles()) {
+                t.setCorp(corporation);
+            }
+            tile.setCorp(corporation);
+            Game.getInstance().colorTile(tile, corporation.getColorNum());
+        }
     }
     public void endGame() {}
 }
