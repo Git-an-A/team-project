@@ -24,8 +24,10 @@
 
 package team.project;
 
+import org.checkerframework.checker.units.qual.Current;
 import org.junit.jupiter.api.Test;
 
+import javax.naming.InitialContext;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,78 +66,19 @@ class CorporationTest {
     }
 
     @Test
-    void getValue() {
+    void testGetValue() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        assertEquals(300, corporation.getValue(1));
+        assertEquals(400, corporation.getValue(2));
     }
 
     @Test
-    void sellStock() {
-    }
-
-    @Test
-    void removeStock() {
-    }
-
-    @Test
-    void giveMajorBonus() {
-    }
-
-    @Test
-    void giveMinorBonus() {
-    }
-
-    @Test
-    void isSafe() {
-    }
-
-    @Test
-    void getNumber() {
-    }
-
-    @Test
-    void getSize() {
-    }
-
-    @Test
-    void setSize() {
-    }
-
-    @Test
-    void getPrice() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void setBaseValue() {
-    }
-
-    @Test
-    void setPlayed() {
-    }
-
-    @Test
-    void getPlayed() {
-    }
-
-    @Test
-    void testToString() {
-    }
-
-    @Test
-    void addTile() {
-    }
-
-    @Test
-    void getPlayTiles() {
-    }
-
-    @Test
-    void getStocks() {
-    }
-
-    @Test
-    void getColorNum() {
+    void testSellStock() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        var player = new Player("Test Name");
+        int initialPlayerMoney = player.checkMoney();
+        corporation.sellStock(player, 1);
+        int playerCurrentMoney = player.checkMoney();
+        assertNotEquals(initialPlayerMoney, playerCurrentMoney);
     }
 }
