@@ -91,8 +91,8 @@ public class GameBoard {
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
 
-        List<Corporation> moreThanOne = null;
-        List<Corporation> merge = null;
+        List<Corporation> moreThanOne = new ArrayList<>();
+        List<Corporation> merge = new ArrayList<>();
 
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
