@@ -265,6 +265,11 @@ public class MainUI extends Application {
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
     }
 
+    /**
+     * Show corporations that have been bought on the share label
+     * @param corporation corporation that was bought
+     * @param player player that bought it
+     */
     public void showBought(Corporation corporation, Player player){
         String lastText;
         int newVal;
@@ -272,11 +277,20 @@ public class MainUI extends Application {
         newVal = Integer.valueOf(lastText) + 1;
         labArShares[corporation.getColorNum()][1].setText(String.valueOf(newVal));
     }
+
+    /**
+     * Updates the share table.
+     * @param shares shares that a player owns of each type
+     */
     private void updateSharesTable(int[] shares){
         for (int i: shares) {
             labArShares[1][i].setText(String.valueOf(shares[i]));
         }
     }
+
+    /**
+     * Updates the info table
+     */
     private void updateInfoTable(){
         List<Corporation> corporations = Game.getInstance().getCorporationList();
 
@@ -397,6 +411,11 @@ public class MainUI extends Application {
 
     }
 
+    /**
+     * creates the sell menu
+     * @param corporation corporation that is merged to
+     * @param corporations any corporation being merged
+     */
     public void sellMenu(Corporation corporation, List<Corporation> corporations){
         stage.hide();
         Stage disp = new Stage();
@@ -447,6 +466,10 @@ public class MainUI extends Application {
         System.out.println("MainUI.java dispMenu()");
 
     }
+
+    /**
+     * Window that allows a player chooses a stock to buy
+     */
     private void chooseStock(){
         stage.hide();
         Stage disp = new Stage();
@@ -508,7 +531,6 @@ public class MainUI extends Application {
      * Displays a new window to select starting a new corporation
      */
     public void chooseCorp(List<Corporation> corporations, int type){
-        stage.hide();
         Stage disp = new Stage();
         disp.initStyle(StageStyle.UNDECORATED);
         disp.setOnHidden(new EventHandler<WindowEvent>() {
@@ -560,6 +582,7 @@ public class MainUI extends Application {
         disp.setScene(scene);
 
         if(corporations.size()!=0){
+            stage.hide();
             disp.showAndWait();
         }
 
