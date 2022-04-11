@@ -180,8 +180,13 @@ public class Game {
         return players;
     }
 
-    public boolean tallyScore(Player player, int amount) {
-        return true;
+    /**
+     * Be able to see player's money
+     *
+     * @param player's total amount of money
+     */
+    public void seePlayerMoney(Player player) {
+        player.checkMoney();
     }
 
     public boolean takeTurn(Player player) {
