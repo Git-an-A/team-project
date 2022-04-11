@@ -87,6 +87,4 @@ class CorporationTest {
         int playerCurrentMoney = player.checkMoney();
         assertNotEquals(initialPlayerMoney, playerCurrentMoney);
     }**/
-
-
 }

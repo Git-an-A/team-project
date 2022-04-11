@@ -65,5 +65,4 @@ public class AppTest {
         node = parent.getChildrenUnmodifiable().get(4);
         FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("Welcome to Acquire!"));
     }
-
 }
