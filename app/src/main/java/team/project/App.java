@@ -137,7 +137,6 @@ public class App extends Application{
                      String filename = "save.txt";
                      Gson gson = new Gson();
                      File loadFile = new File(filename);
-
                      try{
                          Scanner scan = new Scanner(loadFile);
                          while(scan.hasNextLine()){
@@ -146,7 +145,6 @@ public class App extends Application{
                          scan.close();
                         }
                      catch (Exception e){
-
                      }
                      stage.hide();
                  }
