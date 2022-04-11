@@ -35,6 +35,7 @@ public class Tile {
      *
      * @param letter is the letters of the tiles
      * @param num is the numbers of the tiles
+     * @author Baylor McElroy
      */
     public Tile(String letter, int num){
         this.letterID = letter;
@@ -42,6 +43,9 @@ public class Tile {
         this.corp = null;
     }
 
+    /**
+     * Public Getters and Setters
+     */
     public int getNumbers(){return numbers;}
 
     public String getLetterID() {

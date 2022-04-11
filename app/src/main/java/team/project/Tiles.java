@@ -30,7 +30,7 @@ import java.util.Stack;
 
 /**
  * Java class for Tile
- * @author Tori Weir
+ * @author Victoira Weir
  */
 public class Tiles{
     private Stack<Tile> tileList;
@@ -80,6 +80,11 @@ public class Tiles{
         return null;
     }
 
+    /**
+     * getter for tile list
+     *
+     * @return tile list
+     */
     public Stack<Tile> getTileList() {
         return tileList;
     }

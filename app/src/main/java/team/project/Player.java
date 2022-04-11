@@ -26,12 +26,14 @@ package team.project;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
  * Player in the game. Each player has money stocks and tiles
  *
- *
+ * @author Baylor McElroy
+ * @author Victoria Weir
  */
 public class Player {
     private Tile[] playerTiles;
@@ -123,7 +125,7 @@ public class Player {
      * Prints all tiles held by player
      *
      * @author Baylor McElroy
-     * @author Tori Weir
+     * @author Victoria Weir
      */
     public void printTiles(){
         for(var tile: playerTiles){
@@ -133,7 +135,9 @@ public class Player {
 
     /**
      * Player buys a stock
+     *
      * @param corporation desired corporation they buy from
+     * @author Baylor McElroy
      */
     public void buyStock(Corporation corporation) {
         //remove stock to corporation stack
@@ -150,12 +154,13 @@ public class Player {
      * @param stockName is the stock name
      * @param player player who wants to see it
      * @return the number of stocks they own of that type
+     * @author Victoria Weir
      */
     public int viewStocks(String stockName, Player player) {
         int counter= 0;
         for(int i=0; i< player.corps.size(); i++){
             String check = player.corps.get(i).toString();
-            if(check == stockName){
+            if(Objects.equals(check, stockName)){
                 counter++;
             }
 //            else{
@@ -181,8 +186,10 @@ public class Player {
 
     /**
      * Trade stocks with a ratio of 3:1
+     *
      * @param oldCorporation old corporation which lost the merge
      * @param newCorporation new corporation which won the merge
+     * @author Victoria Weir
      */
     public void tradeStocks(Corporation oldCorporation, Corporation newCorporation) {
         //get old corporation number
@@ -221,6 +228,7 @@ public class Player {
      * Player sells stocks back to the corporation
      *
      * @param corporation respective corporation which the stocks are from
+     * @author Victoria Weir
      */
     public void sellStocks(Corporation corporation) {
         //remove stock from player's inventory
@@ -232,7 +240,12 @@ public class Player {
         corps.remove(tempStack);
     }
 
-
+    /**
+     * Discards dead tiles
+     *
+     * @param tile tile that needs to be removed
+     * @author Victoria Weir
+     */
     public void discardDeadTile(Tile tile) {
 //        boolean checkTile = Game.getInstance().restrictedAccess(tile);
 //        if(checkTile){
@@ -244,12 +257,9 @@ public class Player {
         }
     }
 
-    public static void main(String[] args) {
-
-        System.out.println();
-    }
-
-
+    /**
+     * end game
+     */
     public void endGame(){
         Game.getInstance().endGame();
     }

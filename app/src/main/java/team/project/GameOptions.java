@@ -43,6 +43,12 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Game Options class is dealing with Save, Load, Starting, and UI
+ *
+ * @author Baylor McElroy
+ * @author Victoria Weir
+ */
 public class GameOptions extends Application {
     private boolean hiddenAsset;
     private String filename;
@@ -50,8 +56,10 @@ public class GameOptions extends Application {
     private boolean hide;
     private Stage disp;
 
-    public GameOptions(){
-    }
+    /**
+     * Empty
+     */
+    public GameOptions(){}
 
     /**
      * This creates, adds, and determines the game options
@@ -128,7 +136,7 @@ public class GameOptions extends Application {
      *
      * @param filename String of the filename
      * @return getGame Game object that holds the game
-     * @author Tori Weir
+     * @author Victoria Weir
      */
 
 
@@ -141,7 +149,7 @@ public class GameOptions extends Application {
      *
      * @param file desired file location made by the player
      * @param game the current state of the game
-     * @author Tori Weir
+     * @author Victoria Weir
      */
     private void saveData(String file, Game game) throws IOException {
         Gson gson = new Gson();
@@ -156,6 +164,11 @@ public class GameOptions extends Application {
         }catch (Exception e){}
     }
 
+    /**
+     * Default save
+     *
+     * @throws IOException
+     */
     public void saveDefault() throws IOException {
         String file = "save.txt";
         saveData(file, Game.getInstance());

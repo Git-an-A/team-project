@@ -66,7 +66,7 @@ public class Game {
      * Starts game and distributes necessary resources
      *
      * @author Baylor McElroy
-     * @author Tori Weir
+     * @author Victoria Weir
      */
     public void startGame() {
 //        System.out.println("Game.java startGame() top");
@@ -198,11 +198,24 @@ public class Game {
         return true;
     }
 
-
+    /**
+     * Player buys stock from corporation
+     *
+     * @param corporation Corporation being bought from
+     * @param player player who is buying it
+     * @author Victoria Weir
+     */
     public void buyStock(Corporation corporation, Player player) {
         player.buyStock(corporation);
         mainUI.showBought(corporation, player);
     }
+
+    /**
+     * Gets player shares
+     *
+     * @return player shares as a list
+     * @author Baylor McElroy
+     */
     public int[] getPlayerShares(){
         int[] shares = new int[7];
         int i = 0;
@@ -266,9 +279,8 @@ public class Game {
             mainUI.colorTile(tile, 0);
         } else if (tileStack.size() == 1) {
             //add to corporation
-
-            //need to check for one corp not one tile next to it
             tempTile = tileStack.pop();
+            //Check for nearby corporation
             String nearCorporation = gameBoard.checkNearCorps(tempTile);
             List<Corporation> active = getActiveCorporations();
             for (Corporation corps : active) {
@@ -331,31 +343,58 @@ public class Game {
         return true;
     }
 
-    public boolean sellStocks(Stock stockName, int amount) {
-        return true;
-    }
-
+    /**
+     * Gets first of the tile list
+     *
+     * @return get tile on top of list
+     */
     public Tile getLastTile() {
         return playedTiles.peek();
     }
 
+    /**
+     * Gets the unactive corporations
+     *
+     * @return list of unactive corporations
+     */
     public List<Corporation> getUnplacedCorporations() {
         return gameBoard.getUnplacedCorporations();
     }
 
+    /**
+     * Gets the active corporations
+     *
+     * @param corporation list of active corporations
+     */
     public void playCorporation(Corporation corporation) {
         corporation.giveStock(currentPlayer);
         corporation.setPlayed(true);
     }
 
+    /**
+     * Gives the tile a color based on the corporation
+     *
+     * @param tile tile being added to a corporation
+     * @param colorType color based on the corporation
+     */
     public void colorTile(Tile tile, int colorType) {
         mainUI.colorTile(tile, colorType);
     }
 
+    /**
+     * Gets the game board class
+     *
+     * @return game board class
+     */
     public GameBoard getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * For the end of the game- sells the players' stocks and get respective shares from active corporations
+     *
+     * @author Victoria Weir
+     */
     public void distributeMoney() {
         for (Player player : players) {
             for (Corporation corporation : getActiveCorporations()) {
@@ -368,6 +407,12 @@ public class Game {
         }
     }
 
+    /**
+     * Figures out the winner by comparing them to each other
+     *
+     * @return winner
+     * @author Victoria Weir
+     */
     public String getWinner() {
         String m = "";
         int mostMoney = 0;
@@ -383,6 +428,12 @@ public class Game {
         return m;
     }
 
+    /**
+     * Looks at all the player's money
+     *
+     * @return a string with all the player's money
+     * @author Victoria Weir
+     */
     public String getOthers() {
         String m = "";
         for (Player player : players) {
@@ -391,6 +442,12 @@ public class Game {
         return m;
     }
 
+    /**
+     * Checks to end the game
+     *
+     * @return sees if the game can end or not
+     * @author Victoria Weir
+     */
     public boolean checkEndGame() {
         String m = "";
         for (Corporation corporation : getActiveCorporations()) {
@@ -403,6 +460,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Tests if the game can end and if so, prints the results
+     *
+     * @author Victoria Weir
+     */
     public void endGame() {
         if (checkEndGame()) {
             distributeMoney();
@@ -411,12 +473,24 @@ public class Game {
         }
     }
 
-
+    /**
+     * Lets the player pick corporation during merge if both corporations equal eachother
+     *
+     * @param corporations the corporation in merge
+     */
     public void pickMerge(List<Corporation> corporations) {
 
         mainUI.chooseCorp(corporations, 2);
     }
 
+    /**
+     * If a merge tie happens
+     *
+     * @param corporations corporation 1
+     * @param corporation corporation 2
+     * @param tile the amount of tiles
+     * @author Baylor McElroy
+     */
     public void mergeTie(List<Corporation> corporations, Corporation corporation, Tile tile) {
         for (Corporation item : corporations) {
             for (Tile t : item.getPlayTiles()) {
@@ -427,6 +501,12 @@ public class Game {
         }
     }
 
+    /**
+     * Gets the active corporations
+     *
+     * @return active corporations as a list
+     * @author Baylor McElroy
+     */
     public List<Corporation> getActiveCorporations() {
         List<Corporation> corps = new ArrayList<>();
         for (Corporation c : gameBoard.getCorporationList()) {
@@ -437,12 +517,11 @@ public class Game {
         return corps;
     }
 
-
-    public boolean checkingPlace(Tile tile) {
-        boolean check = gameBoard.checkPlace(tile);
-        return check;
-    }
-
+    /**
+     * Gets corporation list
+     *
+     * @return corporation list
+     */
     public List<Corporation> getCorporationList(){
         return gameBoard.getCorporationList();
     }

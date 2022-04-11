@@ -35,6 +35,11 @@ public class Stock {
     private int value;
     private int cost;
 
+    /**
+     * Stock class
+     *
+     * @author Baylor McElroy
+     */
     public Stock(){};
 
     /**

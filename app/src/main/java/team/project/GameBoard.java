@@ -29,6 +29,12 @@ import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
+/**
+ * GameBoard that relates to anything that happens on the board
+ *
+ * @author Baylor McElroy
+ * @author Victoria Weir
+ */
 public class GameBoard {
     private Tiles tiles;
     private Stack<Tile> tileStack;
@@ -40,6 +46,10 @@ public class GameBoard {
     private final String exchange = "EXCHANGE";
     private final String draw = "DRAW";
     private String boardState;
+
+    /**
+     * Initializes GameBoard and the corporations
+      */
     public GameBoard(){
         //initialize game board
         tiles = new Tiles();
@@ -51,15 +61,31 @@ public class GameBoard {
         boardState = play;
     }
 
+    /**
+     * Gets a copy from tile stack
+     *
+     * @param tileStack copy of tile stack
+     */
     public void setTileStack(Stack<Tile> tileStack) {
         Tiles copy = null;
         this.tileStack = copy.getTileList();
     }
 
+    /**
+     * Getter
+     *
+     * @return gets tile stack
+     */
     public Stack<Tile> getTileStack() {
         return tileStack;
     }
 
+    /**
+     * Checks nearby corporations
+     * @param tile tile being placed
+     * @return corporation if nearby or nothing
+     * @author Victoria Weir
+     */
     public String checkNearCorps(Tile tile){
         Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
@@ -108,6 +134,14 @@ public class GameBoard {
 //    }
 
     //For dead tiles
+
+    /**
+     * Checks placement of tile
+     *
+     * @param tile being played
+     * @return boolean, true if there is more than 2 corporation - false if not
+     * @author Victoria Weir
+     */
     public boolean checkPlace(Tile tile){
         String check = checkNearCorps(tile);
 
@@ -118,10 +152,23 @@ public class GameBoard {
         return false;
     }
 
+    /**
+     * deletes the tile
+     *
+     * @param tile dead tile
+     * @author Victoria Weir
+     */
     public void cannotPlace(Tile tile){
         findPlayer().discardDeadTile(tile);
     }
 
+    /**
+     * merging corporation
+     *
+     * @param corporations being merged
+     * @param tile amount
+     * @author Baylor McElroy
+     */
     public void mergeCorp(List<Corporation> corporations, Tile tile){
         int maxSize = 0;
         Corporation corporation;
@@ -157,6 +204,7 @@ public class GameBoard {
      * This will give the players the sharebonus when a corporation is merged
      *
      * @param corp corporation that is merged
+     * @author Victoria Weir
      */
     public void ShareBonus(Corporation corp){
         Queue playerList = Game.getInstance().playerQueue();
@@ -280,6 +328,12 @@ public class GameBoard {
 
         return corporations;
     }
+
+    /**
+     * getters for board state and get tiles
+     *
+     * @return gets booard state and tiles
+     */
     public String getBoardState(){
         return boardState;
     }
@@ -288,6 +342,13 @@ public class GameBoard {
 
         return tiles;
     }
+
+    /**
+     * Gets the list of unplaced corporations
+     *
+     * @return list of unplaced corporations
+     * @author Baylor McElroy
+     */
     public List<Corporation> getUnplacedCorporations(){
         List<Corporation> tempList = new ArrayList<>();
         for (Corporation c: corporationList) {

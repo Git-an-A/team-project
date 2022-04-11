@@ -28,6 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Corporation Class that creates and handles actions from the corporation side
+ *
+ * @author Baylor McElroy
+ * @author Victoria Weir
+ */
 public class Corporation {
     private Stack<Tile> playTiles;
     private int baseValue;
@@ -56,6 +62,8 @@ public class Corporation {
      *
      * @param companyName name of corporation
      * @param number      identifier
+     * @author Baylor McElroy
+     * @author Victoria Weir
      */
     public Corporation(String companyName, int number, int colorNum) {
         this.companyName = companyName;
@@ -77,6 +85,7 @@ public class Corporation {
      * Starting stock for the corporation
      *
      * @return the 25 stocks that are given for a corporation
+     * @author Victoria Weir
      */
     private Stack<Stock> startingStock() {
         Stack<Stock> startStock = new Stack<>();
@@ -91,6 +100,7 @@ public class Corporation {
      *
      * @param player player founding corporation
      * @param tile   location of corporation
+     * @author Baylor McElroy
      */
     public void founded(Player player, Tile tile) {
         player.addFounded(this);
@@ -102,6 +112,7 @@ public class Corporation {
      *
      * @param player player who receives it
      * @return stock
+     * @author Baylor McElroy
      */
     public Stock giveStock(Player player) {
         int cost;
@@ -124,6 +135,7 @@ public class Corporation {
      * When the player sells a stock
      *
      * @param playerName player who sold it
+     * @author Victoria Weir
      */
     public void buyStock(Player playerName) {
         int amount = playerName.getCorps().size();
@@ -136,6 +148,7 @@ public class Corporation {
      *
      * @param number the amount of stocks
      * @return the value
+     * @author Victoria Weir
      */
     public int getValue(int number) {
         return baseValue + 100 * number;
@@ -146,6 +159,7 @@ public class Corporation {
      *
      * @param player player who is buying it
      * @param amount amount of stocks
+     * @author Victoria Weir
      */
     public void sellStock(Player player, int amount) {
         player.takeMoney(getValue(amount));
@@ -157,6 +171,7 @@ public class Corporation {
      * removes stock from player
      *
      * @param playerName player who lost it
+     * @author Baylor McElroy
      */
     public void removeStock(Player playerName) {
         for (int i = 0; i < playerName.getCorps().size(); i++) {
@@ -173,6 +188,7 @@ public class Corporation {
      * Calculates major bonus
      *
      * @return Major bonus
+     * @author Victoria Weir
      */
     public int giveMajorBonus() {
         return getPrice() * 10;
@@ -182,6 +198,7 @@ public class Corporation {
      * Calculates minor bonus
      *
      * @return Minor bonus
+     * @author Victoria Weir
      */
     public int giveMinorBonus() {
         return giveMajorBonus() / 2;
@@ -191,6 +208,7 @@ public class Corporation {
      * Check if the corporation is safe or not
      *
      * @return true if corporation is safe, false if it is less than 11
+     * @author Victoria Weir
      */
     public boolean isSafe() {
         if (size >= 11) {
@@ -201,8 +219,7 @@ public class Corporation {
     }
 
     /**
-     * Getters and Setters
-     * Price is the cost/value of the Corporation
+     * Public Getters and Setters
      */
 
     public int getNumber() {
