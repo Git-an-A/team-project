@@ -322,15 +322,18 @@ public class Game {
             //merge corporation
             Stack<Corporation> corporations = new Stack<>();
             for (Tile t : tileStack) {
-                corporations.add(t.getCorp());
+                String mergingCheck = gameBoard.checkNearCorps(tile);
+                if(mergingCheck.equals("MergeAction")) {
+                    corporations.add(t.getCorp());
+                }
             }
+            gameBoard.mergeCorp(corporations,tile);
             //sending null corporations
         }
         playedTiles.add(tile);
         //get corporation color
-
-
     }
+
 //    public static void main(String[] args) {
 //        Tile tileEx = new Tile("Z",3);
 ////        System.out.println(getInstance().gameBoard.checkNearCorps(tileEx));
@@ -341,6 +344,7 @@ public class Game {
 //        tileEx.setCorp(testMakeCorp);
 //        System.out.println(tileEx.getCorp().toString());
 //        System.out.println("Making it work");
+//        createCorp.mergeCorp(createList,tileEx);
 //    }
 
     public boolean tradeStocks(Stock stockName, int amount) {
