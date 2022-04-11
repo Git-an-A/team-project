@@ -90,12 +90,10 @@ public class GameBoard {
         Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
-<<<<<<< HEAD
-        List<Corporation> moreThanOne = new ArrayList<>();
-=======
+
         List<Corporation> moreThanOne = null;
         List<Corporation> merge = null;
->>>>>>> feature/design
+
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
 
