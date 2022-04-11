@@ -45,7 +45,6 @@ public class Game {
     private List<Corporation> corporationList;
 
     private Game() {
-
         playedTiles = new Stack<>();
     }
 

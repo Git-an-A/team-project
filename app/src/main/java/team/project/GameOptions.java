@@ -148,10 +148,10 @@ public class GameOptions extends Application {
      * Method that will save the current game
      *
      * @param file desired file location made by the player
-     * @param game the current state of the game
      * @author Victoria Weir
      */
-    private void saveData(String file, Game game) throws IOException {
+    private void saveData(String file) throws IOException {
+        System.out.println("savvvveeeee");
         Gson gson = new Gson();
         try{
             File filing = new File(file);
@@ -159,9 +159,13 @@ public class GameOptions extends Application {
                 filing.delete();
             }
             FileWriter fileWrite = new FileWriter(file, true);
-            fileWrite.write(gson.toJson(game));
+            String json = gson.toJson(Game.getInstance());
+            System.out.println(json + " : is json");
+            fileWrite.write(json);
             fileWrite.close();
-        }catch (Exception e){}
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -171,7 +175,7 @@ public class GameOptions extends Application {
      */
     public void saveDefault() throws IOException {
         String file = "save.txt";
-        saveData(file, Game.getInstance());
+        saveData(file);
     }
 
     public boolean Display(){

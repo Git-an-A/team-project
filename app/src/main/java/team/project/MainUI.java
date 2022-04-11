@@ -52,7 +52,6 @@ import java.util.Stack;
  */
 public class MainUI extends Application {
 
-    private Game game;
     private Group root;
     private Label turnLabel;
     private GridPane buttonGrid;
@@ -79,7 +78,7 @@ public class MainUI extends Application {
     private Button sellStock;
     private Button tradeStock;
     final ToggleGroup toggleGroup = new ToggleGroup();
-    private final Stage stage = new Stage();
+    private  Stage stage;
 
     /**
      * Adds all controls to UI
@@ -87,9 +86,9 @@ public class MainUI extends Application {
      */
     public MainUI() throws Exception {
         System.out.println("MainUI.java MainUI() top");
-        game = Game.getInstance();
-
         root = new Group();
+
+        stage = new Stage();
 
         int gridLength = 12;
         int gridHeight = 9;
@@ -117,7 +116,7 @@ public class MainUI extends Application {
         next = makeNextButton();
         buyStockCheck = makeBuyStockCheck();
         endGame = makeEndGameButton();
-        game.setUpGame(new GameOptions(), this);
+        Game.getInstance().setUpGame(new GameOptions(), this);
         System.out.println("MainUI.java MainUI() bottom");
 
     }
@@ -169,28 +168,28 @@ public class MainUI extends Application {
      */
     private void nextPhase(){
         System.out.println("MainUI.java nextPhase() top");
-        String gameState = game.getGameState();
+        String gameState = Game.getInstance().getGameState();
         System.out.println(gameState);
         switch (gameState){
             case "PLAY" -> {
                 playTile();
                 next.setText("Buy Stock");
-                game.nextState();
+                Game.getInstance().nextState();
                 System.out.println("MainUi.java end switch play:");
                 System.out.println(gameState);
             }
             case "EXCHANGE" -> {
                 System.out.println("UI State: EXCHANGE");
                 for(int i=0;i<3;i++){
-                    if(game.getActiveCorporations().size()>0 && buyStockCheck.isSelected()){
+                    if(Game.getInstance().getActiveCorporations().size()>0 && buyStockCheck.isSelected()){
                         chooseStock();
                     }
                 }
                 next.setText("Draw Tile");
-                game.nextState();
+                Game.getInstance().nextState();
             }
             case "DRAW" -> {
-                game.nextState();
+                Game.getInstance().nextState();
                 System.out.println("UI State: DRAW");
                 next.setText("Play Tile");
                 nextTurn();
@@ -200,7 +199,7 @@ public class MainUI extends Application {
     private void playTile(){
         System.out.println("UI State: PLAY");
         Tile tile = null;
-        Player tempPlayer = game.getCurrentPlayer();
+        Player tempPlayer = Game.getInstance().getCurrentPlayer();
         if(toggleGroup.getSelectedToggle() == tileRB1){
             tile = tempPlayer.removeTile(0);
             //System.out.println("0 tile played by " + tempPlayer);
@@ -228,7 +227,7 @@ public class MainUI extends Application {
 
         if(tile!=null){
             System.out.println(tile.toString() + " has been played!");
-            game.playTile(tile);
+            Game.getInstance().playTile(tile);
         }
     }
     /**
@@ -236,8 +235,8 @@ public class MainUI extends Application {
      */
     public void nextTurn(){
         System.out.println("MainUI.java nextTurn() top");
-        game.nextTurn();
-        Player currentPlayer = game.getCurrentPlayer();
+        Game.getInstance().nextTurn();
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
         moneyLabel.setText(String.valueOf(currentPlayer.checkMoney()));
         tileRB1.setText(currentPlayer.getTile(0).toString());
         tileRB2.setText(currentPlayer.getTile(1).toString());
@@ -245,7 +244,7 @@ public class MainUI extends Application {
         tileRB4.setText(currentPlayer.getTile(3).toString());
         tileRB5.setText(currentPlayer.getTile(4).toString());
         tileRB6.setText(currentPlayer.getTile(5).toString());
-        updateSharesTable(game.getPlayerShares());
+        updateSharesTable(Game.getInstance().getPlayerShares());
         updateInfoTable();
         turnLabel.setText(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn");
         System.out.println(Game.getInstance().getCurrentPlayer().getName()+ "'s Turn" + " <- label name");
@@ -264,7 +263,7 @@ public class MainUI extends Application {
         }
     }
     private void updateInfoTable(){
-        List<Corporation> corporations = game.getCorporationList();
+        List<Corporation> corporations = Game.getInstance().getCorporationList();
 
         for(int i=0;i<labArInfo[1].length;i++){
             labArInfo[1][i].setText(String.valueOf(corporations.get(i).getSize()));
@@ -305,7 +304,7 @@ public class MainUI extends Application {
 
         root.getChildren().add(buttonGrid);
         //tabs bottom left
-        Player currentPlayer = game.getCurrentPlayer();
+        Player currentPlayer = Game.getInstance().getCurrentPlayer();
         tileRB1.setText(currentPlayer.getTile(0).toString());
         tileRB2.setText(currentPlayer.getTile(1).toString());
         tileRB3.setText(currentPlayer.getTile(2).toString());
@@ -360,7 +359,7 @@ public class MainUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    game.saveGame();
+                    Game.getInstance().saveGame();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -406,23 +405,22 @@ public class MainUI extends Application {
             }
         });
 
-        //button to call save
-        Button trade = createButton("save", 50, 50);
+        Button trade = createButton("trade", 50, 50);
         trade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for(Corporation c : corporations){
-                    game.tradeStocks(c, corporation);
+                    Game.getInstance().tradeStocks(c, corporation);
                 }
             }
         });
         // button to quit without saving
-        Button sell = createButton("Quit", 50, 80);
+        Button sell = createButton("sell", 50, 80);
         sell.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for (Corporation c: corporations) {
-                    game.sellStock(c);
+                    Game.getInstance().sellStock(c);
                 }
             }
         });
@@ -441,8 +439,8 @@ public class MainUI extends Application {
         stage.hide();
         Stage disp = new Stage();
         disp.setTitle("Choose stock");
-        moneyLabel.setText(String.valueOf(game.getCurrentPlayer().checkMoney()));
-        System.out.println(game.getCurrentPlayer().checkMoney());
+        moneyLabel.setText(String.valueOf(Game.getInstance().getCurrentPlayer().checkMoney()));
+        System.out.println(Game.getInstance().getCurrentPlayer().checkMoney());
         disp.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -454,7 +452,7 @@ public class MainUI extends Application {
             }
         });
         disp.setTitle("Choose a stock");
-        List<Corporation> corporations = game.getActiveCorporations();
+        List<Corporation> corporations = Game.getInstance().getActiveCorporations();
         Group root = new Group();
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
@@ -474,7 +472,7 @@ public class MainUI extends Application {
             public void handle(ActionEvent event) {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
-                        game.buyStock(item, game.getCurrentPlayer());
+                        Game.getInstance().buyStock(item, Game.getInstance().getCurrentPlayer());
 
                     }
                 }
@@ -531,12 +529,12 @@ public class MainUI extends Application {
                     if(comboBox.getValue().equals(item.toString())){
                         if (type == 1){
                             System.out.println("Type = 1");
-                            game.playCorporation(item);
+                            Game.getInstance().playCorporation(item);
                             //needs to change all tiles
-                            game.getLastTile().setCorp(item);
+                            Game.getInstance().getLastTile().setCorp(item);
                         }
                         else{
-                            game.mergeTie(corporations, item, game.getLastTile());
+                            Game.getInstance().mergeTie(corporations, item, Game.getInstance().getLastTile());
                             sellMenu(item, corporations);
                         }
                     }
@@ -871,7 +869,7 @@ public class MainUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 //change text when pressed to depict state
-                game.endGame();
+                Game.getInstance().endGame();
             }
         });
         return button;
