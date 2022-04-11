@@ -27,9 +27,43 @@
  */
 package team.project;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Labeled;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxAssert;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.control.LabeledMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(ApplicationExtension.class)
 public class AppTest {
+    private Scene scene;
+    @Start
+    private void start(Stage stage) throws Exception {
+        App app = new App();
+        app.start(stage);
+        scene = stage.getScene();
+    }
+    @Test
+    void testStart(FxRobot robot) {
+        Parent parent = scene.getRoot();
+        Node node = parent.getChildrenUnmodifiable().get(0);
+        FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("New Game"));
+        node = parent.getChildrenUnmodifiable().get(1);
+        FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("Load Game"));
+        node = parent.getChildrenUnmodifiable().get(2);
+        FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("Start!"));
+        node = parent.getChildrenUnmodifiable().get(3);
+        FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("Quit"));
+        node = parent.getChildrenUnmodifiable().get(4);
+        FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("Welcome to Acquire!"));
+    }
+
 }

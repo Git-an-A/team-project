@@ -90,7 +90,10 @@ public class GameBoard {
         Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
-        List<Corporation> moreThanOne = new ArrayList<>();
+
+        List<Corporation> moreThanOne = null;
+        List<Corporation> merge = null;
+
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
 
@@ -103,7 +106,10 @@ public class GameBoard {
 
                 if(compare == identifier + 1 || compare == identifier - 1 || compare == identifier){
                     if(comparison == letter || comparison == 1 + letter || comparison == letter - 1){
-                        moreThanOne.add(corporation);
+                        if(corporation.isSafe()) {
+                            moreThanOne.add(corporation);
+                        }
+                        merge.add(corporation);
                         return corporation.getName();
                     }
                 }
@@ -111,6 +117,9 @@ public class GameBoard {
         }
         if(moreThanOne.size() > 2){
             return "Dead Tile";
+        }
+        else if(merge.size() > 2){
+            return "Merge Action";
         }
 
         return "This is working";

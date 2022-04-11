@@ -21,9 +21,9 @@ Gradle run
 ### Usage
 The program is designed to be fully played by using buttons. All actions are labeled as well as being placed in spots that can be easily be found. The rulebook on how to play the game can be found at the following link: [AquireRuleBook](https://media.wizards.com/2015/downloads/ah/acquire_rules.pdf)
 ## Authors
-Baylor McElroy - baylormcelroy@isu.edu 
-Brendan Berti - brendanberti@isu.edu
-Victoria Weir - victoriaweir@isu.edu
+* Baylor McElroy - baylormcelroy@isu.edu 
+* Brendan Berti - brendanberti@isu.edu
+* Victoria Weir - victoriaweir@isu.edu
 ### Version History
 * v1.0.0
 	* Implementing 80% code coverage of the whole project.
