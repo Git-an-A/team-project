@@ -1,6 +1,8 @@
 plugins {
+    id 'application'
     id 'java'
     id "org.cadixdev.licenser" version "0.6.1"
+    id 'org.openjfx.javafxplugin' version '0.0.11'
 }
 
 group 'me.git-an-a'
@@ -11,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.testfx:testfx-core:4.0.16-alpha'
@@ -26,9 +30,26 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+javafx {
+    version = "17"
+    modules = ['javafx.controls']
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    destinationDir = reporting.file("myJavadoc")
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'src/main/java/team/project/App.java'
+}
+
 allprojects{
     license {
-        header rootProject.file("LISENCE")
+        header rootProject.file("LICENSE")
         include "**/*.java"
     }
+
 }
