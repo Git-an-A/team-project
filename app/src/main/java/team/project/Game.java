@@ -237,7 +237,6 @@ public class Game {
      * Plays tile specified by UI then marks it on UI
      *
      * @param tile
-     * @return
      * @author Baylor McElroy
      */
     public void playTile(Tile tile) {
