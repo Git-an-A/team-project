@@ -35,7 +35,6 @@ import java.util.*;
  * @author Baylor McElroy
  */
 public class Game {
-    private Stack<Tile> playedTiles;
     private static Game instance = null;
     private Queue<Player> players;
     private Player currentPlayer;
@@ -45,7 +44,7 @@ public class Game {
     private List<Corporation> corporationList;
 
     private Game() {
-        playedTiles = new Stack<>();
+
     }
 
     /**
@@ -247,7 +246,7 @@ public class Game {
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
         Tile tempTile;
-        for (Tile playedTile : playedTiles) {
+        for (Tile playedTile : gameBoard.getPlayedTiles()) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
             //left
@@ -325,7 +324,7 @@ public class Game {
             gameBoard.mergeCorp(corporations,tile);
             //sending null corporations
         }
-        playedTiles.add(tile);
+        gameBoard.getPlayedTiles().add(tile);
         //get corporation color
     }
 
@@ -352,7 +351,7 @@ public class Game {
      * @return get tile on top of list
      */
     public Tile getLastTile() {
-        return playedTiles.peek();
+        return gameBoard.getPlayedTiles().peek();
     }
 
     /**
@@ -527,5 +526,7 @@ public class Game {
     public List<Corporation> getCorporationList(){
         return gameBoard.getCorporationList();
     }
-
+    public void setGameBoard(GameBoard gameBoard){
+        this.gameBoard = gameBoard;
+    }
 }

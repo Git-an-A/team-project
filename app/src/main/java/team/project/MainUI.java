@@ -78,7 +78,7 @@ public class MainUI extends Application {
     private Button sellStock;
     private Button tradeStock;
     final ToggleGroup toggleGroup = new ToggleGroup();
-    private  Stage stage;
+    private Stage stage;
 
     /**
      * Adds all controls to UI
@@ -118,6 +118,18 @@ public class MainUI extends Application {
         endGame = makeEndGameButton();
         Game.getInstance().setUpGame(new GameOptions(), this);
         System.out.println("MainUI.java MainUI() bottom");
+        if(Game.getInstance().getGameBoard()!=null){
+            for (Tile tile: Game.getInstance().getGameBoard().getPlayedTiles()) {
+                if(Game.getInstance().getGameBoard().getPlayedTiles()!=null){
+                    if(tile.getCorp()==null){
+                        colorTile(tile, 0);
+                    }
+                    else{
+                        colorTile(tile, tile.getCorp().getColorNum());
+                    }
+                }
+            }
+        }
 
     }
     public void colorTile(Tile tile, int colorType){
