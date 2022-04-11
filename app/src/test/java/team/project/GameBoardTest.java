@@ -24,8 +24,66 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
+//    @Test
+//    void setTileStack() {
+//
+//    }
+
+//    @Test
+//    void checkNearCorps() {
+//    }
+
+//    @Test
+//    void checkPlace() {
+//    }
+
+//    @Test
+//    void testCannotPlace() {
+//    }
+
+//    @Test
+//    void mergeCorp() {
+//    }
+
+//    @Test
+//    void shareBonus() {
+//    }
+
+//    @Test
+//    void findPlayer() {
+//    }
+
+//    @Test
+//    void findNext() {
+//    }
+
+//    @Test
+//    void giveStocks() {
+//    }
+
+//    @Test
+//    void takeStocks() {
+//    }
+
+//    @Test
+//    void giveMoney() {
+//    }
+
+//    @Test
+//    void takeMoney() {
+//    }
+
+//    @Test
+//    void nextState() {
+//    }
+
+//    @Test
+//    void createCorporationList() {
+//    }
 }
