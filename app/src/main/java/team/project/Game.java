@@ -35,7 +35,6 @@ import java.util.*;
  * @author Baylor McElroy
  */
 public class Game {
-    private Stack<Tile> playedTiles;
     private static Game instance = null;
     private Queue<Player> players;
     private Player currentPlayer;
@@ -45,7 +44,7 @@ public class Game {
     private List<Corporation> corporationList;
 
     private Game() {
-        playedTiles = new Stack<>();
+
     }
 
     /**
@@ -151,6 +150,10 @@ public class Game {
         return currentPlayer;
     }
 
+    /**
+     * Get current game state
+     * @return
+     */
     public String getGameState() {
         System.out.println("Game.java getGameState top");
         return gameBoard.getBoardState();
@@ -175,6 +178,10 @@ public class Game {
         this.currentPlayer = players.poll();
     }
 
+    /**
+     * gets players in game
+     * @return players in game
+     */
     public Queue playerQueue() {
         return players;
     }
@@ -186,20 +193,6 @@ public class Game {
      */
     public void seePlayerMoney(Player player) {
         player.checkMoney();
-    }
-
-    public boolean takeTurn(Player player) {
-        return true;
-    }
-
-    public void displayInfo() {
-    }
-
-    public void openOptions() {
-    }
-
-    public boolean drawTile(Player player) {
-        return true;
     }
 
     /**
@@ -229,6 +222,10 @@ public class Game {
         return shares;
     }
 
+    /**
+     * Player sells all stocks from a corporation
+     * @param corporation corporation of stock being sold
+     */
     public void sellStock(Corporation corporation) {
         currentPlayer.sellStocks(corporation);
     }
@@ -236,7 +233,7 @@ public class Game {
     /**
      * Plays tile specified by UI then marks it on UI
      *
-     * @param tile
+     * @param tile tile to be played
      * @author Baylor McElroy
      */
     public void playTile(Tile tile) {
@@ -247,7 +244,7 @@ public class Game {
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
         Tile tempTile;
-        for (Tile playedTile : playedTiles) {
+        for (Tile playedTile : gameBoard.getPlayedTiles()) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
             //left
@@ -289,11 +286,7 @@ public class Game {
                     mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
                 }
             }
-//            if (tempTile.getCorp() != null){
-//                tile.setCorp(tempTile.getCorp());
-//                mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
 
-//            } else {
             //make corporation
             List<Corporation> corps = getUnplacedCorporations();
             System.out.println(corps.toString() + " corps ");
@@ -325,23 +318,15 @@ public class Game {
             gameBoard.mergeCorp(corporations,tile);
             //sending null corporations
         }
-        playedTiles.add(tile);
+        gameBoard.getPlayedTiles().add(tile);
         //get corporation color
     }
 
-//    public static void main(String[] args) {
-//        Tile tileEx = new Tile("Z",3);
-////        System.out.println(getInstance().gameBoard.checkNearCorps(tileEx));
-//        GameBoard createCorp = new GameBoard();
-//        List<Corporation> createList = createCorp.createCorporationList();
-//        System.out.println(createList.toString());
-//        Corporation testMakeCorp = createList.get(1);
-//        tileEx.setCorp(testMakeCorp);
-//        System.out.println(tileEx.getCorp().toString());
-//        System.out.println("Making it work");
-//        createCorp.mergeCorp(createList,tileEx);
-//    }
-
+    /**
+     * Player trades stocks from one corporation to the merge corporation
+     * @param oldCorp corp to be traded from
+     * @param newCorp corp being traded to
+     */
     public void tradeStocks(Corporation oldCorp, Corporation newCorp) {
         currentPlayer.tradeStocks(oldCorp, newCorp);
     }
@@ -352,7 +337,7 @@ public class Game {
      * @return get tile on top of list
      */
     public Tile getLastTile() {
-        return playedTiles.peek();
+        return gameBoard.getPlayedTiles().peek();
     }
 
     /**
@@ -528,4 +513,11 @@ public class Game {
         return gameBoard.getCorporationList();
     }
 
+    /**
+     * Sets the game board. Only used for loading a game.
+     * @param gameBoard loaded game board
+     */
+    public void setGameBoard(GameBoard gameBoard){
+        this.gameBoard = gameBoard;
+    }
 }

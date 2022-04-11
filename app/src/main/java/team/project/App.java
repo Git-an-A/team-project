@@ -132,7 +132,7 @@ public class App extends Application{
 
              @Override
              public void handle(ActionEvent event) {
-                 Game game;
+                 Game game = Game.getInstance();
                  if(toggleGroup.getSelectedToggle()==loadGame){
                      String filename = "save.txt";
                      Gson gson = new Gson();
@@ -140,7 +140,7 @@ public class App extends Application{
                      try{
                          Scanner scan = new Scanner(loadFile);
                          while(scan.hasNextLine()){
-                             game = gson.fromJson(scan.nextLine(),Game.class);
+                             game.setGameBoard(gson.fromJson(scan.nextLine(),GameBoard.class));
                          }
                          scan.close();
                         }

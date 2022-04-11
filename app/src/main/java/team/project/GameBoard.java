@@ -46,7 +46,7 @@ public class GameBoard {
     private final String exchange = "EXCHANGE";
     private final String draw = "DRAW";
     private String boardState;
-
+    private Stack<Tile> playedTiles;
     /**
      * Initializes GameBoard and the corporations
       */
@@ -57,7 +57,7 @@ public class GameBoard {
             tiles.shuffle();
         }
         corporationList = createCorporationList();
-
+        playedTiles = new Stack<>();
         boardState = play;
     }
 
@@ -370,5 +370,8 @@ public class GameBoard {
 
     public List<Corporation> getCorporationList() {
         return corporationList;
+    }
+    public Stack<Tile> getPlayedTiles(){
+        return playedTiles;
     }
 }

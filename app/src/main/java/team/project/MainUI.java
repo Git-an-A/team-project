@@ -38,13 +38,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import org.checkerframework.checker.units.qual.C;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * The main User interface for the board of the game.
@@ -65,7 +60,6 @@ public class MainUI extends Application {
     private RadioButton tileRB4;
     private RadioButton tileRB5;
     private RadioButton tileRB6;
-    private Button playTileButton;
     private Label yourSharesLabel;
     private GridPane sharesTable;
     private Label moneyAvailableLabel;
@@ -78,7 +72,7 @@ public class MainUI extends Application {
     private Button sellStock;
     private Button tradeStock;
     final ToggleGroup toggleGroup = new ToggleGroup();
-    private  Stage stage;
+    private Stage stage;
 
     /**
      * Adds all controls to UI
@@ -118,8 +112,26 @@ public class MainUI extends Application {
         endGame = makeEndGameButton();
         Game.getInstance().setUpGame(new GameOptions(), this);
         System.out.println("MainUI.java MainUI() bottom");
+        if(Game.getInstance().getGameBoard()!=null){
+            for (Tile tile: Game.getInstance().getGameBoard().getPlayedTiles()) {
+                if(Game.getInstance().getGameBoard().getPlayedTiles()!=null){
+                    if(tile.getCorp()==null){
+                        colorTile(tile, 0);
+                    }
+                    else{
+                        colorTile(tile, tile.getCorp().getColorNum());
+                    }
+                }
+            }
+        }
 
     }
+
+    /**
+     * Colors a tile on the board given its proper color value
+     * @param tile tile to be colored
+     * @param colorType value of pre set color
+     */
     public void colorTile(Tile tile, int colorType){
         int x = tile.getXpos();
         int y = tile.getYpos();
@@ -162,7 +174,6 @@ public class MainUI extends Application {
 
 
     }
-
     /**
      * Moves game to next phase
      */
@@ -196,6 +207,10 @@ public class MainUI extends Application {
             }
         }
     }
+
+    /**
+     * Plays a tile thats selected in tile group
+     */
     private void playTile(){
         System.out.println("UI State: PLAY");
         Tile tile = null;
@@ -271,9 +286,6 @@ public class MainUI extends Application {
         for(int i=0;i<labArInfo[2].length;i++){
             labArInfo[2][i].setText(String.valueOf(corporations.get(i).getPrice()));
         }
-//        for(int i=0;i<labArInfo[3].length;i++){
-//            labArInfo[3][i].setText(String.valueOf(corporations.get(i).getStocks().size()));
-//        }
         for(int i=0;i<labArInfo[4].length;i++){
             //can change this to be active instead of safe
             if(corporations.get(i).isSafe()){
@@ -714,23 +726,7 @@ public class MainUI extends Application {
         radioButton.setToggleGroup(toggleGroup);
         return radioButton;
     }
-    /**
-     * make play tile button that plays tile on selected radio button
-     * @return constructed button
-     */
-//    private Button makePlayTileButton(){
-//        int x = 784;
-//        int y = 600;
-//        String text = "Play selected tile";
-//        Button button = createButton(text, x, y);
-//        button.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//            }
-//        });
-//        return button;
-//    }
+
     /**
      * makes label that says "your shares"
      * @return constructed label

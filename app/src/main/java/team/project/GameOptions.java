@@ -159,7 +159,7 @@ public class GameOptions extends Application {
                 filing.delete();
             }
             FileWriter fileWrite = new FileWriter(file, true);
-            String json = gson.toJson(Game.getInstance());
+            String json = gson.toJson(Game.getInstance().getGameBoard());
             System.out.println(json + " : is json");
             fileWrite.write(json);
             fileWrite.close();
