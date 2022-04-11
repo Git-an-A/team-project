@@ -75,6 +75,9 @@ public class MainUI extends Application {
     private CheckBox buyStockCheck;
     private Label[][] labArInfo;
     private Label[][] labArShares;
+    private Button endGame;
+    private Button sellStock;
+    private Button tradeStock;
     final ToggleGroup toggleGroup = new ToggleGroup();
     private final Stage stage = new Stage();
 
@@ -113,6 +116,7 @@ public class MainUI extends Application {
         moneyLabel = makeMoneyLabel();
         next = makeNextButton();
         buyStockCheck = makeBuyStockCheck();
+        endGame = makeEndGameButton();
         game.setUpGame(new GameOptions(), this);
         System.out.println("MainUI.java MainUI() bottom");
 
@@ -256,7 +260,7 @@ public class MainUI extends Application {
     }
     private void updateSharesTable(int[] shares){
         for (int i: shares) {
-            labArShares[2][i].setText(String.valueOf(shares[i]));
+            labArShares[1][i].setText(String.valueOf(shares[i]));
         }
     }
     private void updateInfoTable(){
@@ -325,6 +329,7 @@ public class MainUI extends Application {
         root.getChildren().add(moneyLabel);
         root.getChildren().add(next);
         root.getChildren().add(buyStockCheck);
+        root.getChildren().add(endGame);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
@@ -381,10 +386,61 @@ public class MainUI extends Application {
 
     }
 
-    private void chooseStock(){
+    public void sellMenu(Corporation corporation, List<Corporation> corporations){
         stage.hide();
         Stage disp = new Stage();
         disp.setTitle("Courses");
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+        scene.setFill(Color.LIGHTGRAY);
+
+        disp.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //button to call save
+        Button trade = createButton("save", 50, 50);
+        trade.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for(Corporation c : corporations){
+                    game.tradeStocks(c, corporation);
+                }
+            }
+        });
+        // button to quit without saving
+        Button sell = createButton("Quit", 50, 80);
+        sell.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (Corporation c: corporations) {
+                    game.sellStock(c);
+                }
+            }
+        });
+
+        root.getChildren().add(trade);
+        root.getChildren().add(sell);
+
+        disp.setResizable(false);
+        disp.setScene(scene);
+        disp.showAndWait();
+
+        System.out.println("MainUI.java dispMenu()");
+
+    }
+    private void chooseStock(){
+        stage.hide();
+        Stage disp = new Stage();
+        disp.setTitle("Choose stock");
         moneyLabel.setText(String.valueOf(game.getCurrentPlayer().checkMoney()));
         System.out.println(game.getCurrentPlayer().checkMoney());
         disp.setOnHidden(new EventHandler<WindowEvent>() {
@@ -397,13 +453,12 @@ public class MainUI extends Application {
                 }
             }
         });
-        disp.setTitle("Choose a stock to buy");
-
+        disp.setTitle("Choose a stock");
+        List<Corporation> corporations = game.getActiveCorporations();
         Group root = new Group();
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
-        List<Corporation> corporations = game.getActiveCorporations();
 
         ComboBox<String> comboBox = new ComboBox<>();
         System.out.println(corporations);
@@ -420,6 +475,7 @@ public class MainUI extends Application {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
                         game.buyStock(item, game.getCurrentPlayer());
+
                     }
                 }
                 disp.hide();
@@ -481,6 +537,7 @@ public class MainUI extends Application {
                         }
                         else{
                             game.mergeTie(corporations, item, game.getLastTile());
+                            sellMenu(item, corporations);
                         }
                     }
                 }
@@ -805,5 +862,18 @@ public class MainUI extends Application {
         checkBox.setLayoutY(y);
         checkBox.setText("Buy Stock?");
         return checkBox;
+    }
+    private Button makeEndGameButton(){
+        int x = 500;
+        int y = 500;
+        Button button = createButton("End game", x, y);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //change text when pressed to depict state
+                game.endGame();
+            }
+        });
+        return button;
     }
 }

@@ -90,7 +90,7 @@ public class GameBoard {
         Stack<Tile> corpTiles = new Stack<>();
         int identifier = tile.getXpos();
         int letter = tile.getYpos();
-        List<Corporation> moreThanOne = null;
+        List<Corporation> moreThanOne = new ArrayList<>();
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
 
@@ -109,7 +109,7 @@ public class GameBoard {
                 }
             }
         }
-        if(moreThanOne.size() >2){
+        if(moreThanOne.size() > 2){
             return "Dead Tile";
         }
 

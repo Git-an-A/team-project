@@ -225,12 +225,8 @@ public class Game {
         return shares;
     }
 
-    public boolean sellStock(Stock stockName, int amount) {
-        return true;
-    }
-
-    public Stock viewStocks(Stock stock) {
-        return new Stock();
+    public void sellStock(Corporation corporation) {
+        currentPlayer.sellStocks(corporation);
     }
 
     /**
@@ -339,8 +335,8 @@ public class Game {
 //        System.out.println("Making it work");
 //    }
 
-    public boolean tradeStocks(Stock stockName, int amount) {
-        return true;
+    public void tradeStocks(Corporation oldCorp, Corporation newCorp) {
+        currentPlayer.tradeStocks(oldCorp, newCorp);
     }
 
     /**
@@ -479,7 +475,6 @@ public class Game {
      * @param corporations the corporation in merge
      */
     public void pickMerge(List<Corporation> corporations) {
-
         mainUI.chooseCorp(corporations, 2);
     }
 
