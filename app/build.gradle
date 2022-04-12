@@ -38,7 +38,8 @@ javafx {
 
 javadoc {
     source = sourceSets.main.allJava
-    destinationDir = reporting.file("myJavadoc")
+    classpath = configurations.runtimeClasspath
+    destinationDir = file("../docs/javadoc")
 }
 
 application {
