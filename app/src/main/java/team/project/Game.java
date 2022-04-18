@@ -43,9 +43,7 @@ public class Game {
     private MainUI mainUI;
     private List<Corporation> corporationList;
 
-    private Game() {
-
-    }
+    private Game() {}
 
     /**
      * Sets up game with specified game options
@@ -379,85 +377,16 @@ public class Game {
     }
 
     /**
-     * For the end of the game- sells the players' stocks and get respective shares from active corporations
-     *
-     * @author Victoria Weir
-     */
-    public void distributeMoney() {
-        for (Player player : players) {
-            for (Corporation corporation : getActiveCorporations()) {
-                player.sellStocks(corporation);
-            }
-        }
-        for (Corporation corporation : getActiveCorporations()) {
-            GameBoard calculate = getGameBoard();
-            calculate.ShareBonus(corporation);
-        }
-    }
-
-    /**
-     * Figures out the winner by comparing them to each other
-     *
-     * @return winner
-     * @author Victoria Weir
-     */
-    public String getWinner() {
-        String m = "";
-        int mostMoney = 0;
-        Player winner = null;
-
-        for (Player player : players) {
-            if (player.checkMoney() > mostMoney) {
-                mostMoney = player.checkMoney();
-                winner = player;
-            }
-        }
-        m = winner.getName() + " is the winner with $" + winner.checkMoney();
-        return m;
-    }
-
-    /**
-     * Looks at all the player's money
-     *
-     * @return a string with all the player's money
-     * @author Victoria Weir
-     */
-    public String getOthers() {
-        String m = "";
-        for (Player player : players) {
-            m += player.getName() + " has the total of $" + player.checkMoney();
-        }
-        return m;
-    }
-
-    /**
-     * Checks to end the game
-     *
-     * @return sees if the game can end or not
-     * @author Victoria Weir
-     */
-    public boolean checkEndGame() {
-        String m = "";
-        for (Corporation corporation : getActiveCorporations()) {
-            if (corporation.getPlayTiles().size() > 41 || corporation.getPlayTiles().size() > 11) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Tests if the game can end and if so, prints the results
      *
      * @author Victoria Weir
      */
-    public void endGame() {
-        if (checkEndGame()) {
-            distributeMoney();
-            getOthers();
-            getWinner();
+    public void endGame(){
+        EndGame checkEnd = new EndGame();
+        if (checkEnd.checkEndGame()) {
+            checkEnd.distributeMoney();
+            checkEnd.getOthers();
+            checkEnd.getWinner();
         }
     }
 

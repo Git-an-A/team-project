@@ -125,23 +125,6 @@ public class GameBoard {
         return "This is working";
     }
 
-//    public static void main(String[] args) {
-//        Tile trying = new Tile("Z", 3);
-//        int letter = trying.getXpos() + trying.getYpos();
-//        System.out.println(letter);
-//        System.out.println(trying.getYpos());
-//
-//        GameBoard testing = new GameBoard();
-////        testing.getTileStack();
-////        System.out.println(testing.getTileStack().toString());
-////        testing.createCorporationList();
-////        System.out.println(testing.getCorporationList().toString());
-////        String works = testing.checkNearCorps(trying);
-////        System.out.println(works);
-//        boolean te = testing.checkPlace(trying);
-//        System.out.println(te);
-//    }
-
     //For dead tiles
 
     /**
@@ -220,10 +203,6 @@ public class GameBoard {
         Player next = findPlayer();
         List<Player> tempCompare = null;
 
-//        playerList.add(new Object());
-//        playerList.add(new Object());
-
-
         int maxStock = 1;
         int secondStock = 1;
         for(int i= 0; i< playerList.size(); i++){
@@ -232,19 +211,17 @@ public class GameBoard {
                 continue;
             }
             findNext();
-//            System.out.println(next.toString());
-//            System.out.println("Got this far");
         }
 
         Player majorWinner = null;
         Player minorWinner = null;
-        for(int i=0; i< tempCompare.size(); i++) {
-            int current = tempCompare.get(i).getCorps().size();
-            if(current > maxStock){
+        assert tempCompare != null;
+        for (Player player : tempCompare) {
+            int current = player.getCorps().size();
+            if (current > maxStock) {
                 maxStock = current;
-                majorWinner = tempCompare.get(i);
+                majorWinner = player;
             }
-//            System.out.println(current);
         }
         for(int i=0; i< tempCompare.size(); i++) {
             tempCompare.remove(majorWinner);
@@ -256,20 +233,12 @@ public class GameBoard {
             }
         }
 
+        assert majorWinner != null;
         majorWinner.giveMoney(corp.giveMajorBonus());
+
+        assert minorWinner != null;
         minorWinner.giveMoney(corp.giveMinorBonus());
-//        System.out.println(majorWinner.toString() + minorWinner.toString());
     }
-//    public static void main(String[] args) {
-//        GameBoard testing = new GameBoard();
-//        Corporation corp = new Corporation("name", 3);
-//        Player player1 = new Player("player1");
-//        player1.buyStock(corp,0,0);
-//        Player player2 = new Player("player2");
-//        player2.buyStock(corp,0,0);
-//        player2.buyStock(corp,0,0);
-//        testing.ShareBonus(corp);
-//    }
 
     /**
      * Finds the current player
@@ -286,19 +255,6 @@ public class GameBoard {
      */
     public void findNext(){
         Game.getInstance().playerQueue().poll();
-    }
-
-    public boolean giveStocks(Stock stockName, int amount){
-        return true;
-    }
-    public boolean takeStocks(Stock stockName, int amount){
-        return true;
-    }
-    public boolean giveMoney(Player player, int amount){
-        return true;
-    }
-    public boolean takeMoney(Player player, int amount){
-        return true;
     }
 
     /**
