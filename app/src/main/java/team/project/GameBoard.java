@@ -24,10 +24,10 @@
 
 package team.project;
 
-import com.sun.scenario.animation.shared.FiniteClipEnvelope;
-import org.checkerframework.checker.units.qual.C;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * GameBoard that relates to anything that happens on the board
@@ -47,6 +47,7 @@ public class GameBoard {
     private final String draw = "DRAW";
     private String boardState;
     private Stack<Tile> playedTiles;
+
     /**
      * Initializes GameBoard and the corporations
       */
@@ -82,6 +83,7 @@ public class GameBoard {
 
     /**
      * Checks nearby corporations
+     *
      * @param tile tile being placed
      * @return corporation if nearby or nothing
      * @author Victoria Weir
@@ -122,10 +124,8 @@ public class GameBoard {
             return "Merge Action";
         }
 
-        return "This is working";
+        return "";
     }
-
-    //For dead tiles
 
     /**
      * Checks placement of tile

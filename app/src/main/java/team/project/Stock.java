@@ -29,17 +29,14 @@ package team.project;
  * Name = corporation name the stock belongs to
  * Value = current value based from corporation's tiles
  * Cost = cost of buying the stock
+ *
+ * @author Baylor McElroy
  */
 public class Stock {
     private String name;
     private int value;
     private int cost;
 
-    /**
-     * Stock class
-     *
-     * @author Baylor McElroy
-     */
     public Stock(){};
 
     /**
@@ -59,7 +56,6 @@ public class Stock {
     public int getValue(){return value;}
 
     public void setName(String name) {this.name = name;}
-
     public void setCost(int cost) {this.cost = cost;}
     public void setValue(int value){this.value = value;}
 
