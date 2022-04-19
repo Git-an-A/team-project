@@ -94,6 +94,7 @@ public class MainUI extends Application {
         menuButton = makeMenuButton();
         infoTable = makeInfoTable();
         yourTileLabel = makeYourTileLabel();
+        yourSharesLabel = makeYourSharesLabel();
         int yDistRB = 25;
 
         tileRB1 = makeTileRadioButtons(toggleGroup, yDistRB, 0);
@@ -102,7 +103,7 @@ public class MainUI extends Application {
         tileRB4 = makeTileRadioButtons(toggleGroup, yDistRB, 3);
         tileRB5 = makeTileRadioButtons(toggleGroup, yDistRB, 4);
         tileRB6 = makeTileRadioButtons(toggleGroup, yDistRB, 5);
-        //playTileButton = makePlayTileButton();
+
         yourSharesLabel = makeYourSharesLabel();
         sharesTable = makeSharesTable();
         moneyAvailableLabel = makeMoneyAvailableLabel();
@@ -241,7 +242,7 @@ public class MainUI extends Application {
         }
 
         if(tile!=null){
-            System.out.println(tile.toString() + " has been played!");
+            System.out.println(tile + " has been played!");
             Game.getInstance().playTile(tile);
         }
     }
@@ -355,6 +356,7 @@ public class MainUI extends Application {
         root.getChildren().add(next);
         root.getChildren().add(buyStockCheck);
         root.getChildren().add(endGame);
+        root.getChildren().add(yourSharesLabel);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
@@ -419,7 +421,7 @@ public class MainUI extends Application {
     public void sellMenu(Corporation corporation, List<Corporation> corporations){
         stage.hide();
         Stage disp = new Stage();
-        disp.setTitle("Courses");
+        disp.setTitle("Sell Menu");
 
         Group root = new Group();
         Scene scene = new Scene(root, 450, 400);
@@ -492,6 +494,11 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
+        Label prompt = new Label();
+        prompt.setLayoutX(50);
+        prompt.setLayoutY(20);
+        prompt.setText("Please choose a stock to buy");
+        prompt.setFont(new Font("Arial", 25));
 
         ComboBox<String> comboBox = new ComboBox<>();
         System.out.println(corporations);
@@ -500,23 +507,26 @@ public class MainUI extends Application {
             System.out.println(item + "item");
         }
 
-        Button button = createButton("Quit", 20, 20);
-        button.setCancelButton(true);
+        Button quit = createButton("Quit", 200, 250);
+        quit.setCancelButton(true);
         comboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
                         Game.getInstance().buyStock(item, Game.getInstance().getCurrentPlayer());
-
                     }
                 }
                 disp.hide();
             }
         });
+        comboBox.setLayoutX(150);
+        comboBox.setLayoutY(100);
         root.getChildren().add(comboBox);
+        root.getChildren().add(quit);
+        root.getChildren().add(prompt);
 
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        quit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 disp.hide();
@@ -549,6 +559,12 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
+        Label prompt = new Label();
+        prompt.setLayoutX(50);
+        prompt.setLayoutY(20);
+        prompt.setText("Please select a corporation");
+        prompt.setFont(new Font("Arial", 25));
+
         ComboBox<String> comboBox = new ComboBox<>();
         System.out.println(corporations);
         for (Corporation item: corporations) {
@@ -576,7 +592,10 @@ public class MainUI extends Application {
                 disp.hide();
             }
         });
+        comboBox.setLayoutX(150);
+        comboBox.setLayoutY(100);
         root.getChildren().add(comboBox);
+        root.getChildren().add(prompt);
 
         disp.setResizable(false);
         disp.setScene(scene);
