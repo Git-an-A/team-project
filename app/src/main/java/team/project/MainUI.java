@@ -32,13 +32,19 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -71,6 +77,8 @@ public class MainUI extends Application {
     private Button endGame;
     private Button sellStock;
     private Button tradeStock;
+    private Button showPricing;
+    private Button showOtherPlayerShares;
     final ToggleGroup toggleGroup = new ToggleGroup();
     private Stage stage;
 
@@ -95,6 +103,11 @@ public class MainUI extends Application {
         infoTable = makeInfoTable();
         yourTileLabel = makeYourTileLabel();
         yourSharesLabel = makeYourSharesLabel();
+
+        showPricing = makeShowPricingButton();
+        showOtherPlayerShares = makeShowOtherPlayerSharesButton();
+
+
         int yDistRB = 25;
 
         tileRB1 = makeTileRadioButtons(toggleGroup, yDistRB, 0);
@@ -360,7 +373,8 @@ public class MainUI extends Application {
         //game action buttons (1-4)
 
         root.getChildren().add(title);
-
+        root.getChildren().add(showPricing);
+        root.getChildren().add(showOtherPlayerShares);
 
         stage.setResizable(false);
         stage.setScene(scene);
@@ -912,4 +926,75 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+
+    /**
+     * Displays menu.
+     */
+    private void dispImage(String fileName) {
+        //creating the image object
+        Stage disp = new Stage();
+        InputStream stream = null;
+        try{
+            stream = new FileInputStream(fileName);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(stream);
+        //Creating the image view
+        ImageView imageView = new ImageView();
+        //Setting image to the image view
+        imageView.setImage(image);
+        //Setting the image view parameters
+        imageView.setX(10);
+        imageView.setY(10);
+        imageView.setFitWidth(575);
+        imageView.setPreserveRatio(true);
+        //Setting the Scene object
+        Group root = new Group(imageView);
+        Scene scene = new Scene(root, 595, 370);
+        disp.setTitle("Displaying Image");
+        disp.setScene(scene);
+        disp.show();
+    }
+    /**
+     *
+     */
+    private Button makeShowPricingButton(){
+        int x = 50;
+        int y = 400;
+        String text = "Show prices for stocks";
+        Button button = createButton(text, x, y);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dispImage("Image1");
+            }
+        });
+
+        return button;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private Button makeShowOtherPlayerSharesButton(){
+        int x = 50;
+        int y = 500;
+        String text = "Show other players stocks";
+        Button button = createButton(text, x, y);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
+        return button;
+    }
+    //make other players shares
 }
