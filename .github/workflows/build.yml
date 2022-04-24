@@ -7,7 +7,7 @@ name: Java CI with Gradle
 on: [push]
 
 jobs:
-  build:
+  gradle:
     runs-on: ubuntu-latest
 
     steps:
