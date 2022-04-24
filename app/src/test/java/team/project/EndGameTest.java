@@ -24,8 +24,33 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameInventoryTest {
+class EndGameTest {
 
+    @Test
+    void getActiveCorporations() {
+    }
+
+    @Test
+    void getGameBoard() {
+    }
+
+    @Test
+    void distributeMoney() {
+    }
+
+    @Test
+    void getWinner() {
+    }
+
+    @Test
+    void getOthers() {
+    }
+
+    @Test
+    void checkEndGame() {
+    }
 }
