@@ -54,7 +54,7 @@ public class AppTest {
         testStage = stage;
     }
     @Test
-    void testStart(FxRobot robot) {
+    void testStart() {
         Parent parent = scene.getRoot();
         assertEquals("Acquire", testStage.getTitle());
         Node node = parent.getChildrenUnmodifiable().get(0);
