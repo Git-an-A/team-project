@@ -1,5 +1,5 @@
 # This workflow is based off of the starter workflow
-# This workflow will build the project with gradle and cache/restore any dependencies to improve the workflow execution time
+# This workflow will build and test the project with gradle and cache/restore any dependencies to improve the workflow execution time
 
 
 name: Java CI with Gradle
@@ -21,7 +21,7 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Make gradlew executable
-      run: chmod+x./gradlew
+      run: chmod +x gradlew
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
     - name: Build with Gradle
