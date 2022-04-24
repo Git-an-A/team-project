@@ -30,27 +30,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EndGameTest {
 
-    @Test
-    void getActiveCorporations() {
-    }
-
-    @Test
-    void getGameBoard() {
-    }
-
-    @Test
-    void distributeMoney() {
-    }
-
-    @Test
-    void getWinner() {
-    }
-
-    @Test
-    void getOthers() {
-    }
-
-    @Test
-    void checkEndGame() {
-    }
+    /**@Test
+    void testGetWinner() {
+        var endGame = new EndGame();
+        var player = new Player("Test Name");
+        String testWinner = endGame.getWinner();
+        assertNotEquals(null, testWinner);
+    }**/
 }
