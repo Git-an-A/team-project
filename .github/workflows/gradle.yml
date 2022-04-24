@@ -29,12 +29,12 @@ jobs:
       with:
         arguments: build
     - name: license Main
-      run: .gradlew licenseMain
+      run: ./gradlew licenseMain
     - name: license Test
-      run: .gradlew licenseTest
+      run: ./gradlew licenseTest
     - name: javadoc
-      run: .gradlew javadoc
+      run: ./gradlew javadoc
     - name: Jacoco report
-      run: .gradlew jacocoTestReport
+      run: ./gradlew jacocoTestReport
  
 
