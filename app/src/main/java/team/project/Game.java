@@ -40,7 +40,7 @@ public class Game {
     private GameBoard gameBoard;
     private GameOptions gameOptions;
     private MainUI mainUI;
-
+    private boolean hide;
 
     private Game() {}
 
@@ -55,6 +55,7 @@ public class Game {
         this.gameOptions = gameOptions;
         gameOptions.start(new Stage());
         this.mainUI = mainUI;
+        hide = gameOptions.getHide();
     }
 
     /**
@@ -430,5 +431,8 @@ public class Game {
      */
     public void saveGame() throws IOException {
         gameOptions.saveDefault();
+    }
+    public boolean getHide(){
+        return hide;
     }
 }

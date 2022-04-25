@@ -174,5 +174,8 @@ public class GameOptions extends Application {
     public void hide(){
         disp.hide();
     }
+    public boolean getHide(){
+        return hide;
+    }
 }
 
