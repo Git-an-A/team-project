@@ -164,6 +164,8 @@ public class GameBoard {
         int maxSize = 0;
         Corporation winner = null;
         Corporation big = null;
+        Corporation losing = null;
+        List<Tile> tiles = null;
 
         for (Corporation c: corporations) {
             if(c.getSize()>maxSize){
@@ -180,6 +182,10 @@ public class GameBoard {
         assert big != null;
         if(maxCorps.size() == 1){
             for (Corporation item: corporations){
+                for(int i=0; i< item.getPlayTiles().size(); i++){
+                    tiles.add(item.getPlayTiles().get(i));
+                }
+
                 for (Tile t : item.getPlayTiles()) {
                     t.setCorp(big);
                     Game.getInstance().colorTile(t, big.getColorNum());
@@ -187,7 +193,16 @@ public class GameBoard {
             }
             tile.setCorp(big);
             Game.getInstance().colorTile(tile, big.getColorNum());
-            return big;
+            for(Tile color: tiles){
+                Game.getInstance().colorTile(color, big.getColorNum());
+            }
+
+            for(Corporation remove: corporations){
+                if(remove != big){
+                    Game.getInstance().getActiveCorporations().remove(remove);
+                    getUnplacedCorporations().add(remove);
+                }
+            }
         }
         else {
             Game.getInstance().pickMerge(maxCorps);
@@ -195,6 +210,17 @@ public class GameBoard {
                 if(chose.getPlayed()){
                     winner = chose;
                     return winner;
+                }
+                else{
+                    for(int i=0; i< chose.getPlayTiles().size(); i++){
+                        tiles.add(chose.getPlayTiles().get(i));
+                    }
+                    for(Tile color: tiles){
+                        Game.getInstance().colorTile(color, big.getColorNum());
+                    }
+                    Game.getInstance().getActiveCorporations().remove(chose);
+                    getUnplacedCorporations().add(chose);
+
                 }
             }
         }// default
