@@ -29,7 +29,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -334,7 +333,7 @@ public class MainUI extends Application {
     }
 
     /**
-     * Shows stage
+     * Shows main stage
      * @param stage new stage to show
      * @throws Exception UI exception
      */
@@ -438,7 +437,7 @@ public class MainUI extends Application {
     }
 
     /**
-     * creates the sell menu
+     * displays the sell menu
      * @param corporation corporation that is merged to
      * @param corporations any corporation being merged
      */
