@@ -970,7 +970,7 @@ public class MainUI extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dispImage("Image1");
+                dispImage("Image1.png");
             }
         });
 
