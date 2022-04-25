@@ -20,6 +20,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+        architecture: x64
     - name: Make gradlew executable
       run: chmod +x gradlew
     - name: Validate Gradle wrapper
@@ -32,9 +33,13 @@ jobs:
 #      run: ./gradlew licenseMain
 #    - name: license Test
 #      run: ./gradlew licenseTest
-    - name: javadoc
-      run: ./gradlew javadoc
-    - name: Jacoco report
-      run: ./gradlew jacocoTestReport
+#    - name: license Main
+#      run: ./gradlew licenseMain
+#    - name: license Test
+#      run: ./gradlew licenseTest
+#    - name: javadoc
+#      run: ./gradlew javadoc
+#    - name: Jacoco report
+#      run: ./gradlew jacocoTestReport
  
 
