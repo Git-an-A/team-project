@@ -94,4 +94,20 @@ class CorporationTest {
         testBoolean = corporation.isSafe();
         assertEquals(false, testBoolean);
     }
+
+    @Test
+    void testGetNumber() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        Integer number = corporation.getNumber();
+        assertEquals(0, number);
+    }
+
+    @Test
+    void testAddTile() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        var tile = new Tile("A", 1);
+        corporation.addTile(tile);
+        Integer playTilesSize = corporation.getPlayTiles().size();
+        assertNotEquals(0, playTilesSize);
+    }
 }
