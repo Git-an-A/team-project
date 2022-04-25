@@ -123,7 +123,7 @@ public class GameBoard {
             return "Merge Action";
         }
 
-        return "";
+        return "Near no corp";
     }
 
     /**

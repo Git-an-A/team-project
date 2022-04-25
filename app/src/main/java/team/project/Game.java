@@ -102,7 +102,6 @@ public class Game {
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
         Tile tempTile;
-        String action = "";
 
         for (Tile playedTile : gameBoard.getPlayedTiles()) {
             int playedTileXpos = playedTile.getXpos();
@@ -164,7 +163,11 @@ public class Game {
             //make other tile corporation
             tempTile.setCorp(c);
 
-        } else {
+            if(getUnplacedCorporations().size() == 0 || Objects.equals(nearCorporation, "Near no corp")){
+                mainUI.colorTile(tile, 0);
+            }
+
+        }else{
             //merge corporation
             Stack<Corporation> corporations = new Stack<>();
             for (Tile t : tileStack){
