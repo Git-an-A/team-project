@@ -839,12 +839,12 @@ public class MainUI extends Application {
         int gridLength = 5;
         int gridHeight = 7;
 
-        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7"};
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
         String[] color = {"Blue", "Yellow", "Red", "Purple", "Green", "Orange", "Pink"};
         String[] size = {"0", "0", "0", "0", "0", "0", "0"};
         String[] price = {"100", "100", "100", "100", "100", "100", "100"};
         String[] status = {"inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive"};
-        String[][] tableData = {corporationNames, color, size, price, status};
+        String[][] tableData = {corpNames, color, size, price, status};
         labArInfo = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
