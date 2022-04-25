@@ -24,13 +24,12 @@
 
 package team.project;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
 
 /**
- * Player in the game. Each player has money stocks and tiles
+ * Player class that defines the current players in the game. Each player has money, stocks and tiles.
  *
  * @author Baylor McElroy
  * @author Victoria Weir
@@ -43,7 +42,7 @@ public class Player {
     private int money;
 
     /**
-     * Constructor requires name
+     * Constructor that gives the current player's tiles, money, and chosen actions
      *
      * @param name the respective player's turn
      * @author Baylor McElroy
@@ -66,17 +65,14 @@ public class Player {
      * @author Baylor McElroy
      */
     public void addTile(Tile tile){
-//        System.out.println("Player.java addTile() top");
         for(int i=0;i<6;i++){
             if(playerTiles[i]==null){
-//                System.out.println("Player tiles pre " + playerTiles[i] + " location " + i);
                 playerTiles[i] = tile;
-//                System.out.println("Player tiles post " + playerTiles[i]+ " location " + i);
                 break;
             }
         }
-
     }
+
     /**
      * Removes tile from tiles player owns
      *
@@ -90,16 +86,6 @@ public class Player {
         return tempTile;
     }
 
-    /**
-     * String representation of object
-     *
-     * @return toString of Player (name for now)
-     * @author Baylor McElroy
-     */
-    public String toString(){
-        String sb = name;
-        return sb;
-    }
     /**
      * Gets a tile from the tiles owned by player
      *
@@ -134,13 +120,12 @@ public class Player {
     }
 
     /**
-     * Player buys a stock
+     * When player decides to buy a stock from their chosen corporation.
      *
      * @param corporation desired corporation they buy from
      * @author Baylor McElroy
      */
     public void buyStock(Corporation corporation) {
-        //remove stock to corporation stack
         int number = corporation.getNumber();
         Stack<Stock> tempStack = corps.get(number);
         tempStack.add(corporation.giveStock(this));
@@ -163,22 +148,10 @@ public class Player {
             if(Objects.equals(check, stockName)){
                 counter++;
             }
-//            else{
-//                System.out.println("This works");
-//            }
         }
         return counter;
     }
 
-//    //testing to see if it works
-//    public static void main(String[] args) {
-//        Player person = new Player("some");
-//        person.viewStocks("WorldWide", person);
-//        Corporation corp1 = new Corporation("WorldWide", 1);
-//        Corporation corp2 = new Corporation("America", 2);
-//
-//        person.tradeStocks(corp1,corp2);
-//    }
 
     public ArrayList<Stack<Stock>> getCorps() {
         return corps;
@@ -192,7 +165,6 @@ public class Player {
      * @author Victoria Weir
      */
     public void tradeStocks(Corporation oldCorporation, Corporation newCorporation) {
-        //get old corporation number
         int number = oldCorporation.getNumber();
         Stack<Stock> oldStack = corps.get(number);
         Stack<Stock> newStack = null;
@@ -205,7 +177,6 @@ public class Player {
             for(int i=0; i< tradeIn; i++){
                 newStack.add(newCorporation.giveStock(this));
             }
-
         }
         else{
             tradeIn = oldStack.size()/3;
@@ -221,7 +192,6 @@ public class Player {
         oldCorporation.removeStock(this);
         corps.add(newStack);
         oldCorporation.giveStock(this);
-        //System.out.println("Works; old: " + oldCorporation.getSize() + "new:" + newCorporation.getSize());
     }
 
     /**
@@ -247,25 +217,15 @@ public class Player {
      * @author Victoria Weir
      */
     public void discardDeadTile(Tile tile) {
-//        boolean checkTile = Game.getInstance().restrictedAccess(tile);
-//        if(checkTile){
             for(int i = 0; i< playerTiles.length; i++){
                 if(getTile(i)==tile) {
                     removeTile(i);
-//                }
             }
         }
     }
 
     /**
-     * end game
-     */
-    public void endGame(){
-        Game.getInstance().endGame();
-    }
-
-    /**
-     * Founding a corporation
+     * When the player founds a desired corporation they are able to get a stock bonus.
      *
      * @param corporation corporation which the player is founding
      */
@@ -274,18 +234,26 @@ public class Player {
     }
 
     /**
-     * Methods that deals with money
+     * Methods that deals with checking, taking, and giving money to the player's money amount
      *
      * @param amount price
      */
     public void takeMoney(int amount){
         money = money - amount;
     }
-    public void giveMoney(int amount){
-        money = money + amount;
-    }
-
+    public void giveMoney(int amount){money = money + amount;}
     public int checkMoney(){
         return money;
+    }
+
+    /**
+     * String representation of object
+     *
+     * @return toString of Player (name for now)
+     * @author Baylor McElroy
+     */
+    public String toString(){
+        String sb = name;
+        return sb;
     }
 }

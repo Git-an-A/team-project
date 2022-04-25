@@ -5,16 +5,16 @@ A simple Aquire project that replicates the 1964 board game Acquire. It has a wo
 * This project requires using Gradle, which must be downloaded separately. 
 * Once Gradle is downloaded, Gradle must be initialized using the command:
 ```
-Gradle int
+gradle init
 ```
 * Then, the project itself must be cloned and placed in a desired folder location. 
 * It then may be built by using the Gradle command:
 ```
-Gradle build
+gradle build
 ```
 * After it is built successfully, it is then ready to be run with the Gradle command:
 ```
-Gradle run
+gradle run
 ```
 * Be ready to play!
 
@@ -29,7 +29,10 @@ The program is designed to be fully played by using buttons. All actions are lab
 	* Implementing 80% code coverage of the whole project.
 	* Working UI Design
 	* Various fixes and optimization
+* v1.1.0
+	* Various fixes and optimization
+	* GitHub Actions pipeline to build, test, pacakge, and generate javadoc.
+	* Uses JPackage to produce a deployable artifact
 
 ### License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/) - see the LICENSE.md file for details.

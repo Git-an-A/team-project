@@ -24,8 +24,17 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+class EndGameTest {
 
+    /**@Test
+    void testGetWinner() {
+        var endGame = new EndGame();
+        var player = new Player("Test Name");
+        String testWinner = endGame.getWinner();
+        assertNotEquals(null, testWinner);
+    }**/
 }

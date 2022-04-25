@@ -24,8 +24,6 @@
 
 package team.project;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -38,24 +36,12 @@ public class Corporation {
     private Stack<Tile> playTiles;
     private int baseValue;
     private int size;
+    private int number;
     private Stack<Stock> stocks;
     private String companyName;
-    private int number;
     private boolean played;
     private int colorNum;
 
-    // Reference of the prices
-    private static final int[] stockPrices = new int[]{200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200};
-    private static final int[] majorShare = new int[]{2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000};
-    private static final int[] minorShare = new int[]{1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000};
-
-    /*
-    for price:
-    create a get price method
-    create a price style instance variable
-    initialize price style in constructor
-    in get price call the array of prices that matches the style that was instantiated
-     */
 
     /**
      * Constructor of corporation
@@ -222,10 +208,6 @@ public class Corporation {
      * Public Getters and Setters
      */
 
-    public int getNumber() {
-        return number;
-    }
-
     public int getSize() {
         return playTiles.size();
     }
@@ -268,7 +250,6 @@ public class Corporation {
         return playTiles;
     }
 
-
     public Stack<Stock> getStocks() {
         return stocks;
     }
@@ -276,5 +257,7 @@ public class Corporation {
     public int getColorNum () {
         return colorNum;
     }
+
+    public int getNumber(){return number;}
 }
 

@@ -24,8 +24,31 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
+    @Test
+    void testRemoveTile() {
+        var player = new Player("Test Name");
+        Tile tempTile = player.removeTile(0);
+        assertNull(tempTile);
+    }
+
+    @Test
+    void testGetTile() {
+        var player = new Player("Test Name");
+        Tile tile = player.getTile(0);
+        assertNull(tile);
+    }
+
+    @Test
+    void testGetName() {
+        var player = new Player("Test Name");
+        String name = player.getName();
+        assertEquals("Test Name", name);
+    }
 
 }

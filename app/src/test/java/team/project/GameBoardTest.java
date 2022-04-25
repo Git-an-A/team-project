@@ -26,64 +26,50 @@ package team.project;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Stack;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
-//    @Test
-//    void setTileStack() {
-//
-//    }
+    /**@Test
+    void testGetTileStack() {
+        var gameBoard = new GameBoard();
+        var testTiles = new Tiles();
+        gameBoard.setTileStack(testTiles.getTileList());
+        Stack<Tile> tileStack = gameBoard.getTileStack();
+        assertNotEquals(null, tileStack);
+    }**/
 
-//    @Test
-//    void checkNearCorps() {
-//    }
+    /**@Test
+    void testCheckNearCorps() {
+        var gameBoard = new GameBoard();
+        var testTile = new Tile("A", 1);
+        gameBoard.checkNearCorps(testTile);
 
-//    @Test
-//    void checkPlace() {
-//    }
+    }**/
 
-//    @Test
-//    void testCannotPlace() {
-//    }
+    /**@Test
+    void testCheckPlace() {
+        var gameBoard = new GameBoard();
+        var tile = new Tile("A", 1);
+        Boolean trueOrFalse = gameBoard.checkPlace(tile);
+        assertEquals(false, trueOrFalse);
+    }**/
 
-//    @Test
-//    void mergeCorp() {
-//    }
+    @Test
+    void testFindPlayer() {
+        var gameBoard = new GameBoard();
+        var player = new Player("Test Name");
+        player = gameBoard.findPlayer();
+        assertEquals(null, player);
+    }
 
-//    @Test
-//    void shareBonus() {
-//    }
-
-//    @Test
-//    void findPlayer() {
-//    }
-
-//    @Test
-//    void findNext() {
-//    }
-
-//    @Test
-//    void giveStocks() {
-//    }
-
-//    @Test
-//    void takeStocks() {
-//    }
-
-//    @Test
-//    void giveMoney() {
-//    }
-
-//    @Test
-//    void takeMoney() {
-//    }
-
-//    @Test
-//    void nextState() {
-//    }
-
-//    @Test
-//    void createCorporationList() {
-//    }
+    @Test
+    void testCreateCorporationMethods() {
+        var gameBoard = new GameBoard();
+        List<Corporation> corporationList = gameBoard.createCorporationList();
+        assertEquals(7, corporationList.size());
+    }
 }

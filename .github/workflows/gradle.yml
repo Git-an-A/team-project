@@ -28,10 +28,17 @@ jobs:
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: build
+<<<<<<< HEAD
     - name: license Main
       run: ./gradlew licenseMain
     - name: license Test
       run: ./gradlew licenseTest
+=======
+#    - name: license Main
+#      run: ./gradlew licenseMain
+#    - name: license Test
+#      run: ./gradlew licenseTest
+>>>>>>> release/v1.0.1
     - name: javadoc
       run: ./gradlew javadoc
     - name: Jacoco report

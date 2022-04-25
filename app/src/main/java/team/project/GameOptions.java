@@ -132,19 +132,6 @@ public class GameOptions extends Application {
     }
 
     /**
-     * Method that will load the game from the json file
-     *
-     * @param filename String of the filename
-     * @return getGame Game object that holds the game
-     * @author Victoria Weir
-     */
-
-
-//    public GameOptions readData(String filepath){
-//        return new GameOptions();
-//    }
-
-    /**
      * Method that will save the current game
      *
      * @param file desired file location made by the player
@@ -187,9 +174,8 @@ public class GameOptions extends Application {
     public void hide(){
         disp.hide();
     }
-    
-    public void endGame(){
-        Game.getInstance().endGame();
+    public boolean getHide(){
+        return hide;
     }
 }
 

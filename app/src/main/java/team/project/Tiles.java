@@ -24,19 +24,19 @@
 
 package team.project;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
 /**
  * Java class for Tile
+ *
  * @author Victoira Weir
  */
 public class Tiles{
     private Stack<Tile> tileList;
 
     /**
-     * Constructor
+     * Constructor that creates the tiles to have labels
      */
     public Tiles() {
         tileList = new Stack<Tile>();
@@ -69,6 +69,7 @@ public class Tiles{
 
     /**
      * Deals the tile
+     *
      * @return given tile is removed from the list
      */
     public Tile dealTile(){

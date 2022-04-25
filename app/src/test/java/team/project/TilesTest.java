@@ -24,8 +24,23 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TilesTest {
 
+    @Test
+    void testToString() {
+        var tiles = new Tiles();
+        String toString = tiles.toString();
+        assertNotNull(toString);
+    }
+
+    @Test
+    void testListSize() {
+        var tiles = new Tiles();
+        int size = tiles.size();
+        assertEquals(108, size);
+    }
 }
