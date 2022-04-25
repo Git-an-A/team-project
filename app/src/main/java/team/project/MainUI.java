@@ -111,6 +111,7 @@ public class MainUI extends Application {
         yourSharesLabel = makeYourSharesLabel();
 
         showPricing = makeShowPricingButton();
+
         showOtherPlayerShares = makeShowOtherPlayerSharesButton();
 
 
@@ -380,7 +381,10 @@ public class MainUI extends Application {
 
         root.getChildren().add(title);
         root.getChildren().add(showPricing);
-        root.getChildren().add(showOtherPlayerShares);
+        if(Game.getInstance().getHide()){
+            root.getChildren().add(showOtherPlayerShares);
+        }
+
 
         stage.setResizable(false);
         stage.setScene(scene);
