@@ -27,9 +27,11 @@ package team.project;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -118,7 +120,7 @@ public class MainUI extends Application {
         tileRB6 = makeTileRadioButtons(toggleGroup, yDistRB, 5);
 
         yourSharesLabel = makeYourSharesLabel();
-        sharesTable = makeSharesTable();
+        sharesTable = makeSharesTable(920, 430);
         moneyAvailableLabel = makeMoneyAvailableLabel();
         moneyLabel = makeMoneyLabel();
         next = makeNextButton();
@@ -855,16 +857,14 @@ public class MainUI extends Application {
      * makes table showing shares in a players inventory
      * @return constructed gridpane
      */
-    private GridPane makeSharesTable(){
-        int x = 920;
-        int y = 430;
+    private GridPane makeSharesTable(int x, int y){
         int gridLength = 2;
         int gridHeight = 8;
 
         String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
         String[] amount = {"0", "0", "0", "0", "0", "0", "0", "0"};
         String[][] tableData = {corporationNames, amount};
-        labArShares = new Label[gridLength][gridHeight];
+        Label[][] labelAr = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
                 final Label label = new Label();
@@ -879,10 +879,10 @@ public class MainUI extends Application {
                 }
                 label.setStyle("-fx-background-color: #ffffff; ");
                 label.setStyle("-fx-border-color: #000000; ");
-                labArShares[i][j] = label;
+                labelAr[i][j] = label;
             }
         }
-        GridPane gridPane = createLabGridpane(labArShares, x, y);
+        GridPane gridPane = createLabGridpane(labelAr, x, y);
         return gridPane;
     }
     /**
@@ -958,6 +958,23 @@ public class MainUI extends Application {
         disp.setScene(scene);
         disp.show();
     }
+    private void dispAllShares(){
+
+        Stage disp = new Stage();
+        Group root = new Group();
+
+        for(int i=0;i<1;i++){
+            root.getChildren().add(makeSharesTable(50, 100*i));
+        }
+
+        Scene scene = new Scene(root, 595, 370);
+
+
+
+        disp.setTitle("All player's shares");
+        disp.setScene(scene);
+        disp.show();
+    }
     /**
      *
      */
@@ -990,7 +1007,7 @@ public class MainUI extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                dispAllShares();
             }
         });
 
