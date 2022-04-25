@@ -27,9 +27,12 @@ package team.project;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -48,6 +51,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The main User interface for the board of the game.
@@ -859,11 +863,11 @@ public class MainUI extends Application {
      */
     private GridPane makeSharesTable(int x, int y){
         int gridLength = 2;
-        int gridHeight = 8;
+        int gridHeight = 7;
 
-        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
-        String[] amount = {"0", "0", "0", "0", "0", "0", "0", "0"};
-        String[][] tableData = {corporationNames, amount};
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
+        String[] amount = {"0", "0", "0", "0", "0", "0", "0"};
+        String[][] tableData = {corpNames, amount};
         Label[][] labelAr = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
@@ -962,21 +966,50 @@ public class MainUI extends Application {
 
         Stage disp = new Stage();
         Group root = new Group();
+        Group labelGroup = new Group();
+        Group scroll = new Group();
 
-        for(int i=0;i<1;i++){
-            GridPane gridPane = makeSharesTable(50, 100*i);
-            for (int j=gridPane.getChildren().size()/2;j<gridPane.getChildren().size();j++) {
+        ScrollBar sc = new ScrollBar();
+        sc.setMin(0);
+        sc.setMax(1000);
+        sc.setValue(0);
+        sc.setOrientation(Orientation.VERTICAL);
 
-                Node label = gridPane.getChildren().get(j);
-                Label label1 = (Label) label;
-                label1.setText("test");
-
+        sc.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                labelGroup.setLayoutY(-new_val.doubleValue());
             }
-            root.getChildren().add(gridPane);
+        });
+
+        Queue<Player> players = Game.getInstance().playerQueue();
+        players.add(Game.getInstance().getCurrentPlayer());
+
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
+        int i = 0;
+        for(Player player : players){
+            GridPane gridPane = makeSharesTable(50, 250*i+50);
+            Label playerIdentifier = new Label(player.getName());
+            playerIdentifier.setLayoutX(75);
+            playerIdentifier.setLayoutY(250*i+20);
+            labelGroup.getChildren().add(playerIdentifier);
+            int k = 0;
+            for (int j=gridPane.getChildren().size()/2;j<gridPane.getChildren().size();j++) {
+                Node nodeLabel = gridPane.getChildren().get(j);
+                Label editLabel = (Label) nodeLabel;
+                editLabel.setText(String.valueOf(player.viewStocks(corpNames[k],player)));
+                k++;
+            }
+            labelGroup.getChildren().add(gridPane);
+            i++;
         }
 
-        Scene scene = new Scene(root, 595, 370);
+        scroll.getChildren().add(sc);
 
+        root.getChildren().add(scroll);
+        root.getChildren().add(labelGroup);
+
+        Scene scene = new Scene(root, 595, 370);
 
 
         disp.setTitle("All player's shares");
