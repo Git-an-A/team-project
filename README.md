@@ -32,7 +32,6 @@ The program is designed to be fully played by using buttons. All actions are lab
 * v1.1.0
 	* Various fixes and optimization
 	* GitHub Actions pipeline to build, test, pacakge, and generate javadoc.
-	* Uses JPackage to produce a deployable artifact
 
 ### License
 This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/) - see the LICENSE.md file for details.

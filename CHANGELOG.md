@@ -18,6 +18,5 @@ All notable changes to this project will be documented in this file.
 ***
 ## [v1.1.0]
 * GitHub Action pipeline is setup and project automatically biolds on each push.
-* Project is automatically packaged using JPackage
 * At least one released artifacts have been created in repository
 
