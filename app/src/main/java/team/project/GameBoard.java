@@ -98,7 +98,6 @@ public class GameBoard {
 
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
 
-
         for(Corporation corporation : corpor){
             corpTiles = corporation.getPlayTiles();
 
@@ -128,7 +127,7 @@ public class GameBoard {
     }
 
     /**
-     * Checks placement of tile
+     * Checks placement of tile. If near a corporatoin that is safe, the tile becomes dead. If near an unsafe corporation, tile will merge with corporation.
      *
      * @param tile being played
      * @return boolean, true if there is more than 2 corporation - false if not
@@ -155,18 +154,21 @@ public class GameBoard {
     }
 
     /**
-     * merging corporation
+     * Merging corporations
      *
      * @param corporations being merged
      * @param tile amount
      * @author Baylor McElroy
      */
-    public void mergeCorp(List<Corporation> corporations, Tile tile){
+    public Corporation mergeCorp(List<Corporation> corporations, Tile tile){
         int maxSize = 0;
-        Corporation corporation;
+        Corporation winner = null;
+        Corporation big = null;
+
         for (Corporation c: corporations) {
             if(c.getSize()>maxSize){
                 maxSize = c.getSize();
+                big = c;
             }
         }
         List<Corporation> maxCorps = new ArrayList<>();
@@ -175,25 +177,32 @@ public class GameBoard {
                 maxCorps.add(c);
             }
         }
-
+        assert big != null;
         if(maxCorps.size() == 1){
-            corporation = maxCorps.get(0);
-            for (Corporation item: corporations) {
+            for (Corporation item: corporations){
                 for (Tile t : item.getPlayTiles()) {
-                    t.setCorp(corporation);
-                    Game.getInstance().colorTile(t, corporation.getColorNum());
+                    t.setCorp(big);
+                    Game.getInstance().colorTile(t, big.getColorNum());
                 }
             }
-            tile.setCorp(corporation);
-            Game.getInstance().colorTile(tile, corporation.getColorNum());
+            tile.setCorp(big);
+            Game.getInstance().colorTile(tile, big.getColorNum());
+            return big;
         }
         else {
             Game.getInstance().pickMerge(maxCorps);
-        }
+            for(Corporation chose : corporations){
+                if(chose.getPlayed()){
+                    winner = chose;
+                    return winner;
+                }
+            }
+        }// default
+        return big;
     }
 
     /**
-     * This will give the players the sharebonus when a corporation is merged
+     * This will give the players the share bonus when a corporation is merged
      *
      * @param corp corporation that is merged
      * @author Victoria Weir
@@ -223,13 +232,12 @@ public class GameBoard {
                 majorWinner = player;
             }
         }
-        for(int i=0; i< tempCompare.size(); i++) {
-            tempCompare.remove(majorWinner);
-            int current = tempCompare.get(i).getCorps().size();
-
+        tempCompare.remove(majorWinner);
+        for (Player player : tempCompare) {
+            int current = player.getCorps().size();
             if (current > secondStock) {
                 secondStock = current;
-                minorWinner = tempCompare.get(i);
+                minorWinner = player;
             }
         }
 
