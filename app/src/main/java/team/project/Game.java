@@ -102,6 +102,8 @@ public class Game {
         int tileYpos = tile.getYpos();
         Stack<Tile> tileStack = new Stack<>();
         Tile tempTile;
+        String action = "";
+
         for (Tile playedTile : gameBoard.getPlayedTiles()) {
             int playedTileXpos = playedTile.getXpos();
             int playedTileYpos = playedTile.getYpos();
@@ -127,7 +129,7 @@ public class Game {
         if (tileStack.size() == 0) {
             //no corporation
             mainUI.colorTile(tile, 0);
-        } else if (tileStack.size() == 1) {
+        } else if (tileStack.size() == 1){
             //add to corporation
             tempTile = tileStack.pop();
             //Check for nearby corporation
@@ -135,7 +137,7 @@ public class Game {
             List<Corporation> active = getActiveCorporations();
             for (Corporation corps : active) {
                 String compare = corps.getName();
-                if (Objects.equals(nearCorporation, compare)) {
+                if (nearCorporation == compare) {
                     tile.setCorp(tempTile.getCorp());
                     mainUI.colorTile(tile, tempTile.getCorp().getColorNum());
                 }
@@ -149,26 +151,30 @@ public class Game {
             //get chosen corp
             Corporation tempCorp = null;
             for (Corporation corporation : corps) {
-                if (!getUnplacedCorporations().contains(corporation)) {
+                if (getActiveCorporations().contains(corporation)) {
                     tempCorp = corporation;
+
                 }
             }
             Corporation c = tempCorp;
             System.out.println("new color number: " + c.getColorNum());
             mainUI.colorTile(tile, c.getColorNum());
             mainUI.colorTile(tempTile, c.getColorNum());
+            tempCorp.founded(getCurrentPlayer(), tile);
             //make other tile corporation
             tempTile.setCorp(c);
+
         } else {
             //merge corporation
             Stack<Corporation> corporations = new Stack<>();
-            for (Tile t : tileStack) {
+            for (Tile t : tileStack){
                 String mergingCheck = gameBoard.checkNearCorps(tile);
                 if (mergingCheck.equals("MergeAction")) {
                     corporations.add(t.getCorp());
                 }
             }
-            gameBoard.mergeCorp(corporations, tile);
+            Corporation win = gameBoard.mergeCorp(corporations, tile);
+            gameBoard.ShareBonus(win);
         }
         gameBoard.getPlayedTiles().add(tile);
     }
