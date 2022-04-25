@@ -24,8 +24,35 @@
 
 package team.project;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Labeled;
+import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxAssert;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.control.LabeledMatchers;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(ApplicationExtension.class)
 class GameOptionsTest {
+    /**private Scene scene;
+    Stage testStage;
+    @Start
+    private void start(Stage stage) throws Exception {
+        GameOptions gameOptions = new GameOptions();
+        gameOptions.start(stage);
+        scene = stage.getScene();
+        testStage = stage;
+    }
+    @Test
+    void testStart() {
+        Parent parent = scene.getRoot();
+        assertEquals("Acquire", testStage.getTitle());
 
+    }**/
 }

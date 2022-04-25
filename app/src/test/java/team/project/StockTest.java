@@ -24,8 +24,28 @@
 
 package team.project;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StockTest {
+    @Test
+    void testGetCost() {
+        var stock = new Stock();
+        stock.setCost(100);
+        assertEquals(100, stock.getCost());
+    }
+    @Test
+    void testGetName() {
+        var stock = new Stock();
+        stock.setName("Test Name");
+        assertEquals("Test Name", stock.getName());
+    }
+    @Test
+    void testGetValue() {
+        var stock = new Stock();
+        stock.setValue(100);
+        assertEquals(100, stock.getValue());
+    }
 
 }
