@@ -27,19 +27,30 @@ package team.project;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The main User interface for the board of the game.
@@ -71,6 +82,8 @@ public class MainUI extends Application {
     private Button endGame;
     private Button sellStock;
     private Button tradeStock;
+    private Button showPricing;
+    private Button showOtherPlayerShares;
     final ToggleGroup toggleGroup = new ToggleGroup();
     private Stage stage;
 
@@ -94,6 +107,13 @@ public class MainUI extends Application {
         menuButton = makeMenuButton();
         infoTable = makeInfoTable();
         yourTileLabel = makeYourTileLabel();
+        yourSharesLabel = makeYourSharesLabel();
+
+        showPricing = makeShowPricingButton();
+
+        showOtherPlayerShares = makeShowOtherPlayerSharesButton();
+
+
         int yDistRB = 25;
 
         tileRB1 = makeTileRadioButtons(toggleGroup, yDistRB, 0);
@@ -102,9 +122,9 @@ public class MainUI extends Application {
         tileRB4 = makeTileRadioButtons(toggleGroup, yDistRB, 3);
         tileRB5 = makeTileRadioButtons(toggleGroup, yDistRB, 4);
         tileRB6 = makeTileRadioButtons(toggleGroup, yDistRB, 5);
-        //playTileButton = makePlayTileButton();
+
         yourSharesLabel = makeYourSharesLabel();
-        sharesTable = makeSharesTable();
+        sharesTable = makeSharesTable(920, 430);
         moneyAvailableLabel = makeMoneyAvailableLabel();
         moneyLabel = makeMoneyLabel();
         next = makeNextButton();
@@ -241,7 +261,7 @@ public class MainUI extends Application {
         }
 
         if(tile!=null){
-            System.out.println(tile.toString() + " has been played!");
+            System.out.println(tile + " has been played!");
             Game.getInstance().playTile(tile);
         }
     }
@@ -313,7 +333,7 @@ public class MainUI extends Application {
     }
 
     /**
-     * Shows stage
+     * Shows main stage
      * @param stage new stage to show
      * @throws Exception UI exception
      */
@@ -355,9 +375,14 @@ public class MainUI extends Application {
         root.getChildren().add(next);
         root.getChildren().add(buyStockCheck);
         root.getChildren().add(endGame);
+        root.getChildren().add(yourSharesLabel);
         //game action buttons (1-4)
 
         root.getChildren().add(title);
+        root.getChildren().add(showPricing);
+        if(Game.getInstance().getHide()){
+            root.getChildren().add(showOtherPlayerShares);
+        }
 
 
         stage.setResizable(false);
@@ -412,14 +437,14 @@ public class MainUI extends Application {
     }
 
     /**
-     * creates the sell menu
+     * displays the sell menu
      * @param corporation corporation that is merged to
      * @param corporations any corporation being merged
      */
     public void sellMenu(Corporation corporation, List<Corporation> corporations){
         stage.hide();
         Stage disp = new Stage();
-        disp.setTitle("Courses");
+        disp.setTitle("Sell Menu");
 
         Group root = new Group();
         Scene scene = new Scene(root, 450, 400);
@@ -492,6 +517,11 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
+        Label prompt = new Label();
+        prompt.setLayoutX(50);
+        prompt.setLayoutY(20);
+        prompt.setText("Please choose a stock to buy");
+        prompt.setFont(new Font("Arial", 25));
 
         ComboBox<String> comboBox = new ComboBox<>();
         System.out.println(corporations);
@@ -500,23 +530,26 @@ public class MainUI extends Application {
             System.out.println(item + "item");
         }
 
-        Button button = createButton("Quit", 20, 20);
-        button.setCancelButton(true);
+        Button quit = createButton("Quit", 200, 250);
+        quit.setCancelButton(true);
         comboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for (Corporation item: corporations) {
                     if(comboBox.getValue().equals(item.toString())){
                         Game.getInstance().buyStock(item, Game.getInstance().getCurrentPlayer());
-
                     }
                 }
                 disp.hide();
             }
         });
+        comboBox.setLayoutX(150);
+        comboBox.setLayoutY(100);
         root.getChildren().add(comboBox);
+        root.getChildren().add(quit);
+        root.getChildren().add(prompt);
 
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        quit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 disp.hide();
@@ -549,6 +582,12 @@ public class MainUI extends Application {
         Scene scene = new Scene(root, 450, 400);
         scene.setFill(Color.LIGHTGRAY);
 
+        Label prompt = new Label();
+        prompt.setLayoutX(50);
+        prompt.setLayoutY(20);
+        prompt.setText("Please select a corporation");
+        prompt.setFont(new Font("Arial", 25));
+
         ComboBox<String> comboBox = new ComboBox<>();
         System.out.println(corporations);
         for (Corporation item: corporations) {
@@ -576,7 +615,10 @@ public class MainUI extends Application {
                 disp.hide();
             }
         });
+        comboBox.setLayoutX(150);
+        comboBox.setLayoutY(100);
         root.getChildren().add(comboBox);
+        root.getChildren().add(prompt);
 
         disp.setResizable(false);
         disp.setScene(scene);
@@ -787,7 +829,7 @@ public class MainUI extends Application {
         return label;
     }
     /**
-     *  makes gridpane for info table on top right
+     * makes gridpane for info table on top right
      * @return constructed gridpane
      */
     private GridPane makeInfoTable(){
@@ -796,12 +838,12 @@ public class MainUI extends Application {
         int gridLength = 5;
         int gridHeight = 7;
 
-        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7"};
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
         String[] color = {"Blue", "Yellow", "Red", "Purple", "Green", "Orange", "Pink"};
         String[] size = {"0", "0", "0", "0", "0", "0", "0"};
         String[] price = {"100", "100", "100", "100", "100", "100", "100"};
         String[] status = {"inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive" , "inactive"};
-        String[][] tableData = {corporationNames, color, size, price, status};
+        String[][] tableData = {corpNames, color, size, price, status};
         labArInfo = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
@@ -822,16 +864,14 @@ public class MainUI extends Application {
      * makes table showing shares in a players inventory
      * @return constructed gridpane
      */
-    private GridPane makeSharesTable(){
-        int x = 920;
-        int y = 430;
+    private GridPane makeSharesTable(int x, int y){
         int gridLength = 2;
-        int gridHeight = 8;
+        int gridHeight = 7;
 
-        String[] corporationNames = {"Corporation 1", "Corporation 2", "Corporation 3", "Corporation 4", "Corporation 5", "Corporation 6", "Corporation 7", "Corporation 8"};
-        String[] amount = {"0", "0", "0", "0", "0", "0", "0", "0"};
-        String[][] tableData = {corporationNames, amount};
-        labArShares = new Label[gridLength][gridHeight];
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
+        String[] amount = {"0", "0", "0", "0", "0", "0", "0"};
+        String[][] tableData = {corpNames, amount};
+        Label[][] labelAr = new Label[gridLength][gridHeight];
         for(int i=0; i<gridLength;i++){
             for(int j=0;j<gridHeight;j++){
                 final Label label = new Label();
@@ -846,10 +886,10 @@ public class MainUI extends Application {
                 }
                 label.setStyle("-fx-background-color: #ffffff; ");
                 label.setStyle("-fx-border-color: #000000; ");
-                labArShares[i][j] = label;
+                labelAr[i][j] = label;
             }
         }
-        GridPane gridPane = createLabGridpane(labArShares, x, y);
+        GridPane gridPane = createLabGridpane(labelAr, x, y);
         return gridPane;
     }
     /**
@@ -871,6 +911,11 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+    /**
+     * Makes the check box so a player can choose to buy stock
+     * @return checkbox to put on stage
+     */
     private CheckBox makeBuyStockCheck(){
         int x = 1120;
         int y = 500;
@@ -880,6 +925,11 @@ public class MainUI extends Application {
         checkBox.setText("Buy Stock?");
         return checkBox;
     }
+
+    /**
+     * Creates the end game button to allow a player to end the game
+     * @return Button to display on stage
+     */
     private Button makeEndGameButton(){
         int x = 500;
         int y = 500;
@@ -893,4 +943,133 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+
+    /**
+     * Displays menu.
+     */
+    private void dispImage(String fileName) {
+        //creating the image object
+        Stage disp = new Stage();
+        InputStream stream = null;
+        try{
+            stream = new FileInputStream(fileName);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(stream);
+        //Creating the image view
+        ImageView imageView = new ImageView();
+        //Setting image to the image view
+        imageView.setImage(image);
+        //Setting the image view parameters
+        imageView.setX(10);
+        imageView.setY(10);
+        imageView.setFitWidth(575);
+        imageView.setPreserveRatio(true);
+        //Setting the Scene object
+        Group root = new Group(imageView);
+        Scene scene = new Scene(root, 595, 370);
+        disp.setTitle("Displaying Image");
+        disp.setScene(scene);
+        disp.show();
+    }
+
+    /**
+     * Displays tables of all the shares for every player (if enabled)
+     */
+    private void dispAllShares(){
+
+        Stage disp = new Stage();
+        Group root = new Group();
+        Group labelGroup = new Group();
+        Group scroll = new Group();
+
+        ScrollBar sc = new ScrollBar();
+        sc.setMin(0);
+        sc.setMax(1000);
+        sc.setValue(0);
+        sc.setOrientation(Orientation.VERTICAL);
+
+        sc.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                labelGroup.setLayoutY(-new_val.doubleValue());
+            }
+        });
+
+        Queue<Player> players = Game.getInstance().playerQueue();
+        players.add(Game.getInstance().getCurrentPlayer());
+
+        String[] corpNames = {"Worldwide","Sackson","Festival","Imperial","American","Continental","Tower"};
+        int i = 0;
+        for(Player player : players){
+            GridPane gridPane = makeSharesTable(50, 250*i+50);
+            Label playerIdentifier = new Label(player.getName());
+            playerIdentifier.setLayoutX(75);
+            playerIdentifier.setLayoutY(250*i+20);
+            labelGroup.getChildren().add(playerIdentifier);
+            int k = 0;
+            for (int j=gridPane.getChildren().size()/2;j<gridPane.getChildren().size();j++) {
+                Node nodeLabel = gridPane.getChildren().get(j);
+                Label editLabel = (Label) nodeLabel;
+                editLabel.setText(String.valueOf(player.viewStocks(corpNames[k],player)));
+                k++;
+            }
+            labelGroup.getChildren().add(gridPane);
+            i++;
+        }
+
+        scroll.getChildren().add(sc);
+
+        root.getChildren().add(scroll);
+        root.getChildren().add(labelGroup);
+
+        Scene scene = new Scene(root, 595, 370);
+
+
+        disp.setTitle("All player's shares");
+        disp.setScene(scene);
+        disp.show();
+    }
+    /**
+     * Makes the button to show the player info card
+     */
+    private Button makeShowPricingButton(){
+        int x = 50;
+        int y = 400;
+        String text = "Show prices for stocks";
+        Button button = createButton(text, x, y);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dispImage("Image1.png");
+            }
+        });
+
+        return button;
+    }
+
+    /**
+     *  makes the button to display all players shares (if enabled)
+     * @return the button
+     */
+    private Button makeShowOtherPlayerSharesButton(){
+        int x = 50;
+        int y = 500;
+        String text = "Show other players stocks";
+        Button button = createButton(text, x, y);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dispAllShares();
+            }
+        });
+
+        return button;
+    }
+    //make other players shares
 }

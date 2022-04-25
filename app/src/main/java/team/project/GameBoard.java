@@ -24,10 +24,10 @@
 
 package team.project;
 
-import com.sun.scenario.animation.shared.FiniteClipEnvelope;
-import org.checkerframework.checker.units.qual.C;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * GameBoard that relates to anything that happens on the board
@@ -47,6 +47,7 @@ public class GameBoard {
     private final String draw = "DRAW";
     private String boardState;
     private Stack<Tile> playedTiles;
+
     /**
      * Initializes GameBoard and the corporations
       */
@@ -82,6 +83,7 @@ public class GameBoard {
 
     /**
      * Checks nearby corporations
+     *
      * @param tile tile being placed
      * @return corporation if nearby or nothing
      * @author Victoria Weir
@@ -95,7 +97,6 @@ public class GameBoard {
         List<Corporation> merge = new ArrayList<>();
 
         List<Corporation> corpor = Game.getInstance().getActiveCorporations();
-
 
         for(Corporation corporation : corpor){
             corpTiles = corporation.getPlayTiles();
@@ -122,30 +123,11 @@ public class GameBoard {
             return "Merge Action";
         }
 
-        return "This is working";
+        return "Near no corp";
     }
 
-//    public static void main(String[] args) {
-//        Tile trying = new Tile("Z", 3);
-//        int letter = trying.getXpos() + trying.getYpos();
-//        System.out.println(letter);
-//        System.out.println(trying.getYpos());
-//
-//        GameBoard testing = new GameBoard();
-////        testing.getTileStack();
-////        System.out.println(testing.getTileStack().toString());
-////        testing.createCorporationList();
-////        System.out.println(testing.getCorporationList().toString());
-////        String works = testing.checkNearCorps(trying);
-////        System.out.println(works);
-//        boolean te = testing.checkPlace(trying);
-//        System.out.println(te);
-//    }
-
-    //For dead tiles
-
     /**
-     * Checks placement of tile
+     * Checks placement of tile. If near a corporatoin that is safe, the tile becomes dead. If near an unsafe corporation, tile will merge with corporation.
      *
      * @param tile being played
      * @return boolean, true if there is more than 2 corporation - false if not
@@ -172,18 +154,23 @@ public class GameBoard {
     }
 
     /**
-     * merging corporation
+     * Merging corporations
      *
      * @param corporations being merged
      * @param tile amount
      * @author Baylor McElroy
      */
-    public void mergeCorp(List<Corporation> corporations, Tile tile){
+    public Corporation mergeCorp(List<Corporation> corporations, Tile tile){
         int maxSize = 0;
-        Corporation corporation;
+        Corporation winner = null;
+        Corporation big = null;
+        Corporation losing = null;
+        List<Tile> tiles = null;
+
         for (Corporation c: corporations) {
             if(c.getSize()>maxSize){
                 maxSize = c.getSize();
+                big = c;
             }
         }
         List<Corporation> maxCorps = new ArrayList<>();
@@ -192,25 +179,56 @@ public class GameBoard {
                 maxCorps.add(c);
             }
         }
-
+        assert big != null;
         if(maxCorps.size() == 1){
-            corporation = maxCorps.get(0);
-            for (Corporation item: corporations) {
+            for (Corporation item: corporations){
+                for(int i=0; i< item.getPlayTiles().size(); i++){
+                    tiles.add(item.getPlayTiles().get(i));
+                }
+
                 for (Tile t : item.getPlayTiles()) {
-                    t.setCorp(corporation);
-                    Game.getInstance().colorTile(t, corporation.getColorNum());
+                    t.setCorp(big);
+                    Game.getInstance().colorTile(t, big.getColorNum());
                 }
             }
-            tile.setCorp(corporation);
-            Game.getInstance().colorTile(tile, corporation.getColorNum());
+            tile.setCorp(big);
+            Game.getInstance().colorTile(tile, big.getColorNum());
+            for(Tile color: tiles){
+                Game.getInstance().colorTile(color, big.getColorNum());
+            }
+
+            for(Corporation remove: corporations){
+                if(remove != big){
+                    Game.getInstance().getActiveCorporations().remove(remove);
+                    getUnplacedCorporations().add(remove);
+                }
+            }
         }
         else {
             Game.getInstance().pickMerge(maxCorps);
-        }
+            for(Corporation chose : corporations){
+                if(chose.getPlayed()){
+                    winner = chose;
+                    return winner;
+                }
+                else{
+                    for(int i=0; i< chose.getPlayTiles().size(); i++){
+                        tiles.add(chose.getPlayTiles().get(i));
+                    }
+                    for(Tile color: tiles){
+                        Game.getInstance().colorTile(color, big.getColorNum());
+                    }
+                    Game.getInstance().getActiveCorporations().remove(chose);
+                    getUnplacedCorporations().add(chose);
+
+                }
+            }
+        }// default
+        return big;
     }
 
     /**
-     * This will give the players the sharebonus when a corporation is merged
+     * This will give the players the share bonus when a corporation is merged
      *
      * @param corp corporation that is merged
      * @author Victoria Weir
@@ -220,10 +238,6 @@ public class GameBoard {
         Player next = findPlayer();
         List<Player> tempCompare = null;
 
-//        playerList.add(new Object());
-//        playerList.add(new Object());
-
-
         int maxStock = 1;
         int secondStock = 1;
         for(int i= 0; i< playerList.size(); i++){
@@ -232,44 +246,33 @@ public class GameBoard {
                 continue;
             }
             findNext();
-//            System.out.println(next.toString());
-//            System.out.println("Got this far");
         }
 
         Player majorWinner = null;
         Player minorWinner = null;
-        for(int i=0; i< tempCompare.size(); i++) {
-            int current = tempCompare.get(i).getCorps().size();
-            if(current > maxStock){
+        assert tempCompare != null;
+        for (Player player : tempCompare) {
+            int current = player.getCorps().size();
+            if (current > maxStock) {
                 maxStock = current;
-                majorWinner = tempCompare.get(i);
+                majorWinner = player;
             }
-//            System.out.println(current);
         }
-        for(int i=0; i< tempCompare.size(); i++) {
-            tempCompare.remove(majorWinner);
-            int current = tempCompare.get(i).getCorps().size();
-
+        tempCompare.remove(majorWinner);
+        for (Player player : tempCompare) {
+            int current = player.getCorps().size();
             if (current > secondStock) {
                 secondStock = current;
-                minorWinner = tempCompare.get(i);
+                minorWinner = player;
             }
         }
 
+        assert majorWinner != null;
         majorWinner.giveMoney(corp.giveMajorBonus());
+
+        assert minorWinner != null;
         minorWinner.giveMoney(corp.giveMinorBonus());
-//        System.out.println(majorWinner.toString() + minorWinner.toString());
     }
-//    public static void main(String[] args) {
-//        GameBoard testing = new GameBoard();
-//        Corporation corp = new Corporation("name", 3);
-//        Player player1 = new Player("player1");
-//        player1.buyStock(corp,0,0);
-//        Player player2 = new Player("player2");
-//        player2.buyStock(corp,0,0);
-//        player2.buyStock(corp,0,0);
-//        testing.ShareBonus(corp);
-//    }
 
     /**
      * Finds the current player
@@ -286,19 +289,6 @@ public class GameBoard {
      */
     public void findNext(){
         Game.getInstance().playerQueue().poll();
-    }
-
-    public boolean giveStocks(Stock stockName, int amount){
-        return true;
-    }
-    public boolean takeStocks(Stock stockName, int amount){
-        return true;
-    }
-    public boolean giveMoney(Player player, int amount){
-        return true;
-    }
-    public boolean takeMoney(Player player, int amount){
-        return true;
     }
 
     /**

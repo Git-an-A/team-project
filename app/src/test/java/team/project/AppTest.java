@@ -45,15 +45,18 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ApplicationExtension.class)
 public class AppTest {
     private Scene scene;
+    Stage testStage;
     @Start
     private void start(Stage stage) throws Exception {
         App app = new App();
         app.start(stage);
         scene = stage.getScene();
+        testStage = stage;
     }
     @Test
-    void testStart(FxRobot robot) {
+    void testStart() {
         Parent parent = scene.getRoot();
+        assertEquals("Acquire", testStage.getTitle());
         Node node = parent.getChildrenUnmodifiable().get(0);
         FxAssert.verifyThat((Labeled) node, LabeledMatchers.hasText("New Game"));
         node = parent.getChildrenUnmodifiable().get(1);

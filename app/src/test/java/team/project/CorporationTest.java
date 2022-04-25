@@ -39,26 +39,20 @@ class CorporationTest {
         assertEquals(25, corporation.getStocks().size());
     }
 
-    @Test
-    void testFoundedCompany() {
-        var corporation = new Corporation("Test Company", 1, 1);
-
-    }
-
     /**@Test
-    void testGivingStocksToPlayer() {
+    void testGiveStockToPlayer() {
         var corporation = new Corporation("Test Company", 1, 1);
         var player = new Player("Test Name");
-        var game = Game.getInstance();
-        GameBoard gameBoard = new GameBoard();
-        game.setUpGame();
-        game.startGame();
-        var tile = new Tile("A", 1);
-        game.playTile(tile);
-        Stock tempStock = corporation.giveStock(player);
-        assertNotEquals(null, tempStock);
-        int stockCount = player.viewStocks(tempStock.getName(), player);
-        assertEquals(1, stockCount);
+        while (corporation.getStocks().size() >= 24) {
+            Stock testOutput = corporation.giveStock(player);
+            assertNotEquals(null, testOutput);
+            if (corporation.getStocks().size() == 24) {
+                assertEquals(0, testOutput.getCost());
+            }
+            else {
+                assertNotEquals(0, testOutput.getCost());
+            }
+        }
     }**/
 
     @Test
@@ -78,13 +72,42 @@ class CorporationTest {
         assertEquals(400, corporation.getValue(2));
     }
 
-    /**@Test
-    void testSellStock() {
+    @Test
+    void testGiveMajorBonus() {
         var corporation = new Corporation("Test Company", 1, 1);
-        var player = new Player("Test Name");
-        int initialPlayerMoney = player.checkMoney();
-        corporation.sellStock(player, 1);
-        int playerCurrentMoney = player.checkMoney();
-        assertNotEquals(initialPlayerMoney, playerCurrentMoney);
-    }**/
+        corporation.giveMajorBonus();
+    }
+
+    @Test
+    void testGiveMinorBonus() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        corporation.giveMinorBonus();
+    }
+
+    @Test
+    void testIsSafe() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        corporation.setSize(11);
+        Boolean testBoolean = corporation.isSafe();
+        assertEquals(true, testBoolean);
+        corporation.setSize(10);
+        testBoolean = corporation.isSafe();
+        assertEquals(false, testBoolean);
+    }
+
+    @Test
+    void testGetNumber() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        Integer number = corporation.getNumber();
+        assertEquals(0, number);
+    }
+
+    @Test
+    void testAddTile() {
+        var corporation = new Corporation("Test Company", 1, 1);
+        var tile = new Tile("A", 1);
+        corporation.addTile(tile);
+        Integer playTilesSize = corporation.getPlayTiles().size();
+        assertNotEquals(0, playTilesSize);
+    }
 }
