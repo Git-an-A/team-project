@@ -3,6 +3,7 @@ plugins {
     id 'java'
     id "org.cadixdev.licenser" version "0.6.1"
     id 'org.openjfx.javafxplugin' version '0.0.11'
+    id 'jacoco'
 }
 
 group 'me.git-an-a'
@@ -29,6 +30,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 javafx {
@@ -45,6 +47,23 @@ javadoc {
 application {
     // Define the main class for the application.
     mainClass = 'src/main/java/team/project/App.java'
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
 
 allprojects{

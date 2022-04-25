@@ -29,7 +29,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -334,7 +333,7 @@ public class MainUI extends Application {
     }
 
     /**
-     * Shows stage
+     * Shows main stage
      * @param stage new stage to show
      * @throws Exception UI exception
      */
@@ -438,7 +437,7 @@ public class MainUI extends Application {
     }
 
     /**
-     * creates the sell menu
+     * displays the sell menu
      * @param corporation corporation that is merged to
      * @param corporations any corporation being merged
      */
@@ -830,7 +829,7 @@ public class MainUI extends Application {
         return label;
     }
     /**
-     *  makes gridpane for info table on top right
+     * makes gridpane for info table on top right
      * @return constructed gridpane
      */
     private GridPane makeInfoTable(){
@@ -912,6 +911,11 @@ public class MainUI extends Application {
         });
         return button;
     }
+
+    /**
+     * Makes the check box so a player can choose to buy stock
+     * @return checkbox to put on stage
+     */
     private CheckBox makeBuyStockCheck(){
         int x = 1120;
         int y = 500;
@@ -921,6 +925,11 @@ public class MainUI extends Application {
         checkBox.setText("Buy Stock?");
         return checkBox;
     }
+
+    /**
+     * Creates the end game button to allow a player to end the game
+     * @return Button to display on stage
+     */
     private Button makeEndGameButton(){
         int x = 500;
         int y = 500;
@@ -966,6 +975,10 @@ public class MainUI extends Application {
         disp.setScene(scene);
         disp.show();
     }
+
+    /**
+     * Displays tables of all the shares for every player (if enabled)
+     */
     private void dispAllShares(){
 
         Stage disp = new Stage();
@@ -1021,7 +1034,7 @@ public class MainUI extends Application {
         disp.show();
     }
     /**
-     *
+     * Makes the button to show the player info card
      */
     private Button makeShowPricingButton(){
         int x = 50;
@@ -1040,8 +1053,8 @@ public class MainUI extends Application {
     }
 
     /**
-     *
-     * @return
+     *  makes the button to display all players shares (if enabled)
+     * @return the button
      */
     private Button makeShowOtherPlayerSharesButton(){
         int x = 50;
