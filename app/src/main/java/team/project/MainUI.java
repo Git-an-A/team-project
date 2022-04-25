@@ -964,7 +964,15 @@ public class MainUI extends Application {
         Group root = new Group();
 
         for(int i=0;i<1;i++){
-            root.getChildren().add(makeSharesTable(50, 100*i));
+            GridPane gridPane = makeSharesTable(50, 100*i);
+            for (int j=gridPane.getChildren().size()/2;j<gridPane.getChildren().size();j++) {
+
+                Node label = gridPane.getChildren().get(j);
+                Label label1 = (Label) label;
+                label1.setText("test");
+
+            }
+            root.getChildren().add(gridPane);
         }
 
         Scene scene = new Scene(root, 595, 370);
